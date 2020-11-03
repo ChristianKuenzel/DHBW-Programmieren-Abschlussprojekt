@@ -1,21 +1,32 @@
-// Copyright 2020
-// DHBW Lörrach, Programmieren Abschlussprojekt: Hauswirtschaftsprogramm
-// David Schüler <Mail> & Christian Künzel <kunibertgames@web.de>
-// Matr.Nr & Matr. Nr
-//
-// Main Datei
-//
-// ____________________________________________________________________________________________________________________
+/*
+
+Copyright 2020
+DHBW Lörrach, Programmieren Abschlussprojekt: Hauswirtschaftsprogramm
+David Schüler <david.schueler97@gmail.com> & Christian Künzel <kunibertgames@web.de>
+Matr.Nr.: & Matr.Nr.: 3889521
+
+Main Datei
+
+*/
+// ________________________________________________________________________________
+// Importing all structures as modules.
+let struct = require('./structures');
+
+// Initialize storage containing user and entries.
 
 
+// Reading command line arguments; Initialize test mode for examination.
+struct.readCLA();
 
-let x = 6
-let y = 2
-console.log(x);
-console.log(y);
+// Choose User
+    // Implement pw ?
 
-let z = process.argv;
-console.log(z);
+// Show start menu.
+    // @David
+
+// Menu functions.
 
 
-test
+// Repeat.
+
+// ### End of program. ###
