@@ -35,9 +35,9 @@ let _ = struct.readCLA;
 
 // TESTBEREICH
 const testStorage = require("process");
-if (testStorage.argv[2] == "-test") {
-    console.log(userStorage)
-    console.log(entryStorage)
+if (testStorage.argv[2] == '-test') {
+    console.log(userStorage);
+    console.log(entryStorage);
 
     userStorage.setItem('userStorage', 'myFirstValue');
     console.log(userStorage.getItem('userStorage'));
