@@ -10,13 +10,14 @@ Main Datei
 */
 // ________________________________________________________________________________
 // Importing all structures as modules.
-let struct = require('./structures');
+const struct = require('./structures');
 
 // Initialize storage containing user and entries.
-
+userStorage = struct.initStorage[0];
+entryStorage = struct.initStorage[1];
 
 // Reading command line arguments; Initialize test mode for examination.
-struct.readCLA();
+let _ = struct.readCLA;
 
 // Choose User
     // Implement pw ?
@@ -28,5 +29,24 @@ struct.readCLA();
 
 
 // Repeat.
+
+
+
+
+// TESTBEREICH
+const testStorage = require("process");
+if (testStorage.argv[2] == "-test") {
+    console.log(userStorage)
+    console.log(entryStorage)
+
+    userStorage.setItem('userStorage', 'myFirstValue');
+    console.log(userStorage.getItem('userStorage'));
+
+    entryStorage.setItem('entryStorage', 'myFirstValue');
+    console.log(entryStorage.getItem('entryStorage'));
+}
+
+
+
 
 // ### End of program. ###

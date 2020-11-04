@@ -52,5 +52,29 @@ function testMode () {
     console.log("TestMode: EMPTY")
 }
 
+// Intialize storage containing user and entries.
+// Check if files already exist, otherwise create them.
+function initStorage () {
+    // Import module node-localstorage for creating storage files.
+    const LocalStorage = require('node-localstorage').LocalStorage;
+
+    // Check if file already exists, otherwise create one.
+    if (typeof userStorage === "undefined" || userStorage === null) {
+        var userStorage = new LocalStorage('./userStorage');
+    }
+    console.log("initStorage check uStorage: OK")
+
+    // Check if file already exists, otherwise create one.
+    if (typeof entryStorage === "undefined" || entryStorage === null) {
+        var entryStorage = new LocalStorage('./entryStorage');
+    }
+    console.log("initStorage check eStorage: OK")
+    console.log("initStorage: FINISH")
+    return [userStorage, entryStorage]
+}
+
 // Exporting all functions as modules.
-module.exports = {readCLA}
+module.exports = {
+    readCLA: readCLA(),
+    initStorage: initStorage(),
+}
