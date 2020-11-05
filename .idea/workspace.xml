@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -28,6 +31,10 @@
   <component name="ChangeListManager">
     <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="added semicolon">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +106,8 @@
     <MESSAGE value="GeneralInfo FINISHED&#10;Layout FINISHED&#10;&#10;readCLA FINISHED&#10;testMode INITIALIZED&#10;&#10;Commented: CHECK&#10;GeneralTested: CHECK" />
     <MESSAGE value="versioned all" />
     <MESSAGE value="added semicolon" />
-    <option name="LAST_COMMIT_MESSAGE" value="added semicolon" />
+    <MESSAGE value="?" />
+    <option name="LAST_COMMIT_MESSAGE" value="?" />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
@@ -111,14 +119,19 @@
     </state>
     <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
     <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
-    <state x="596" y="291" key="Vcs.Push.Dialog.v2" timestamp="1604514107833">
-      <screen x="72" y="23" width="1848" height="1057" />
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2" timestamp="1604604206667">
+      <screen x="69" y="23" width="1851" height="1057" />
     </state>
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1604604206667" />
     <state x="596" y="291" key="Vcs.Push.Dialog.v2/72.23.1848.1057@72.23.1848.1057" timestamp="1604514107833" />
     <state x="599" y="291" key="Vcs.Push.Dialog.v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604435693931" />
     <state x="812" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604430564630">
       <screen x="76" y="23" width="1844" height="1057" />
     </state>
     <state x="812" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604430564630" />
+    <state x="660" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1604616403755">
+      <screen x="69" y="23" width="1851" height="1057" />
+    </state>
+    <state x="660" y="258" width="670" height="676" key="search.everywhere.popup/69.23.1851.1057@69.23.1851.1057" timestamp="1604616403755" />
   </component>
 </project>
