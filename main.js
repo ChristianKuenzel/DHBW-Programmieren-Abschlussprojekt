@@ -31,27 +31,7 @@ console.log("------------------------------------------------------------" +
     "----------"); // 60 + 10 "-"
 
 // Choose User
-const prompt = require('prompt');
-prompt.start();
 
-var controller = new Boolean("true");
-
-while (controller == true) {
-    var inputNumber
-
-    console.log("Please choose one of the following by entering its number:");
-    console.log("1 - Create a new profil.");
-    console.log("2 - Choose an already existing profil.");
-    console.log("");
-    console.log("Input:");
-
-    prompt.get(['input'], function (err, result) {
-        inputNumber = parseInt(result.input);
-        console.log(inputNumber);
-
-        // if ()
-    });
-}
 
 
 // Text
