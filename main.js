@@ -13,56 +13,26 @@ Main Datei
 const struct = require('./structures');
 
 // Initialize storage files containing user and entries.
-userStorage = struct.initStorage[0];
-entryStorage = struct.initStorage[1];
+var userStorage = struct.initStorage()[0];
+var entryStorage = struct.initStorage()[1];
 
 // Reading command line arguments; Initialize test mode for examination.
-let _ = struct.readCLA;
+struct.readCLA();
 
+// Check and validate profile menu option. Return given input.
+var profileMenuInput = struct.profileMenuOption();
 
+// Run profileFunction based on chosen task.
+var activeProfile = struct.profileMenuFunctions(profileMenuInput, userStorage);
 
+console.log("Test activeProfile")
+console.log(activeProfile)
 
-
-
-
-
-// Introduction
-console.log("------------------------------------------------------------" +
-    "----------"); // 60 + 10 "-"
-console.log("Welcome to your budget software to manage your households finances!");
-console.log("------------------------------------------------------------" +
-    "----------"); // 60 + 10 "-"
-
-// Choose User
-const readlineSync = require('readline-sync');
-
-
-
-
-
-// Text
-// User Input
-// Validate Input
-// if x -> repeat; y -> continue
-// !Safe input!
-
-// var = storage
-// while
-//// Text
-//// User Input
-//// if Input
-//// x -> repeat
-//// y -> var = input; break
-
-
-
-
-
-
-
-
-// Show start menu.
+// Show entry start menu.
     // @David
+    // activeProfil = Ausgewähltes Profil des Nutzers
+    // Noch unklar wie es zu verwerten ist.
+    // Müsste: entryStorage -> storage; activeProfile -> key; entry -> value;
 
 // Menu functions.
 
@@ -72,7 +42,7 @@ const readlineSync = require('readline-sync');
 
 
 
-// TESTBEREICH
+// TESTBEREICH // Aus Local.Storage: getItem & setItem
 const testStorage = require("process");
 if (testStorage.argv[2] == '-test') {
     console.log(userStorage);
@@ -84,8 +54,5 @@ if (testStorage.argv[2] == '-test') {
     entryStorage.setItem('entryStorage', 'myFirstValue');
     console.log(entryStorage.getItem('entryStorage'));
 }
-
-
-
 
 // ### End of program. ###
