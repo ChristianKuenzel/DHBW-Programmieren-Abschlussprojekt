@@ -15,6 +15,8 @@ Struktur Datei
 */
 // ________________________________________________________________________________
 // Listing of all existing const variables.
+const process = require("process");
+const LocalStorage = require('node-localstorage').LocalStorage;
 
 // ________________________________________________________________________________
 // Listing of all existing variables.
@@ -27,7 +29,6 @@ Struktur Datei
 // Reading command line arguments to secure program execution and check for -test mode.
 function readCLA () {
     // Get commandLineArguments
-    const process = require("process");
     let cmdLineArgument = process.argv;
 
     // Check if argument number is correct && if test mode is used.
@@ -56,12 +57,9 @@ function testMode () {
 }
 
 // Intialize storage containing user and entries.
-// Check if files already exist, otherwise create them.
+// Check if storage files already exist, otherwise create them.
 function initStorage () {
-    // Import module node-localstorage for creating storage files.
-    const LocalStorage = require('node-localstorage').LocalStorage;
-
-    // Check if file already exists, otherwise create one.
+    // Check if storage file already exists, otherwise create one.
     if (typeof userStorage === "undefined" || userStorage === null) {
         var userStorage = new LocalStorage('./userStorage');
     }

@@ -12,12 +12,15 @@ Main Datei
 // Importing all structures as modules.
 const struct = require('./structures');
 
-// Initialize storage containing user and entries.
+// Initialize storage files containing user and entries.
 userStorage = struct.initStorage[0];
 entryStorage = struct.initStorage[1];
 
 // Reading command line arguments; Initialize test mode for examination.
 let _ = struct.readCLA;
+
+
+
 
 
 
@@ -31,6 +34,9 @@ console.log("------------------------------------------------------------" +
     "----------"); // 60 + 10 "-"
 
 // Choose User
+const readlineSync = require('readline-sync');
+
+
 
 
 
@@ -47,6 +53,10 @@ console.log("------------------------------------------------------------" +
 //// if Input
 //// x -> repeat
 //// y -> var = input; break
+
+
+
+
 
 
 
