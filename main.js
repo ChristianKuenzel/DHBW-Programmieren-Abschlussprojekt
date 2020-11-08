@@ -19,14 +19,11 @@ var entryStorage = struct.initStorage()[1];
 // Reading command line arguments; Initialize test mode for examination.
 struct.readCLA();
 
-// Check and validate profile menu option. Return given input.
-struct.activeProfile = struct.profileMenuOptions(userStorage);
-
-console.log("Test activeProfile"); // Delete later
-console.log(struct.activeProfile);
+// Check and validate profile menu option. Return given input.struct.
+var activeProfile = struct.profileMenuOptions(userStorage);
 
 // Menu functions.
-struct.mainMenuOptions();
+struct.mainMenuOptions(entryStorage, activeProfile);
 
     // activeProfil = Ausgewähltes Profil des Nutzers
     // Noch unklar wie es zu verwerten ist.
@@ -49,7 +46,7 @@ können. Die anderen Funktionen äquivlent/analog.
 const testStorage = require("process");
 if (testStorage.argv[2] == '-test') {
     console.log(userStorage);
-    console.log(entryStorage);
+    console.log(userStorage);
 
     userStorage.setItem('userStorage', 'myFirstValue');
     console.log(userStorage.getItem('userStorage'));
