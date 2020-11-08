@@ -27,6 +27,11 @@ const readlineSync = require('readline-sync');
 
 // ________________________________________________________________________________
 // Listing of all objects.
+var entry = {
+    date: NaN,
+    category: NaN,
+    amount: NaN
+}
 
 // ________________________________________________________________________________
 // Listing of all functions.
@@ -104,7 +109,7 @@ function profileMenuOption () {
         //var input = readlineSync.keyIn("Input: ");
         var input = readlineSync.prompt();
 
-        // Check which option was chosen. Move on, leave or repeat.
+        // Check which option was chosen. Move on, leave or repeat. // XXX switch XXX
         if (input == "1" || input == "2") {
             return parseInt(input);
 
@@ -213,10 +218,88 @@ function setValue (storage, key, value) {
 }
 
 // ________________________________________________________________________________
-// Entry Menu
-// ...
+// Start menu functions and entry based functions.
+function mainMenuOptions() {
+    // Layout
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
+    console.log("Main menu: What is you next task ?")
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
 
+    // Repeat main menu until user leaves the program.
+    while (true) {
+        console.log("[1] - Entry management");
+        console.log("[2] - Income management");
+        console.log("[3] - Outcome management");
+        console.log("[4] - Accounting");
+        console.log("[5] - Creditability");
+        console.log("[6] - Solvency");
+        console.log("[7] - Leave");
+        console.log("");
 
+        // User input
+        var input = readlineSync.prompt();
+        input = parseInt(input);
+
+        // Run function user chose.
+        switch (input) {
+            case 1:
+                entryManagement()
+                break
+            case 2:
+                incomeManagement()
+                break
+            case 3:
+                outcomeManagement()
+                break
+            case 4:
+                accounting()
+                break
+            case 5:
+                creditability()
+                break
+            case 6:
+                solvency()
+                break
+            case 7:
+                process.exit();
+                break // -> Ignore IDEA warning
+            case NaN:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+            default:
+                console.log("Error: Wrong value -> mainMenuOptions");
+                break
+        }
+    }
+}
+
+// Entry management: Add, show, search, delete entry or leave.
+function entryManagement() {
+
+}
+// Income management:
+function incomeManagement() {
+
+}
+// Outcome management:
+function outcomeManagement() {
+
+}
+// Accounting:
+function accounting() {
+
+}
+// Creditability
+function creditability() {
+
+}
+// Solvency
+function solvency() {
+
+}
 
 
 
@@ -233,4 +316,5 @@ module.exports = {
     initStorage: initStorage,
     profileMenuOption: profileMenuOption,
     profileMenuFunctions: profileMenuFunctions,
+    mainMenuOptions: mainMenuOptions
 }
