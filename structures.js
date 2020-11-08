@@ -19,11 +19,10 @@ Struktur Datei
 const process = require("process");
 const LocalStorage = require('node-localstorage').LocalStorage;
 const readlineSync = require('readline-sync');
+const { get } = require('prompt');
 
 // ________________________________________________________________________________
 // Listing of all variables.
-// activeProfile
-// module.exports.activeProfile = activeProfile
 
 // ________________________________________________________________________________
 // Listing of all objects.
@@ -72,6 +71,7 @@ function initStorage () {
     if (typeof userStorage === "undefined" || userStorage === null) {
         var userStorage = new LocalStorage('./userStorage');
     }
+
     console.log("initStorage check uStorage: OK");
 
     // Check if file already exists, otherwise create one.
@@ -85,7 +85,7 @@ function initStorage () {
 
 // ________________________________________________________________________________
 // Check and validate profile menu option.
-function profileMenuOptions(userStorage) {
+function profileMenuOptions (userStorage) {
     // Layout + Introduction
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -118,13 +118,12 @@ function profileMenuOptions(userStorage) {
         switch (input) {
             // Chose given profile.
             case 1:
-                //activeProfile = chooseProfile(userStorage);
-                //break
+                //activeProfile = chooseProfile(userStorage);userStorage //break
                 return chooseProfile(userStorage);
 
-            // Create a new user profile.
+            // Create a new user profile.userStorage
             case 2:
-                createNewProfile(userStorage);
+                createNewProfile();
                 break
 
             // Leave.
@@ -216,7 +215,7 @@ function setValue (storage, key, value) {
 
 // ________________________________________________________________________________
 // Start menu functions and entry based functions.
-function mainMenuOptions() {
+function mainMenuOptions(entryStorage, activeProfile) {
     // Layout
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -242,7 +241,7 @@ function mainMenuOptions() {
         // Run function user chose.
         switch (input) {
             case 1:
-                entryManagement();
+                entryManagement(entryStorage, activeProfile);
                 break
             case 2:
                 incomeManagement();
@@ -273,26 +272,177 @@ function mainMenuOptions() {
     }
 }
 
+// ________________________________________________________________________________
 // Entry management: Add, show, search, delete entry or leave.
-function entryManagement() {
+function entryManagement(entryStorage, activeProfile) {
+    // Layout
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
+    console.log("Entry Management: Choose your task!");
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
+
+    // Run until user wants back or leave.
+    while(true) {
+        // Print user Interface.
+        console.log("[1] - Add entries.");
+        console.log("[2] - Show all entries.");
+        console.log("[3] - Search for a specific entry.");
+        console.log("[4] - Delete a specific entry.");
+        console.log("[5] - Back.");
+        console.log("[6] - Leave.");
+        console.log("");
+
+        // Read user input.
+        var input = readlineSync.prompt();
+        input = parseInt(input);
+        console.log("");
+
+        // Evaluate user input.
+        switch (input) {
+            // Add entries.
+            case 1:
+                addEntries(entryStorage, activeProfile);
+                break
+            // Show all entries.
+            case 2:
+                showEntries(entryStorage);
+                break
+            // Search an entry.
+            case 3:
+                searchEntry(entryStorage);
+                break
+            // Delete an entry.
+            case 4:
+                deleteEntry(entryStorage);
+                break
+            // Back to main menu.
+            case 5:
+                break
+            // Leave.
+            case 6:
+                process.exit();
+                break // -> Ignore IDEA warning
+            // Wrong input.
+            case NaN:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+            // Error.
+            default:
+                console.log("Error: Wrong input -> entrymanagement");
+                break
+        }
+
+        // Go back to main menu.
+        if (input === 5) {
+            break
+        }
+    }
+}
+
+// Add entries.
+function addEntries(entryStorage, activeProfile) {
+    // Layout
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
+    console.log("Task: Adding entry");
+
+    // Repeat till "OK" / "DONE"
+    while (true) {
+        console.log("------------------------------------------------------------" +
+            "----------"); // 60 + 10 "-"
+        console.log("Please consider the following scheme: ");
+        console.log("Date: year + month + day; Category: category; Money: 123,45€");
+        console.log("DONE / BACK: Enter '!'.");
+        console.log("");
+
+        var date = readlineSync.question("Date: ");
+        if (date === "!") {
+            break
+        }
+
+        var category = readlineSync.question("Category: ");
+        if (category === "!") {
+            break
+        }
+
+        var money = readlineSync.question("Money: ");
+        if (money === "!") {
+            break
+        }
+
+        // money -> float ???
+
+        // Evaluate Input.
+        // date = int; category = string; money = int;
+        // Add input.
+        if (isNaN(parseInt(date)) === false && isNaN(parseInt(category)) === true
+            && isNaN(parseInt(money)) === false && date.length === 8) {
+
+            // Check if there is a number.
+            if (money.length <= 0) {
+                money = 0;
+            }
+
+            // Add object entry to storage
+            let insertEntry = entry;
+            insertEntry = {date: date, category: category, money:money};
+            console.log("");
+            console.log("Your entry", insertEntry, "got integrated!");
+            console.log("");
+            setValue(entryStorage, activeProfile, insertEntry); // Change obj to string.
+
+        // Don't add
+        } else {
+            console.log("");
+            console.log("Input not valid!");
+            console.log("Your input: " + date + " " + category + " " + money);
+            console.log("");
+        }
+    }
+}
+
+// Show all entries.
+function showEntries(entryStorage) {
 
 }
+
+// Search a specific entry.
+function searchEntry(entryStorage) {
+
+}
+
+// Delete an entry.
+function deleteEntry(entryStorage) {
+
+}
+
+// ________________________________________________________________________________
 // Income management:
 function incomeManagement() {
 
 }
+
+// ________________________________________________________________________________
 // Outcome management:
 function outcomeManagement() {
 
 }
+
+// ________________________________________________________________________________
 // Accounting:
 function accounting() {
 
 }
+
+// ________________________________________________________________________________
 // Creditability
 function creditability() {
 
 }
+
+// ________________________________________________________________________________
 // Solvency
 function solvency() {
 
@@ -312,5 +462,5 @@ module.exports = {
     readCLA: readCLA,
     initStorage: initStorage,
     profileMenuOptions: profileMenuOptions,
-    mainMenuOptions: mainMenuOptions
+    mainMenuOptions: mainMenuOptions,
 }
