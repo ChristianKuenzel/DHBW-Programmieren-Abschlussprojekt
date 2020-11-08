@@ -22,8 +22,7 @@ const readlineSync = require('readline-sync');
 
 // ________________________________________________________________________________
 // Listing of all variables.
-// activeProfile
-// module.exports.activeProfile = activeProfile
+var activeProfile;
 
 // ________________________________________________________________________________
 // Listing of all objects.
@@ -312,5 +311,6 @@ module.exports = {
     readCLA: readCLA,
     initStorage: initStorage,
     profileMenuOptions: profileMenuOptions,
-    mainMenuOptions: mainMenuOptions
+    mainMenuOptions: mainMenuOptions,
+    activeProfile: activeProfile
 }

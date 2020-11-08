@@ -28,10 +28,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="added semicolon">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/structures.js" beforeDir="false" afterPath="$PROJECT_DIR$/structures.js" afterDir="false" />
-    </list>
+    <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="added semicolon" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,7 +109,9 @@
     <MESSAGE value="prompt die" />
     <MESSAGE value="prompt deleted" />
     <MESSAGE value="profile function&#10;export korrigiert&#10;readline implementiert&#10;getestet&#10;&#10;local.Storage verwendung prüfen!" />
-    <option name="LAST_COMMIT_MESSAGE" value="profile function&#10;export korrigiert&#10;readline implementiert&#10;getestet&#10;&#10;local.Storage verwendung prüfen!" />
+    <MESSAGE value="save slot, wanna rework profile menu workflow." />
+    <MESSAGE value="function reduction complete &amp; profile menu &quot;rework&quot;.&#10;mainMenuOptions menu implemented. Sub functions still empty." />
+    <option name="LAST_COMMIT_MESSAGE" value="function reduction complete &amp; profile menu &quot;rework&quot;.&#10;mainMenuOptions menu implemented. Sub functions still empty." />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
@@ -124,10 +123,10 @@
     </state>
     <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
     <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
-    <state x="594" y="291" key="Vcs.Push.Dialog.v2" timestamp="1604686815811">
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2" timestamp="1604849407618">
       <screen x="69" y="23" width="1851" height="1057" />
     </state>
-    <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1604686815811" />
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1604849407618" />
     <state x="596" y="291" key="Vcs.Push.Dialog.v2/72.23.1848.1057@72.23.1848.1057" timestamp="1604514107833" />
     <state x="599" y="291" key="Vcs.Push.Dialog.v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604435693931" />
     <state x="812" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604430564630">

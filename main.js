@@ -20,25 +20,29 @@ var entryStorage = struct.initStorage()[1];
 struct.readCLA();
 
 // Check and validate profile menu option. Return given input.
-var activeProfile = struct.profileMenuOptions(userStorage);
+struct.activeProfile = struct.profileMenuOptions(userStorage);
 
 console.log("Test activeProfile"); // Delete later
-console.log(activeProfile);
+console.log(struct.activeProfile);
 
+// Menu functions.
 struct.mainMenuOptions();
 
-// Show entry start menu.
-    // @David
     // activeProfil = Ausgewähltes Profil des Nutzers
     // Noch unklar wie es zu verwerten ist.
     // Müsste: entryStorage -> storage; activeProfile -> key; entry -> value;
 
-// Menu functions.
+/*
+@David :
+
+Du kannst einfach die unter menus erstellen und/oder deren Funktionalität.
+Schau die dir Funktion mainMenuOptions an.
+Die startet die entsprechenden Funktionen, die sind allerdings noch leer.
+EntryManagement: Hier soll der Benutzer alle Funktionen für Einträge auswählen
+können. Die anderen Funktionen äquivlent/analog.
 
 
-// Repeat.
-
-
+*/
 
 
 // TESTBEREICH // Aus Local.Storage: getItem & setItem
