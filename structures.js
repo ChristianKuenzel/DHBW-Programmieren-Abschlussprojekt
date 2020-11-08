@@ -85,7 +85,7 @@ function initStorage () {
 
 // ________________________________________________________________________________
 // Check and validate profile menu option.
-function profileMenuOption () {
+function profileMenuOptions(userStorage) {
     // Layout + Introduction
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -108,44 +108,41 @@ function profileMenuOption () {
         // Read user input
         //var input = readlineSync.keyIn("Input: ");
         var input = readlineSync.prompt();
+        input = parseInt(input);
 
-        // Check which option was chosen. Move on, leave or repeat. // XXX switch XXX
-        if (input == "1" || input == "2") {
-            return parseInt(input);
+        // Layout
+        console.log("------------------------------------------------------------" +
+            "----------"); // 60 + 10 "-"
 
-        } else if (input == "3") {
-            process.exit();
+        // Evaluate user input.
+        switch (input) {
+            // Chose given profile.
+            case 1:
+                //activeProfile = chooseProfile(userStorage);
+                //break
+                return chooseProfile(userStorage);
 
-        } else {
-            console.log("Input not valid! Only numbers allowed!");
-            console.log("Your Input: " + input);
+            // Create a new user profile.
+            case 2:
+                createNewProfile(userStorage);
+                break
+
+            // Leave.
+            case 3:
+                process.exit();
+                break // -> Ignore IDEA warning
+
+            // User input is not valid.
+            case NaN:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+
+            // Error.
+            default:
+                console.log("Error: Wrong value -> profileMenuInput");
+                break
         }
-    }
-}
-
-// Evaluate user input und run function.
-function profileMenuFunctions (profileMenuInput, userStorage) {
-    // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
-
-    // Evaluate user input.
-    switch (profileMenuInput) {
-        // Chose given profile.
-        case 1:
-            //activeProfile = chooseProfile(userStorage);
-            //break
-            return chooseProfile(userStorage);
-
-        // Create a new user profile.
-        case 2:
-            createNewProfile(userStorage);
-            break
-
-        // Error.
-        default:
-            console.log("Error: Wrong value -> profileMenuInput");
-            break
     }
 }
 
@@ -223,7 +220,7 @@ function mainMenuOptions() {
     // Layout
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
-    console.log("Main menu: What is you next task ?")
+    console.log("Main menu: What is you next task ?");
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
 
@@ -245,22 +242,22 @@ function mainMenuOptions() {
         // Run function user chose.
         switch (input) {
             case 1:
-                entryManagement()
+                entryManagement();
                 break
             case 2:
-                incomeManagement()
+                incomeManagement();
                 break
             case 3:
-                outcomeManagement()
+                outcomeManagement();
                 break
             case 4:
-                accounting()
+                accounting();
                 break
             case 5:
-                creditability()
+                creditability();
                 break
             case 6:
-                solvency()
+                solvency();
                 break
             case 7:
                 process.exit();
@@ -314,7 +311,6 @@ function solvency() {
 module.exports = {
     readCLA: readCLA,
     initStorage: initStorage,
-    profileMenuOption: profileMenuOption,
-    profileMenuFunctions: profileMenuFunctions,
+    profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions
 }

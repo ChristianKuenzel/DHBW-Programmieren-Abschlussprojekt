@@ -20,13 +20,12 @@ var entryStorage = struct.initStorage()[1];
 struct.readCLA();
 
 // Check and validate profile menu option. Return given input.
-var profileMenuInput = struct.profileMenuOption();
+var activeProfile = struct.profileMenuOptions(userStorage);
 
-// Run profileFunction based on chosen task.
-var activeProfile = struct.profileMenuFunctions(profileMenuInput, userStorage);
+console.log("Test activeProfile"); // Delete later
+console.log(activeProfile);
 
-console.log("Test activeProfile")
-console.log(activeProfile)
+struct.mainMenuOptions();
 
 // Show entry start menu.
     // @David
