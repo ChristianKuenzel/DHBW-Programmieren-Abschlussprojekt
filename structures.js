@@ -64,12 +64,18 @@ function testMode () {
     console.log("TestMode: EMPTY");
 }
 
+// declare userStorage as variable
+let userStorage;
+
 // Intialize storage containing user and entries.
 // Check if storage files already exist, otherwise create them.
 function initStorage () {
     // Check if storage file already exists, otherwise create one.
     if (typeof userStorage === "undefined" || userStorage === null) {
-        var userStorage = new LocalStorage('./userStorage');
+        // mit var ist userStorage nur in dieser Funktion bekannt
+        // var userStorage = new LocalStorage('./userStorage');
+        // so wird die Variable oben initialisiert und kann unten exportiert werden
+        userStorage = new LocalStorage('./userStorage');
     }
 
     console.log("initStorage check uStorage: OK");
@@ -463,4 +469,5 @@ module.exports = {
     initStorage: initStorage,
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
+    userStorage: userStorage,
 }
