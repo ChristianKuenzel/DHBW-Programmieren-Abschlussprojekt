@@ -67,9 +67,6 @@ function testMode () {
     console.log("TestMode: EMPTY");
 }
 
-// declare userStorage as variable
-let userStorage;
-
 // Intialize storage containing user and entries.
 // Check if storage files already exist, otherwise create them.
 function initStorage () {
@@ -112,7 +109,6 @@ function profileMenuOptions () {
         console.log(""); // Empty line
 
         // Read user input
-        //var input = readlineSync.keyIn("Input: ");
         var input = readlineSync.prompt();
         input = parseInt(input);
 
@@ -124,7 +120,8 @@ function profileMenuOptions () {
         switch (input) {
             // Chose given profile.
             case 1:
-                return chooseProfile();
+                chooseProfile();
+                break
 
             // Create a new user profile.
             case 2:
@@ -147,6 +144,10 @@ function profileMenuOptions () {
                 console.log("Error: Wrong value -> profileMenuInput");
                 break
         }
+
+        if (input === 1) {
+            break
+        }
     }
 }
 
@@ -168,9 +169,9 @@ function chooseProfile() {
         if (getValue(userStorage, userName) == userName) {
             console.log("");
             console.log("You have chosen " + userName + "s profile!");
-            //activeProfile = userName;
-            return userName
-            //break
+            activeProfile = userName;
+            break
+
         } else {
             console.log("Your input: " + userName);
             console.log("");
@@ -228,8 +229,6 @@ function mainMenuOptions() {
     console.log("Main menu: What is you next task ?");
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
-
-    console.log(activeProfile)
 
     // Repeat main menu until user leaves the program.
     while (true) {
@@ -561,4 +560,6 @@ module.exports = {
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
     userStorage: userStorage,
+    entryStorage: entryStorage,
+    activeProfile: activeProfile,
 }
