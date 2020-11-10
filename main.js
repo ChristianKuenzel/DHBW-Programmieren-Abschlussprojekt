@@ -19,10 +19,10 @@ struct.entryStorage = struct.initStorage()[1];
 // Reading command line arguments; Initialize test mode for examination.
 struct.readCLA();
 
-// Check and validate profile menu option. Return given input.struct.userStorage
-struct.activeProfile = struct.profileMenuOptions();
-console.log(struct.activeProfile)
-// Menu functions.entryStorage, activeProfile
+// Check and validate profile menu option. Return given input.
+struct.profileMenuOptions();
+
+// Menu functions.
 struct.mainMenuOptions();
 
     // activeProfil = Ausgewähltes Profil des Nutzers
