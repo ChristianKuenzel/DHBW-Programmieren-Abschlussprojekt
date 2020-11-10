@@ -116,27 +116,30 @@
     <MESSAGE value="save slot, wanna rework profile menu workflow." />
     <MESSAGE value="function reduction complete &amp; profile menu &quot;rework&quot;.&#10;mainMenuOptions menu implemented. Sub functions still empty." />
     <MESSAGE value="Beginn Entry Management" />
-    <option name="LAST_COMMIT_MESSAGE" value="Beginn Entry Management" />
+    <MESSAGE value="addEntries fast fertig. change obj to string.&#10;globals removed.&#10;entry menu done." />
+    <option name="LAST_COMMIT_MESSAGE" value="addEntries fast fertig. change obj to string.&#10;globals removed.&#10;entry menu done." />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
       <screen x="76" y="23" width="1844" height="1057" />
     </state>
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog/76.23.1844.1057@76.23.1844.1057" timestamp="1604423598248" />
-    <state x="505" y="190" key="SettingsEditor" timestamp="1604511881929">
-      <screen x="72" y="23" width="1848" height="1057" />
-    </state>
-    <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
-    <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
-    <state x="594" y="291" key="Vcs.Push.Dialog.v2" timestamp="1604850478636">
+    <state x="503" y="190" key="SettingsEditor" timestamp="1605012670634">
       <screen x="69" y="23" width="1851" height="1057" />
     </state>
-    <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1604850478636" />
+    <state x="503" y="190" key="SettingsEditor/69.23.1851.1057@69.23.1851.1057" timestamp="1605012670634" />
+    <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
+    <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2" timestamp="1604860510370">
+      <screen x="69" y="23" width="1851" height="1057" />
+    </state>
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1604860510370" />
     <state x="596" y="291" key="Vcs.Push.Dialog.v2/72.23.1848.1057@72.23.1848.1057" timestamp="1604514107833" />
     <state x="599" y="291" key="Vcs.Push.Dialog.v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604435693931" />
-    <state x="812" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604430564630">
-      <screen x="76" y="23" width="1844" height="1057" />
+    <state x="808" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605010663053">
+      <screen x="69" y="23" width="1851" height="1057" />
     </state>
+    <state x="808" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/69.23.1851.1057@69.23.1851.1057" timestamp="1605010663053" />
     <state x="812" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604430564630" />
     <state x="660" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1604849808937">
       <screen x="69" y="23" width="1851" height="1057" />

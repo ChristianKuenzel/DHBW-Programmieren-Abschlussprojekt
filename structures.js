@@ -19,10 +19,13 @@ Struktur Datei
 const process = require("process");
 const LocalStorage = require('node-localstorage').LocalStorage;
 const readlineSync = require('readline-sync');
-const { get } = require('prompt');
 
 // ________________________________________________________________________________
 // Listing of all variables.
+let userStorage;
+let entryStorage;
+
+let activeProfile;
 
 // ________________________________________________________________________________
 // Listing of all objects.
@@ -69,14 +72,14 @@ function testMode () {
 function initStorage () {
     // Check if storage file already exists, otherwise create one.
     if (typeof userStorage === "undefined" || userStorage === null) {
-        var userStorage = new LocalStorage('./userStorage');
+        userStorage = new LocalStorage('./userStorage');
     }
 
     console.log("initStorage check uStorage: OK");
 
     // Check if file already exists, otherwise create one.
     if (typeof entryStorage === "undefined" || entryStorage === null) {
-        var entryStorage = new LocalStorage('./entryStorage');
+        entryStorage = new LocalStorage('./entryStorage');
     }
     console.log("initStorage check eStorage: OK");
     console.log("initStorage: FINISH");
@@ -85,7 +88,7 @@ function initStorage () {
 
 // ________________________________________________________________________________
 // Check and validate profile menu option.
-function profileMenuOptions (userStorage) {
+function profileMenuOptions () {
     // Layout + Introduction
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -118,10 +121,9 @@ function profileMenuOptions (userStorage) {
         switch (input) {
             // Chose given profile.
             case 1:
-                //activeProfile = chooseProfile(userStorage);userStorage //break
-                return chooseProfile(userStorage);
+                return chooseProfile();
 
-            // Create a new user profile.userStorage
+            // Create a new user profile.
             case 2:
                 createNewProfile();
                 break
@@ -146,7 +148,7 @@ function profileMenuOptions (userStorage) {
 }
 
 // Choose an already existing profile.
-function chooseProfile(userStorage) {
+function chooseProfile() {
     console.log("Choose one of the following profiles:");
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -163,6 +165,7 @@ function chooseProfile(userStorage) {
         if (getValue(userStorage, userName) == userName) {
             console.log("");
             console.log("You have chosen " + userName + "s profile!");
+            //activeProfile = userName;
             return userName
             //break
         } else {
@@ -175,7 +178,7 @@ function chooseProfile(userStorage) {
 }
 
 // Create a new user profile.
-function createNewProfile (userStorage) {
+function createNewProfile () {
     console.log("Creating a new profile:");
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -215,13 +218,15 @@ function setValue (storage, key, value) {
 
 // ________________________________________________________________________________
 // Start menu functions and entry based functions.
-function mainMenuOptions(entryStorage, activeProfile) {
+function mainMenuOptions() {
     // Layout
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
     console.log("Main menu: What is you next task ?");
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
+
+    console.log(activeProfile)
 
     // Repeat main menu until user leaves the program.
     while (true) {
@@ -241,7 +246,7 @@ function mainMenuOptions(entryStorage, activeProfile) {
         // Run function user chose.
         switch (input) {
             case 1:
-                entryManagement(entryStorage, activeProfile);
+                entryManagement();
                 break
             case 2:
                 incomeManagement();
@@ -274,7 +279,7 @@ function mainMenuOptions(entryStorage, activeProfile) {
 
 // ________________________________________________________________________________
 // Entry management: Add, show, search, delete entry or leave.
-function entryManagement(entryStorage, activeProfile) {
+function entryManagement() {
     // Layout
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -302,19 +307,19 @@ function entryManagement(entryStorage, activeProfile) {
         switch (input) {
             // Add entries.
             case 1:
-                addEntries(entryStorage, activeProfile);
+                addEntries();
                 break
             // Show all entries.
             case 2:
-                showEntries(entryStorage);
+                showEntries();
                 break
             // Search an entry.
             case 3:
-                searchEntry(entryStorage);
+                searchEntry();
                 break
             // Delete an entry.
             case 4:
-                deleteEntry(entryStorage);
+                deleteEntry();
                 break
             // Back to main menu.
             case 5:
@@ -342,7 +347,7 @@ function entryManagement(entryStorage, activeProfile) {
 }
 
 // Add entries.
-function addEntries(entryStorage, activeProfile) {
+function addEntries() {
     // Layout
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
@@ -350,8 +355,8 @@ function addEntries(entryStorage, activeProfile) {
 
     // Repeat till "OK" / "DONE"
     while (true) {
-        console.log("------------------------------------------------------------" +
-            "----------"); // 60 + 10 "-"
+        console.log("--------------------------------------------------------" +
+            "--------------"); // 60 + 10 "-"
         console.log("Please consider the following scheme: ");
         console.log("Date: year + month + day; Category: category; Money: 123,45€");
         console.log("DONE / BACK: Enter '!'.");
@@ -404,17 +409,106 @@ function addEntries(entryStorage, activeProfile) {
 }
 
 // Show all entries.
-function showEntries(entryStorage) {
+function showEntries() {
+    // Layout
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
+    console.log("Entries: Choose one of the following specifier or all.");
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
+
+    // Run until user wants back or leave.
+    while(true) {
+        // Print user Interface.
+        console.log("[1] - Date.");
+        console.log("[2] - Category.");
+        console.log("[3] - Money.");
+        console.log("[4] - All.");
+        console.log("[5] - Back.");
+        console.log("");
+
+        // Read user input.
+        var input = readlineSync.prompt();
+        input = parseInt(input);
+        console.log("");
+
+        switch (input) {
+            // Show entries filtered by a date.
+            case 1:
+                showEntriesDate();
+                break
+            // Show entries filtered by a category.
+            case 2:
+                showEntriesCategory();
+                break
+            // Show entries filtered by a value.
+            case 3:
+                showEntriesMoney();
+                break
+            // Show all entries.
+            case 4:
+                showEntriesAll();
+                break
+            case 5:
+                break
+            // Wrong input.
+            case NaN:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+            // Error.
+            default:
+                console.log("Error: Wrong input -> entrymanagement");
+                break
+        }
+        if (input === 5) {
+            break
+        }
+    }
+}
+
+//
+function showEntriesDate() {
 
 }
 
+//
+function showEntriesCategory() {
+
+}
+
+//
+function showEntriesMoney() {
+
+}
+
+//
+function showEntriesAll() {
+    // Layout
+    console.log("------------------------------------------------------------" +
+        "----------"); // 60 + 10 "-"
+    console.log("Task: Show all entries.");
+
+    // Repeat till "OK" / "DONE"
+    console.log("----------------------------------------------------" +
+        "------------------"); // 60 + 10 "-"
+    console.log("")
+
+    // Print every entry in entryStorage.
+    for (let i = 0; i < entryStorage.length; i++) {
+        let temp = getValue(entryStorage, activeProfile);
+        console.log(temp);
+    }
+    // console.table();
+}
+
 // Search a specific entry.
-function searchEntry(entryStorage) {
+function searchEntry() {
 
 }
 
 // Delete an entry.
-function deleteEntry(entryStorage) {
+function deleteEntry() {
 
 }
 
@@ -463,4 +557,7 @@ module.exports = {
     initStorage: initStorage,
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
+    userStorage: userStorage,
+    entryStorage: entryStorage,
+    activeProfile: activeProfile,
 }
