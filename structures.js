@@ -398,7 +398,8 @@ function addEntries() {
             console.log("");
             console.log("Your entry", insertEntry, "got integrated!");
             console.log("");
-            setValue(entryStorage, activeProfile, insertEntry); // Change obj to string.
+            console.log(activeProfile.length);
+            setValue(entryStorage, activeProfile, JSON.stringify(insertEntry));
 
         // Don't add
         } else {
@@ -494,14 +495,17 @@ function showEntriesAll() {
     // Repeat till "OK" / "DONE"
     console.log("----------------------------------------------------" +
         "------------------"); // 60 + 10 "-"
-    console.log("")
 
     // Print every entry in entryStorage.
+    let allEntries = [];
     for (let i = 0; i < entryStorage.length; i++) {
-        let temp = getValue(entryStorage, activeProfile);
-        console.log(temp);
+        allEntries.push(JSON.parse(getValue(entryStorage, activeProfile)));
     }
-    // console.table();
+    console.table(allEntries);
+
+    console.log("");
+    console.log("--------------------------------------------------------" +
+        "--------------"); // 60 + 10 "-"
 }
 
 // Search a specific entry.
