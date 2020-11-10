@@ -13,17 +13,17 @@ Main Datei
 const struct = require('./structures');
 
 // Initialize storage files containing user and entries.
-var userStorage = struct.initStorage()[0];
-var entryStorage = struct.initStorage()[1];
+struct.userStorage = struct.initStorage()[0];
+struct.entryStorage = struct.initStorage()[1];
 
 // Reading command line arguments; Initialize test mode for examination.
 struct.readCLA();
 
-// Check and validate profile menu option. Return given input.struct.
-var activeProfile = struct.profileMenuOptions(userStorage);
-
-// Menu functions.
-struct.mainMenuOptions(entryStorage, activeProfile);
+// Check and validate profile menu option. Return given input.struct.userStorage
+struct.activeProfile = struct.profileMenuOptions();
+console.log(struct.activeProfile)
+// Menu functions.entryStorage, activeProfile
+struct.mainMenuOptions();
 
     // activeProfil = Ausgewähltes Profil des Nutzers
     // Noch unklar wie es zu verwerten ist.
@@ -45,14 +45,14 @@ können. Die anderen Funktionen äquivlent/analog.
 // TESTBEREICH // Aus Local.Storage: getItem & setItem
 const testStorage = require("process");
 if (testStorage.argv[2] == '-test') {
-    console.log(userStorage);
-    console.log(userStorage);
+    console.log(struct.userStorage);
+    console.log(struct.entryStorage);
 
-    userStorage.setItem('userStorage', 'myFirstValue');
-    console.log(userStorage.getItem('userStorage'));
+    struct.userStorage.setItem('userStorage', 'myFirstValue');
+    console.log(struct.userStorage.getItem('userStorage'));
 
-    entryStorage.setItem('entryStorage', 'myFirstValue');
-    console.log(entryStorage.getItem('entryStorage'));
+    struct.entryStorage.setItem('entryStorage', 'myFirstValue');
+    console.log(struct.entryStorage.getItem('entryStorage'));
 }
 
 // ### End of program. ###
