@@ -67,6 +67,9 @@ function testMode () {
     console.log("TestMode: EMPTY");
 }
 
+// declare userStorage as variable
+let userStorage;
+
 // Intialize storage containing user and entries.
 // Check if storage files already exist, otherwise create them.
 function initStorage () {
@@ -558,6 +561,4 @@ module.exports = {
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
     userStorage: userStorage,
-    entryStorage: entryStorage,
-    activeProfile: activeProfile,
 }
