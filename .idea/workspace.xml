@@ -28,15 +28,10 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="added semicolon">
-      <change afterPath="$PROJECT_DIR$/accounting.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/creditability.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entries.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/income.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/outcome.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/solvency.js" afterDir="false" />
+    <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="Filestruktur geändert.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outcome.js" beforeDir="false" afterPath="$PROJECT_DIR$/outcome.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/structures.js" beforeDir="false" afterPath="$PROJECT_DIR$/structures.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,6 +66,7 @@
     <option name="sortByType" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
@@ -125,7 +121,8 @@
     <MESSAGE value="addEntries fast fertig. change obj to string.&#10;globals removed.&#10;entry menu done." />
     <MESSAGE value="global fehler activeProfil  gelöst.&#10;Merge Fehler behoben?" />
     <MESSAGE value="add und show all funktionieren. Aber: Nur 1 Wert in JSON file speicherbar ?" />
-    <option name="LAST_COMMIT_MESSAGE" value="add und show all funktionieren. Aber: Nur 1 Wert in JSON file speicherbar ?" />
+    <MESSAGE value="Filestruktur geändert." />
+    <option name="LAST_COMMIT_MESSAGE" value="Filestruktur geändert." />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
@@ -142,10 +139,10 @@
     <state x="503" y="190" key="SettingsEditor/69.23.1851.1057@69.23.1851.1057" timestamp="1605012670634" />
     <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
     <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
-    <state x="594" y="291" key="Vcs.Push.Dialog.v2" timestamp="1605021390044">
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2" timestamp="1605275631242">
       <screen x="69" y="23" width="1851" height="1057" />
     </state>
-    <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1605021390044" />
+    <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1605275631242" />
     <state x="596" y="291" key="Vcs.Push.Dialog.v2/72.23.1848.1057@72.23.1848.1057" timestamp="1604514107833" />
     <state x="599" y="291" key="Vcs.Push.Dialog.v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604435693931" />
     <state x="808" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605010663053">
