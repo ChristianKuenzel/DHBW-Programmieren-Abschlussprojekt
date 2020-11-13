@@ -15,6 +15,15 @@ Struktur Datei
 
 */
 // ________________________________________________________________________________
+// Importing all structures as modules.
+const entries = require('./entries');
+const income = require('./income');
+const outcome = require('./outcome');
+const accounting = require('./accounting');
+const creditability = require('./creditability');
+const solvency = require('./solvency');
+
+// ________________________________________________________________________________
 // Listing of all const variables.
 const process = require("process");
 const LocalStorage = require('node-localstorage').LocalStorage;
@@ -26,6 +35,9 @@ let userStorage;
 let entryStorage;
 
 let activeProfile;
+        // activeProfil = Ausgewähltes Profil des Nutzers
+        // Noch unklar wie es zu verwerten ist.
+        // Müsste: entryStorage -> storage; activeProfile -> key; entry -> value;
 
 // ________________________________________________________________________________
 // Listing of all objects.
@@ -248,22 +260,22 @@ function mainMenuOptions() {
         // Run function user chose.
         switch (input) {
             case 1:
-                entryManagement();
+                entries.entryManagement();
                 break
             case 2:
-                incomeManagement();
+                income.incomeManagement();
                 break
             case 3:
-                outcomeManagement();
+                outcome.outcomeManagement();
                 break
             case 4:
-                accounting();
+                accounting.accounting();
                 break
             case 5:
-                creditability();
+                creditability.creditability();
                 break
             case 6:
-                solvency();
+                solvency.solvency();
                 break
             case 7:
                 process.exit();
@@ -280,290 +292,16 @@ function mainMenuOptions() {
 }
 
 // ________________________________________________________________________________
-// Entry management: Add, show, search, delete entry or leave.
-function entryManagement() {
-    // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
-    console.log("Entry Management: Choose your task!");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
-
-    // Run until user wants back or leave.
-    while(true) {
-        // Print user Interface.
-        console.log("[1] - Add entries.");
-        console.log("[2] - Show all entries.");
-        console.log("[3] - Search for a specific entry.");
-        console.log("[4] - Delete a specific entry.");
-        console.log("[5] - Back.");
-        console.log("[6] - Leave.");
-        console.log("");
-
-        // Read user input.
-        var input = readlineSync.prompt();
-        input = parseInt(input);
-        console.log("");
-
-        // Evaluate user input.
-        switch (input) {
-            // Add entries.
-            case 1:
-                addEntries();
-                break
-            // Show all entries.
-            case 2:
-                showEntries();
-                break
-            // Search an entry.
-            case 3:
-                searchEntry();
-                break
-            // Delete an entry.
-            case 4:
-                deleteEntry();
-                break
-            // Back to main menu.
-            case 5:
-                break
-            // Leave.
-            case 6:
-                process.exit();
-                break // -> Ignore IDEA warning
-            // Wrong input.
-            case NaN:
-                console.log("Input not valid! Only numbers allowed!");
-                console.log("Your Input: " + input);
-                break
-            // Error.
-            default:
-                console.log("Error: Wrong input -> entrymanagement");
-                break
-        }
-
-        // Go back to main menu.
-        if (input === 5) {
-            break
-        }
-    }
-}
-
-// Add entries.
-function addEntries() {
-    // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
-    console.log("Task: Adding entry");
-
-    // Repeat till "OK" / "DONE"
-    while (true) {
-        console.log("--------------------------------------------------------" +
-            "--------------"); // 60 + 10 "-"
-        console.log("Please consider the following scheme: ");
-        console.log("Date: year + month + day; Category: category; Money: 123,45€");
-        console.log("DONE / BACK: Enter '!'.");
-        console.log("");
-
-        var date = readlineSync.question("Date: ");
-        if (date === "!") {
-            break
-        }
-
-        var category = readlineSync.question("Category: ");
-        if (category === "!") {
-            break
-        }
-
-        var money = readlineSync.question("Money: ");
-        if (money === "!") {
-            break
-        }
-
-        // money -> float ???
-
-        // Evaluate Input.
-        // date = int; category = string; money = int;
-        // Add input.
-        if (isNaN(parseInt(date)) === false && isNaN(parseInt(category)) === true
-            && isNaN(parseInt(money)) === false && date.length === 8) {
-
-            // Check if there is a number.
-            if (money.length <= 0) {
-                money = 0;
-            }
-
-            // Add object entry to storage
-            let insertEntry = entry;
-            insertEntry = {date: date, category: category, money:money};
-            console.log("");
-            console.log("Your entry", insertEntry, "got integrated!");
-            console.log("");
-            console.log(activeProfile.length);
-            setValue(entryStorage, activeProfile, JSON.stringify(insertEntry));
-
-        // Don't add
-        } else {
-            console.log("");
-            console.log("Input not valid!");
-            console.log("Your input: " + date + " " + category + " " + money);
-            console.log("");
-        }
-    }
-}
-
-// Show all entries.
-function showEntries() {
-    // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
-    console.log("Entries: Choose one of the following specifier or all.");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
-
-    // Run until user wants back or leave.
-    while(true) {
-        // Print user Interface.
-        console.log("[1] - Date.");
-        console.log("[2] - Category.");
-        console.log("[3] - Money.");
-        console.log("[4] - All.");
-        console.log("[5] - Back.");
-        console.log("");
-
-        // Read user input.
-        var input = readlineSync.prompt();
-        input = parseInt(input);
-        console.log("");
-
-        switch (input) {
-            // Show entries filtered by a date.
-            case 1:
-                showEntriesDate();
-                break
-            // Show entries filtered by a category.
-            case 2:
-                showEntriesCategory();
-                break
-            // Show entries filtered by a value.
-            case 3:
-                showEntriesMoney();
-                break
-            // Show all entries.
-            case 4:
-                showEntriesAll();
-                break
-            case 5:
-                break
-            // Wrong input.
-            case NaN:
-                console.log("Input not valid! Only numbers allowed!");
-                console.log("Your Input: " + input);
-                break
-            // Error.
-            default:
-                console.log("Error: Wrong input -> entrymanagement");
-                break
-        }
-        if (input === 5) {
-            break
-        }
-    }
-}
-
-//
-function showEntriesDate() {
-
-}
-
-//
-function showEntriesCategory() {
-
-}
-
-//
-function showEntriesMoney() {
-
-}
-
-//
-function showEntriesAll() {
-    // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
-    console.log("Task: Show all entries.");
-
-    // Repeat till "OK" / "DONE"
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
-
-    // Print every entry in entryStorage.
-    let allEntries = [];
-    for (let i = 0; i < entryStorage.length; i++) {
-        allEntries.push(JSON.parse(getValue(entryStorage, activeProfile)));
-    }
-    console.table(allEntries);
-
-    console.log("");
-    console.log("--------------------------------------------------------" +
-        "--------------"); // 60 + 10 "-"
-}
-
-// Search a specific entry.
-function searchEntry() {
-
-}
-
-// Delete an entry.
-function deleteEntry() {
-
-}
-
-// ________________________________________________________________________________
-// Income management:
-function incomeManagement() {
-
-}
-
-// ________________________________________________________________________________
-// Outcome management:
-function outcomeManagement() {
-
-}
-
-// ________________________________________________________________________________
-// Accounting:
-function accounting() {
-
-}
-
-// ________________________________________________________________________________
-// Creditability
-function creditability() {
-
-}
-
-// ________________________________________________________________________________
-// Solvency
-function solvency() {
-
-}
-
-
-
-
-
-
-
-
-
-// ________________________________________________________________________________
 // Exporting all functions as modules.
 module.exports = {
     readCLA: readCLA,
     initStorage: initStorage,
     profileMenuOptions: profileMenuOptions,
+    getValue: getValue,
+    setValue: setValue,
     mainMenuOptions: mainMenuOptions,
     userStorage: userStorage,
     entryStorage: entryStorage,
     activeProfile: activeProfile,
+    entry: entry
 }
