@@ -52,6 +52,7 @@ function readCLA () {
             testMode();
         } else {
             console.log("Error: cmdLineArg != -test");
+            process.exit();
         }
     } else if (cmdLineArgument.length > 3 || cmdLineArgument.length < 2) {
         console.log("Error: cmdLineArgument > 3 || < 2");
@@ -70,7 +71,7 @@ function testMode () {
     console.log("TestMode: EMPTY");
 }
 
-// Intialize storage containing user and entries.
+// Initialize storage containing user and entries.
 // Check if storage files already exist, otherwise create them.
 function initStorage () {
     // Check if storage file already exists, otherwise create one.
@@ -113,7 +114,6 @@ function profileMenuOptions () {
 
         // Read user input
         var input = readlineSync.prompt();
-        input = parseInt(input);
 
         // Layout
         console.log("------------------------------------------------------------" +
@@ -122,33 +122,28 @@ function profileMenuOptions () {
         // Evaluate user input.
         switch (input) {
             // Chose given profile.
-            case 1:
+            case "1":
                 chooseProfile();
                 break
 
             // Create a new user profile.
-            case 2:
+            case "2":
                 createNewProfile();
                 break
 
             // Leave.
-            case 3:
+            case "3":
                 process.exit();
                 break // -> Ignore IDEA warning
 
             // User input is not valid.
-            case NaN:
+            default:
                 console.log("Input not valid! Only numbers allowed!");
                 console.log("Your Input: " + input);
                 break
-
-            // Error.
-            default:
-                console.log("Error: Wrong value -> profileMenuInput");
-                break
         }
 
-        if (input === 1) {
+        if (input === "1") {
             break
         }
     }
