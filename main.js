@@ -22,7 +22,7 @@ struct.readCLA();
 // Check and validate profile menu option. Return given input.
 struct.profileMenuOptions();
 
-// Menu functions.
+// Menu main functions.
 struct.mainMenuOptions();
 
 // ### End of program. ###
