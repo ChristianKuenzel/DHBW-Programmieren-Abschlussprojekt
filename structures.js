@@ -27,7 +27,6 @@ let entryStorage;
 
 let activeProfile;
         // activeProfil = Ausgewähltes Profil des Nutzers
-        // Noch unklar wie es zu verwerten ist.
         // Müsste: entryStorage -> storage; activeProfile -> key; entry -> value;
 
 // ________________________________________________________________________________
@@ -386,7 +385,7 @@ function addEntries() {
 
             // Create entry object containing info.
             let insertEntry = entry;
-            insertEntry = {date: date, category: category, money:money};
+            insertEntry = {date: date, category: category, money: money};
             console.log("");
             console.log("Your entry", insertEntry, "got integrated!");
             console.log("");
@@ -526,7 +525,7 @@ function showEntriesCategory() {
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
     let showCategory = [];
     for (let i = 0; i < allEntries.length; i++) {
-        showCategory.push(allEntries[i].money);
+        showCategory.push(allEntries[i].category);
     }
 
     // Print showCategory as a table.
