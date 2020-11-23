@@ -970,13 +970,14 @@ function expenditureLastDays(days) {
 
     // Calculate date.
     let deadline = new Date();
-    deadline.setTime(deadline.getDate() - days);
+    deadline.setDate(deadline.getDate() - days);
 
     // Sum up all entries within the date.
     let sum = 0;
 
     for (let i = 0; i < allEntries.length; i++) {
-        if (allEntries[i].date >= deadline.getTime()) {
+        if (allEntries[i].date.toString() >= deadline.toString()) { // !!! conversion needed: string -> date !!!
+            console.log(allEntries[i]); // Testing
             sum += allEntries[i].amount;
         }
     }
@@ -1010,12 +1011,13 @@ function expenditureAverage(days) {
     let counter = 0;
 
     for (let i = 0; i < allEntries.length; i++) {
-        if (allEntries[i].date.getTime() >= deadline.getTime()) {
+        if (allEntries[i].date >= deadline.getDate()) { // Average need to be calculated different.
             sum += allEntries[i].amount;
             counter += 1;
         }
     }
 
+    // Calculate average.
     let result = sum / counter;
 
     // Print result.
