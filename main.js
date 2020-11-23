@@ -17,7 +17,11 @@ struct.userStorage = struct.initStorage()[0];
 struct.entryStorage = struct.initStorage()[1];
 
 // Reading command line arguments; Initialize test mode for examination.
-struct.readCLA();
+if (struct.readCLA() === true) {
+    struct.testMode(1000);
+    struct.mainMenuOptions();
+    process.exit();
+}
 
 // Check and validate profile menu option. Return given input.
 struct.profileMenuOptions();
@@ -26,18 +30,3 @@ struct.profileMenuOptions();
 struct.mainMenuOptions();
 
 // ### End of program. ###
-
-
-// ________________________________________________________________________________
-// TESTBEREICH // Aus Local.Storage: getItem & setItem
-const testStorage = require("process");
-if (testStorage.argv[2] == '-test') {
-    console.log(struct.userStorage);
-    console.log(struct.entryStorage);
-
-    struct.userStorage.setItem('userStorage', 'myFirstValue');
-    console.log(struct.userStorage.getItem('userStorage'));
-
-    struct.entryStorage.setItem('entryStorage', 'myFirstValue');
-    console.log(struct.entryStorage.getItem('entryStorage'));
-}
