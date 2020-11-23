@@ -124,17 +124,14 @@ function profileMenuOptions () {
             case "1":
                 chooseProfile();
                 break
-
             // Create a new user profile.
             case "2":
                 createNewProfile();
                 break
-
             // Leave.
             case "3":
                 process.exit();
                 break // -> Ignore IDEA warning
-
             // User input is not valid.
             default:
                 console.log("Input not valid! Only numbers allowed!");
@@ -142,7 +139,8 @@ function profileMenuOptions () {
                 break
         }
 
-        if (input === "1") {
+        // Continue in program, if at least one profile exists and had been chosen.
+        if (activeProfile !== undefined) {
             break
         }
     }
@@ -154,6 +152,16 @@ function chooseProfile() {
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
 
+    // Check if at least one profile exists.
+    if (userStorage.length === 0) {
+        console.log("No profiles available. At first create a new one.");
+        return false
+    }
+
+    // Layout.
+    console.log("DONE / BACK: Enter '!'.");
+    console.log("");
+
     // Show all existing profiles
     for (let i = 0; i < userStorage.length; i++) {
         console.log(getValue(userStorage, userStorage.key(i)));
@@ -162,7 +170,14 @@ function chooseProfile() {
 
     // Chose an existing profile. Else try again.
     while (true) {
-        let userName = readlineSync.question("Your profile: ");
+        let userName = readlineSync.prompt();
+
+        // Back.
+        if (userName === "!") {
+            break
+        }
+
+        // Validate input, check if user exists.
         if (getValue(userStorage, userName) == userName) {
             console.log("");
             console.log("You have chosen " + userName + "s profile!");
@@ -170,8 +185,8 @@ function chooseProfile() {
             break
 
         } else {
-            console.log("Your input: " + userName);
             console.log("");
+            console.log("Your input: " + userName);
             console.log("This user doesnt exist!");
             console.log("");
         }
@@ -180,12 +195,22 @@ function chooseProfile() {
 
 // Create a new user profile.
 function createNewProfile () {
+    // Layout.
     console.log("Creating a new profile:");
     console.log("------------------------------------------------------------" +
         "----------"); // 60 + 10 "-"
+    console.log("DONE / BACK: Enter '!'.");
+    console.log("");
+
     while (true) {
         // User enters userName.
         let userName = readlineSync.question('New username: ');
+        console.log("");
+
+        // Back.
+        if (userName === "!") {
+            break
+        }
 
         // Check if userProfile already exists.
         if (getValue(userStorage, userName) == userName) {
@@ -239,38 +264,42 @@ function mainMenuOptions() {
         console.log("");
 
         // User input
-        var input = readlineSync.prompt();
-        input = parseInt(input);
+        let input = readlineSync.prompt();
 
         // Run function user chose.
         switch (input) {
-            case 1:
+            // Manage all entries.
+            case "1":
                 entryManagement();
                 break
-            case 2:
+            // Manage the users income.
+            case "2":
                 incomeManagement();
                 break
-            case 3:
+            // Manage the expenditures of the user.
+            case "3":
                 outcomeManagement();
                 break
-            case 4:
+            // Calculate income and expenditures,
+            case "4":
                 accounting();
                 break
-            case 5:
+            // Check creditability.
+            case "5":
                 creditability();
                 break
-            case 6:
+            // Check solvency.
+            case "6":
                 solvency();
                 break
-            case 7:
+            // Leave.
+            case "7":
                 process.exit();
                 break // -> Ignore IDEA warning
-            case NaN:
+            // User input is not valid.
+            default:
                 console.log("Input not valid! Only numbers allowed!");
                 console.log("Your Input: " + input);
-                break
-            default:
-                console.log("Error: Wrong value -> mainMenuOptions");
                 break
         }
     }
@@ -299,46 +328,41 @@ function entryManagement() {
 
         // Read user input.
         var input = readlineSync.prompt();
-        input = parseInt(input);
 
         // Evaluate user input.
         switch (input) {
             // Add entries.
-            case 1:
+            case "1":
                 addEntries();
                 break
             // Show all entries.
-            case 2:
+            case "2":
                 showEntries();
                 break
             // Search an entry.
-            case 3:
+            case "3":
                 searchEntry();
                 break
             // Delete an entry.
-            case 4:
+            case "4":
                 deleteEntry();
                 break
             // Back to main menu.
-            case 5:
+            case "5":
                 break
             // Leave.
-            case 6:
+            case "6":
                 process.exit();
                 break // -> Ignore IDEA warning
-            // Wrong input.
-            case NaN:
+            // User input is not valid.
+            default:
                 console.log("Input not valid! Only numbers allowed!");
                 console.log("Your Input: " + input);
-                break
-            // Error.
-            default:
-                console.log("Error: Wrong input -> entryManagement");
                 break
         }
 
         // Go back to main menu.
-        if (input === 5) {
+        if (input === "5") {
             break
         }
     }
@@ -360,16 +384,19 @@ function addEntries() {
         console.log("DONE / BACK: Enter '!'.");
         console.log("");
 
+        // Get date.
         var date = readlineSync.question("Date: ");
         if (date === "!") {
             break
         }
 
+        // Get category.
         var category = readlineSync.question("Category: ");
         if (category === "!") {
             break
         }
 
+        // Get price.
         var money = readlineSync.question("Money: ");
         if (money === "!") {
             break
@@ -377,8 +404,7 @@ function addEntries() {
 
         // money -> float ???
 
-        // Evaluate Input.
-        // date = int; category = string; money = int;
+        // Evaluate Input: date = int; category = string; money = int;
         // Add input.
         if (isNaN(parseInt(date)) === false && isNaN(parseInt(category)) === true
             && isNaN(parseInt(money)) === false && date.length === 8) {
@@ -398,7 +424,7 @@ function addEntries() {
             temp.push(insertEntry);
             setValue(entryStorage, activeProfile, JSON.stringify(temp));
 
-            // Don't add.
+        // Don't add.
         } else {
             console.log("");
             console.log("Input not valid!");
@@ -428,39 +454,35 @@ function showEntries() {
 
         // Read user input.
         var input = readlineSync.prompt();
-        input = parseInt(input);
         console.log("");
 
         switch (input) {
             // Show entries filtered by a date.
-            case 1:
+            case "1":
                 showEntriesDate();
                 break
             // Show entries filtered by a category.
-            case 2:
+            case "2":
                 showEntriesCategory();
                 break
             // Show entries filtered by a value.
-            case 3:
+            case "3":
                 showEntriesMoney();
                 break
             // Show all entries.
-            case 4:
+            case "4":
                 showEntriesAll();
                 break
-            case 5:
+            // Back.
+            case "5":
                 break
-            // Wrong input.
-            case NaN:
+            // User input is not valid.
+            default:
                 console.log("Input not valid! Only numbers allowed!");
                 console.log("Your Input: " + input);
                 break
-            // Error.
-            default:
-                console.log("Error: Wrong input -> entryManagement");
-                break
         }
-        if (input === 5) {
+        if (input === "5") {
             break
         }
     }

@@ -30,7 +30,6 @@
   <component name="ChangeListManager">
     <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="x">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/structures.js" beforeDir="false" afterPath="$PROJECT_DIR$/structures.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +71,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,7 +123,8 @@
     <MESSAGE value="Filestruktur rückgängi gemacht." />
     <MESSAGE value="x" />
     <MESSAGE value="mini Korrektur" />
-    <option name="LAST_COMMIT_MESSAGE" value="mini Korrektur" />
+    <MESSAGE value="h" />
+    <option name="LAST_COMMIT_MESSAGE" value="h" />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
@@ -135,24 +135,27 @@
       <screen x="69" y="23" width="1851" height="1057" />
     </state>
     <state x="741" y="360" key="#com.intellij.fileTypes.FileTypeChooser/69.23.1851.1057@69.23.1851.1057" timestamp="1605019121983" />
-    <state x="503" y="190" key="SettingsEditor" timestamp="1605012670634">
-      <screen x="69" y="23" width="1851" height="1057" />
+    <state x="514" y="192" key="SettingsEditor" timestamp="1605722648617">
+      <screen x="83" y="25" width="1837" height="1055" />
     </state>
     <state x="503" y="190" key="SettingsEditor/69.23.1851.1057@69.23.1851.1057" timestamp="1605012670634" />
     <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
     <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
-    <state x="598" y="292" key="Vcs.Push.Dialog.v2" timestamp="1605470432288">
+    <state x="514" y="192" key="SettingsEditor/83.25.1837.1055@83.25.1837.1055" timestamp="1605722648617" />
+    <state x="598" y="292" key="Vcs.Push.Dialog.v2" timestamp="1605559685122">
       <screen x="74" y="25" width="1846" height="1055" />
     </state>
     <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1605287179562" />
     <state x="596" y="291" key="Vcs.Push.Dialog.v2/72.23.1848.1057@72.23.1848.1057" timestamp="1604514107833" />
-    <state x="598" y="292" key="Vcs.Push.Dialog.v2/74.25.1846.1055@74.25.1846.1055" timestamp="1605470432288" />
+    <state x="598" y="292" key="Vcs.Push.Dialog.v2/74.25.1846.1055@74.25.1846.1055" timestamp="1605559685122" />
     <state x="599" y="291" key="Vcs.Push.Dialog.v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604435693931" />
-    <state x="808" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605010663053">
-      <screen x="69" y="23" width="1851" height="1057" />
+    <state x="816" y="473" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606133312090">
+      <screen x="83" y="25" width="1837" height="1055" />
     </state>
     <state x="808" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/69.23.1851.1057@69.23.1851.1057" timestamp="1605010663053" />
+    <state x="811" y="473" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/74.25.1846.1055@74.25.1846.1055" timestamp="1605559237549" />
     <state x="812" y="472" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604430564630" />
+    <state x="816" y="473" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/83.25.1837.1055@83.25.1837.1055" timestamp="1606133312090" />
     <state x="660" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1605267342402">
       <screen x="69" y="23" width="1851" height="1057" />
     </state>
