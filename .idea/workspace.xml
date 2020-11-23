@@ -29,7 +29,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="x">
+      <change afterPath="$PROJECT_DIR$/Notizen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entryStorage/testprofil1" beforeDir="false" afterPath="$PROJECT_DIR$/entryStorage/testprofil1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/structures.js" beforeDir="false" afterPath="$PROJECT_DIR$/structures.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,7 +127,8 @@
     <MESSAGE value="x" />
     <MESSAGE value="mini Korrektur" />
     <MESSAGE value="h" />
-    <option name="LAST_COMMIT_MESSAGE" value="h" />
+    <MESSAGE value="r" />
+    <option name="LAST_COMMIT_MESSAGE" value="r" />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
@@ -142,13 +146,14 @@
     <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
     <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
     <state x="514" y="192" key="SettingsEditor/83.25.1837.1055@83.25.1837.1055" timestamp="1605722648617" />
-    <state x="598" y="292" key="Vcs.Push.Dialog.v2" timestamp="1605559685122">
-      <screen x="74" y="25" width="1846" height="1055" />
+    <state x="604" y="292" key="Vcs.Push.Dialog.v2" timestamp="1606135898244">
+      <screen x="83" y="25" width="1837" height="1055" />
     </state>
     <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1605287179562" />
     <state x="596" y="291" key="Vcs.Push.Dialog.v2/72.23.1848.1057@72.23.1848.1057" timestamp="1604514107833" />
     <state x="598" y="292" key="Vcs.Push.Dialog.v2/74.25.1846.1055@74.25.1846.1055" timestamp="1605559685122" />
     <state x="599" y="291" key="Vcs.Push.Dialog.v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604435693931" />
+    <state x="604" y="292" key="Vcs.Push.Dialog.v2/83.25.1837.1055@83.25.1837.1055" timestamp="1606135898244" />
     <state x="816" y="473" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606133312090">
       <screen x="83" y="25" width="1837" height="1055" />
     </state>

@@ -26,8 +26,6 @@ let userStorage;
 let entryStorage;
 
 let activeProfile;
-        // activeProfil = Ausgewähltes Profil des Nutzers
-        // Müsste: entryStorage -> storage; activeProfile -> key; entry -> value;
 
 // ________________________________________________________________________________
 // Listing of all objects.
@@ -45,29 +43,47 @@ function readCLA () {
     let cmdLineArgument = process.argv;
 
     // Check if argument number is correct && if test mode is used.
-    if (cmdLineArgument.length == 3) {
-        if (cmdLineArgument[2] == '-test') {
-            console.log("Read CLA -test: OK");
-            testMode();
+    if (cmdLineArgument.length === 3) {
+        if (cmdLineArgument[2] === '-test') {
+            console.log("readCLA testMode: STARTED");
+            return true
         } else {
+            console.log("readCLA program: FAILED");
             console.log("Error: cmdLineArg != -test");
             process.exit();
         }
     } else if (cmdLineArgument.length > 3 || cmdLineArgument.length < 2) {
+        console.log("readCLA program: FAILED")
         console.log("Error: cmdLineArgument > 3 || < 2");
-    } else {
-        console.log("ReadCLA: OK");
+        process.exit();
     }
 
-    if (cmdLineArgument[2] == '-test') {
-        console.log(cmdLineArgument);
+    if (cmdLineArgument[2] === '-test') {
+        console.log("readCLA: FINISHED")
     }
-    console.log("readCLA: FINISH");
 }
 
 // Test function. Inserting given values for examination.
-function testMode () {
-    console.log("TestMode: EMPTY");
+function testMode (value) {
+    // Insert profile and chose profile.
+    setValue(userStorage, "test", "test");
+    activeProfile = "test";
+
+    // Create list of entries. -> value.
+    let testList = [];
+    let testObj = entry;
+    let char = "x";
+    for (let i = 0; i < value; i++) {
+        testObj.date = "2001-11-10T23:00:00.000Z";
+        for (let j = 0; j < i || j < 20; j++) {
+            testObj.category += char;
+        }
+        testObj.amount = i;
+        testList.push(testObj);
+    }
+
+    // Insert list of entries.
+    setValue(entryStorage, activeProfile, testList); // JSON.stringify
 }
 
 // Initialize storage containing user and entries.
@@ -178,7 +194,7 @@ function chooseProfile() {
         }
 
         // Validate input, check if user exists.
-        if (getValue(userStorage, userName) == userName) {
+        if (getValue(userStorage, userName) === userName) {
             console.log("");
             console.log("You have chosen " + userName + "s profile!");
             activeProfile = userName;
@@ -309,11 +325,9 @@ function mainMenuOptions() {
 // Entry management: Add, show, search, delete entry or leave.
 function entryManagement() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Entry Management: Choose your task!");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Run until user wants back or leave.
     while(true) {
@@ -327,7 +341,7 @@ function entryManagement() {
         console.log("");
 
         // Read user input.
-        var input = readlineSync.prompt();
+        let input = readlineSync.prompt();
 
         // Evaluate user input.
         switch (input) {
@@ -370,66 +384,91 @@ function entryManagement() {
 
 // Add entries.
 function addEntries() {
-    // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    // Layout.
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Adding entry");
 
-    // Repeat till "OK" / "DONE"
+    // Repeat till "OK" / "DONE".
     while (true) {
-        console.log("--------------------------------------------------------" +
-            "--------------"); // 60 + 10 "-"
+        console.log("----------------------------------------------------------------------"); // 70.
         console.log("Please consider the following scheme: ");
-        console.log("Date: year + month + day; Category: category; Money: 123,45€");
+        console.log("Date: 'day month year' or 'day-month-year'; Category: category; Money: '123,45€'");
         console.log("DONE / BACK: Enter '!'.");
         console.log("");
 
-        // Get date.
-        var date = readlineSync.question("Date: ");
+        // GET DATE:
+        let date = readlineSync.question("Date: ");
+
+        // Back.
         if (date === "!") {
             break
         }
 
-        // Get category.
-        var category = readlineSync.question("Category: ");
+        // Check length before converting.
+        if (date.length !== 10) {
+            console.log("The number of characters needs to be exactly 10: 'xx-xx-xxxx' or 'xx xx xxxx'");
+            break
+        }
+
+        // Convert string into date object.
+        date = Date.parse(date);
+        let newDate = new Date(date);
+
+        // Check if date is correct.
+        if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
+            console.log("Your date is not valid: day month year; numbers only;");
+            break
+        }
+
+
+        // GET CATEGORY:
+        let category = readlineSync.question("Category: ");
+
+        // Back.
         if (category === "!") {
             break
-        }
 
-        // Get price.
-        var money = readlineSync.question("Money: ");
-        if (money === "!") {
+        // Check if category is correct and not larger than 15 letters.
+        } else if (isNaN(parseInt(category)) === false || category.length > 15) {
+            console.log("Your category is not valid: Letter's only; max. 15;");
             break
         }
 
-        // money -> float ???
 
-        // Evaluate Input: date = int; category = string; money = int;
-        // Add input.
-        if (isNaN(parseInt(date)) === false && isNaN(parseInt(category)) === true
-            && isNaN(parseInt(money)) === false && date.length === 8) {
+        // GET PRICE:
+        let money = readlineSync.question("Money: ");
 
-            // Create entry object containing info.
-            let insertEntry = entry;
-            insertEntry = {date: date, category: category, money: money};
+        // Back.
+        if (money === "!") {
+            break
+
+        // Check if money is correct.
+        } else if (isNaN(parseInt(money)) === true || money === undefined) { // money -> float ???
             console.log("");
-            console.log("Your entry", insertEntry, "got integrated!");
+            console.log("Your value is not valid: Numbers only;");
             console.log("");
-
-            // Adding by rewriting list of objects
-            let temp = [];
-            if (activeProfile.length > 0) {
-                temp = JSON.parse(getValue(entryStorage, activeProfile));
-            }
-            temp.push(insertEntry);
-            setValue(entryStorage, activeProfile, JSON.stringify(temp));
-
-        // Don't add.
-        } else {
-            console.log("");
-            console.log("Input not valid!");
-            console.log("Your input: " + date + " " + category + " " + money);
+            break
         }
+
+        // After input validation:
+        // Create entry object containing info.
+        let insertEntry = entry;
+        insertEntry = {date: newDate, category: category, money: money};
+
+        // Layout + user info.
+        let insertEntryPrintFormat = entry;
+        insertEntryPrintFormat = {date: newDate.toLocaleString(), category: category, money: money};
+        console.log("");
+        console.log("Your entry", insertEntryPrintFormat, "got integrated!");
+        console.log("");
+
+        // Adding by rewriting list of objects.
+        let temp = [];
+        if (activeProfile.length > 0) {
+            temp = JSON.parse(getValue(entryStorage, activeProfile));
+        }
+        temp.push(insertEntry);
+        setValue(entryStorage, activeProfile, JSON.stringify(temp));
     }
 }
 
@@ -522,7 +561,7 @@ function showEntriesDate() {
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
     let showDate = [];
     for (let i = 0; i < allEntries.length; i++) {
-        showDate.push(allEntries[i].money);
+        showDate.push(allEntries[i].date);
     }
 
     // Print showDate as a table.
@@ -749,59 +788,54 @@ function outcomeManagement() {
         console.log("");
 
         // Read user input.
-        var input = readlineSync.prompt();
-        input = parseInt(input);
+        let input = readlineSync.prompt();
 
         // Evaluate user input.
         switch (input) {
             // Last week.
-            case 1:
+            case "1":
                 expenditureLastDays(7);
                 break
             // Last month.
-            case 2:
+            case "2":
                 expenditureLastDays(31);
                 break
             // Last year.
-            case 3:
+            case "3":
                 expenditureLastDays(365);
                 break
             // Delete an entry.
-            case 4:
+            case "4":
                 expenditureAverage(7);
                 break
             // Delete an entry.
-            case 5:
+            case "5":
                 expenditureAverage(31);
                 break
             // Delete an entry.
-            case 6:
+            case "6":
                 expenditureAverage(365);
                 break
             // Back to main menu.
-            case 7:
+            case "7":
                 expenditureForecast();
                 break
             // Back to main menu.
-            case 8:
+            case "8":
                 break
             // Leave.
-            case 9:
+            case "9":
                 process.exit();
                 break // -> Ignore IDEA warning
             // Wrong input.
-            case NaN:
+            default:
                 console.log("Input not valid! Only numbers allowed!");
                 console.log("Your Input: " + input);
-                break
-            // Error.
-            default:
-                console.log("Error: Wrong input -> outcomeManagement");
                 break
         }
 
         // Go back to main menu.
-        if (input === 8) {
+        if (input === "8") {
             break
         }
     }
@@ -926,7 +960,7 @@ module.exports = {
     initStorage: initStorage,
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
+    testMode: testMode,
     userStorage: userStorage,
     entryStorage: entryStorage,
-    activeProfile: activeProfile,
 }
