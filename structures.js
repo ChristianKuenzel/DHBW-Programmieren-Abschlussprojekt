@@ -453,11 +453,11 @@ function addEntries() {
         // After input validation:
         // Create entry object containing info.
         let insertEntry = entry;
-        insertEntry = {date: newDate, category: category, money: money};
+        insertEntry = {date: newDate, category: category, amount: money};
 
         // Layout + user info.
         let insertEntryPrintFormat = entry;
-        insertEntryPrintFormat = {date: newDate.toLocaleString(), category: category, money: money};
+        insertEntryPrintFormat = {date: newDate.toLocaleString(), category: category, amount: money};
         console.log("");
         console.log("Your entry", insertEntryPrintFormat, "got integrated!");
         console.log("");
@@ -475,11 +475,9 @@ function addEntries() {
 // Show entries. Select a filter.
 function showEntries() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Entries: Choose one of the following specifier or all.");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Run until user wants back or leave.
     while(true) {
@@ -492,7 +490,7 @@ function showEntries() {
         console.log("");
 
         // Read user input.
-        var input = readlineSync.prompt();
+        let input = readlineSync.prompt();
         console.log("");
 
         switch (input) {
@@ -530,11 +528,9 @@ function showEntries() {
 // Show all entries.
 function showEntriesAll() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Show all entries.");
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
@@ -544,18 +540,15 @@ function showEntriesAll() {
 
     // Layout.
     console.log("");
-    console.log("--------------------------------------------------------" +
-        "--------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // Show all dates.
 function showEntriesDate() {
     // Layout
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Show all dates.");
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
@@ -569,18 +562,15 @@ function showEntriesDate() {
 
     // Layout.
     console.log("");
-    console.log("--------------------------------------------------------" +
-        "--------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // Show all categories.
 function showEntriesCategory() {
     // Layout
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Show all categories.");
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
@@ -594,24 +584,21 @@ function showEntriesCategory() {
 
     // Layout.
     console.log("");
-    console.log("--------------------------------------------------------" +
-        "--------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // Show all expenditures.
 function showEntriesMoney() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Show all expenditure.");
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
     let showMoney = [];
     for (let i = 0; i < allEntries.length; i++) {
-        showMoney.push(allEntries[i].money);
+        showMoney.push(allEntries[i].amount);
     }
 
     // Print showMoney as a table.
@@ -619,76 +606,135 @@ function showEntriesMoney() {
 
     // Layout.
     console.log("");
-    console.log("--------------------------------------------------------" +
-        "--------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // Search a specific entry.
 function searchEntry() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Search for a specific entry.");
 
     // Repeat till "OK" / "DONE"
     while (true) {
-        console.log("--------------------------------------------------------" +
-            "--------------"); // 60 + 10 "-"
+        console.log("----------------------------------------------------------------------"); // 70.
         console.log("Please consider the following scheme: ");
-        console.log("Date: year + month + day; Category: category; Money: 123,45€");
+        console.log("Date: 'day month year' or 'day-month-year'; Category: category; Money: '123,45€'");
         console.log("DONE / BACK: Enter '!'.");
         console.log("");
 
-        var date = readlineSync.question("Date: ");
+        // GET DATE:
+        let date = readlineSync.question("Date: ");
+        var newDate;
+
+        // Back.
         if (date === "!") {
             break
         }
 
-        var category = readlineSync.question("Category: ");
+        // If input is empty, dont search for date.
+        if (date.length === 0) {
+            newDate = NaN
+
+        // If input got the correct amount of characters, start converting.
+        } else if (date.length === 10) {
+            // Convert string into date object.
+            date = Date.parse(date);
+            newDate = new Date(date);
+
+            // Check if date is correct.
+            if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
+                console.log("Your date is not valid: 'day month year' or 'day-month-year'; numbers only;");
+                break
+            }
+
+        } else {
+            console.log("Your date is not valid: NONE or 'day month year' or 'day-month-year'; numbers only;");
+            break
+        }
+
+
+        // GET CATEGORY:
+        let category = readlineSync.question("Category: ");
+
+        // Back.
         if (category === "!") {
             break
+
+        // Check if category is correct and not larger than 15 letters.
+        } else if (isNaN(parseInt(category)) === false || category.length > 15) {
+            console.log("Your category is not valid: Letter's only; max. 15;");
+            break
+
+        // If input is empty, dont search for category.
+        } else if (category.length === 0) {
+            category = NaN;
         }
 
-        var money = readlineSync.question("Money: ");
+
+        // GET PRICE:
+        let money = readlineSync.question("Money: ");
+
+        // Back.
         if (money === "!") {
+            break
+
+        // If input is empty, dont search for money.
+        } else if (money.length === 0) {
+            money = NaN;
+
+        // Check if money is correct.
+        } else if (isNaN(parseInt(money)) === true) { // money -> float ???
+            console.log("");
+            console.log("Your value is not valid: Numbers only;");
+            console.log("");
             break
         }
 
-        // money -> float ???
+        // After input validation:
+        // Create entry object containing info.
+        let insertEntry = entry;
+        insertEntry = {date: newDate, category: category, amount: money};
 
-        // Evaluate Input.
-        // date = int; category = string; money = int;
-        // Check input.
-        if (isNaN(parseInt(date)) === false && isNaN(parseInt(category)) === true
-            && isNaN(parseInt(money)) === false && date.length === 8) {
+        // Comparing searched entry to stored entries.
+        // Temporary list, containing all entries from entryStorage.
+        let temp = [];
+        // Output list, containing all found entries to print.
+        let output = [];
+        // Check if there is an existing key file with entries.
+        if (activeProfile.length > 0) {
+            temp = JSON.parse(getValue(entryStorage, activeProfile));
 
-            // Create search object containing info.
-            let insertEntry = entry;
-            insertEntry = {date: date, category: category, money:money};
-
-            // Comparing searched entry to stored entries.
-            let temp = [];
-            let output = [];
-            if (activeProfile.length > 0) {
-                temp = JSON.parse(getValue(entryStorage, activeProfile));
-
-                for (let i = 0; i < temp.length; i++) {
-                    if (temp[i] === insertEntry) {
+            // Search through every element from entryStorage.
+            for (let i = 0; i < temp.length; i++) {
+                // Check if we use date as a Comparison factor.
+                if (isNaN(newDate) === false) {
+                    if (temp[i].date === insertEntry.date) {
                         output.push(temp[i]);
                     }
                 }
 
-                console.table(output);
+                // Check if we use category as a Comparison factor.
+                if (isNaN(category) === false) {
+                    if (temp[i].category === insertEntry.category) {
+                        output.push(temp[i]);
+                    }
+                }
 
-            } else {
-                console.log("No entries available!")
+                // Check if we use amount as a Comparison factor.
+                if (isNaN(money) === false) {
+                    if (temp[i].amount === insertEntry.amount) {
+                        output.push(temp[i]);
+                    }
+                }
+
             }
 
-            // Input not validated.
+            // Print all the compared fitting entries.
+            console.table(output);
+
         } else {
-            console.log("");
-            console.log("Input not valid!");
-            console.log("Your input: " + date + " " + category + " " + money);
+            console.log("No entries available!")
         }
     }
 }
@@ -702,63 +748,136 @@ function deleteEntry() {
 
     // Repeat till "OK" / "DONE"
     while (true) {
-        console.log("--------------------------------------------------------" +
-            "--------------"); // 60 + 10 "-"
+        console.log("----------------------------------------------------------------------"); // 70.
         console.log("Please consider the following scheme: ");
-        console.log("Date: year + month + day; Category: category; Money: 123,45€");
+        console.log("Date: 'day month year' or 'day-month-year'; Category: category; Money: '123,45€'");
         console.log("DONE / BACK: Enter '!'.");
         console.log("");
 
-        var date = readlineSync.question("Date: ");
+        // GET DATE:
+        let date = readlineSync.question("Date: ");
+        var newDate;
+
+        // Back.
         if (date === "!") {
             break
         }
 
-        var category = readlineSync.question("Category: ");
+        // If input is empty, dont search for date.
+        if (date.length === 0) {
+            newDate = NaN
+
+            // If input got the correct amount of characters, start converting.
+        } else if (date.length === 10) {
+            // Convert string into date object.
+            date = Date.parse(date);
+            newDate = new Date(date);
+
+            // Check if date is correct.
+            if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
+                console.log("Your date is not valid: 'day month year' or 'day-month-year'; numbers only;");
+                break
+            }
+
+        } else {
+            console.log("Your date is not valid: NONE or 'day month year' or 'day-month-year'; numbers only;");
+            break
+        }
+
+
+        // GET CATEGORY:
+        let category = readlineSync.question("Category: ");
+
+        // Back.
         if (category === "!") {
             break
+
+            // Check if category is correct and not larger than 15 letters.
+        } else if (isNaN(parseInt(category)) === false || category.length > 15) {
+            console.log("Your category is not valid: Letter's only; max. 15;");
+            break
+
+            // If input is empty, dont search for category.
+        } else if (category.length === 0) {
+            category = NaN;
         }
 
-        var money = readlineSync.question("Money: ");
+
+        // GET PRICE:
+        let money = readlineSync.question("Money: ");
+
+        // Back.
         if (money === "!") {
+            break
+
+            // If input is empty, dont search for money.
+        } else if (money.length === 0) {
+            money = NaN;
+
+            // Check if money is correct.
+        } else if (isNaN(parseInt(money)) === true) { // money -> float ???
+            console.log("");
+            console.log("Your value is not valid: Numbers only;");
+            console.log("");
             break
         }
 
-        // money -> float ???
+        // After input validation:
+        // Create entry object containing info.
+        let insertEntry = entry;
+        insertEntry = {date: newDate, category: category, amount: money};
 
-        // Evaluate Input.
-        // date = int; category = string; money = int;
-        // Check input.
-        if (isNaN(parseInt(date)) === false && isNaN(parseInt(category)) === true
-            && isNaN(parseInt(money)) === false && date.length === 8) {
+        // Comparing searched entry to stored entries.
+        // Temporary list, containing all entries from entryStorage.
+        let temp = [];
+        // Entry list, containing all left entries after delete function.
+        let newEntries = [];
+        // Entry list, containing all deleted entries.
+        let deletedEntries = [];
+        // Check if there is an existing key file with entries.
+        if (activeProfile.length > 0) {
+            temp = JSON.parse(getValue(entryStorage, activeProfile));
 
-            // Create search object containing info.
-            let insertEntry = entry;
-            insertEntry = {date: date, category: category, money:money};
-
-            // Compare searched entry to stored entries to delete it.
-            let temp = [];
-            let newTemp = [];
-            if (activeProfile.length > 0) {
-                temp = JSON.parse(getValue(entryStorage, activeProfile));
-
-                for (let i = 0; i < temp.length; i++) {
-                    if (temp[i] !== insertEntry) {
-                        newTemp.push(temp[i]);
+            // Search through every element from entryStorage.
+            for (let i = 0; i < temp.length; i++) {
+                // Check if we use date as a Comparison factor.
+                if (isNaN(newDate) === false) {
+                    if (temp[i].date !== insertEntry.date) {
+                        newEntries.push(temp[i]);
+                    } else {
+                        deletedEntries.push(temp[i]);
                     }
                 }
 
-                setValue(entryStorage, activeProfile, JSON.stringify(newTemp));
+                // Check if we use category as a Comparison factor.
+                 else if (isNaN(category) === false) {
+                    if (temp[i].category !== insertEntry.category) {
+                        newEntries.push(temp[i]);
+                    } else {
+                        deletedEntries.push(temp[i]);
+                    }
+                }
 
-            } else {
-                console.log("No entries available!")
+                // Check if we use amount as a Comparison factor.
+                else if (isNaN(money) === false) {
+                    if (temp[i].amount !== insertEntry.amount) {
+                        newEntries.push(temp[i]);
+                    } else {
+                        deletedEntries.push(temp[i]);
+                    }
+                }
+
             }
 
-            // Input not validated.
+            // Print all the deleted entries.
+            console.log(deletedEntries.length + " entry/entries have been deleted!")
+            console.table(deletedEntries);
+
+            // Set allEntries to newEntries.
+            setValue(entryStorage, activeProfile, JSON.stringify(newEntries));
+
         } else {
-            console.log("");
-            console.log("Input not valid!");
-            console.log("Your input: " + date + " " + category + " " + money);
+            console.log("No entries available!")
         }
     }
 }
