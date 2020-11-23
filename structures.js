@@ -886,11 +886,9 @@ function deleteEntry() {
 // Outcome management:
 function outcomeManagement() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Entry Management: Choose your task!");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Run until user wants back or leave.
     while(true) {
@@ -963,79 +961,69 @@ function outcomeManagement() {
 // Calculate the expenditure of the last days n.
 function expenditureLastDays(days) {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Show all entries.");
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
-
-    // Get date.
-    let inputDate = readlineSync.question("Date: ");
-
-    // Check date
-    // > ....
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
+
+    // Calculate date.
+    let deadline = new Date();
+    deadline.setTime(deadline.getDate() - days);
 
     // Sum up all entries within the date.
     let sum = 0;
 
     for (let i = 0; i < allEntries.length; i++) {
-        if (allEntries[i].date >= inputDate - days) {
-            sum += allEntries[i].money;
-            console.log(allEntries[i]);
+        if (allEntries[i].date >= deadline.getTime()) {
+            sum += allEntries[i].amount;
         }
     }
 
-    console.log(sum);
+    // Print result.
+    console.log("The expenditures of the last " + days + "days are " + sum + "Euro.");
 
     // Layout.
     console.log("");
-    console.log("--------------------------------------------------------" +
-        "--------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // Calculate the average expenditure.
 function expenditureAverage(days) {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Show all entries.");
-    console.log("----------------------------------------------------" +
-        "------------------"); // 60 + 10 "-"
-
-    // Get date.
-    let inputDate = readlineSync.question("Date: ");
-
-    // Check date
-    // > ....
+    console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
 
+    // Calculate date.
+    let deadline = new Date();
+    deadline.setTime(deadline.getDate() - days);
+
     // Sum up all entries within the date.
     let sum = 0;
+
+    // Count the amount of entries
     let counter = 0;
 
     for (let i = 0; i < allEntries.length; i++) {
-        if (allEntries[i].date >= inputDate - days) {
-            sum += allEntries[i].money;
-            counter++;
+        if (allEntries[i].date.getTime() >= deadline.getTime()) {
+            sum += allEntries[i].amount;
+            counter += 1;
         }
     }
 
-    let average = 0;
-    if (counter > 0) {
-        average = sum / counter;
-    }
+    let result = sum / counter;
 
-    console.log(average);
+    // Print result.
+    console.log("The average expenditures of the last " + days + "days are " + result + " Euro.");
 
     // Layout.
     console.log("");
-    console.log("--------------------------------------------------------" +
-        "--------------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // ...
