@@ -985,10 +985,9 @@ function expenditureLastDays(days) {
         }
     }
 
-    // Print result.
+    // Layout + Print result.
+    console.log("");
     console.log("The expenditures of the last " + days + "days are " + sum + "Euro.");
-
-    // Layout.
     console.log("");
     console.log("----------------------------------------------------------------------"); // 70.
 }
@@ -1028,7 +1027,8 @@ function expenditureAverage(days) {
     let result = sum / counter;
 
     // Layout + Print result.
-    console.log("The expenditures of the last " + days + " " + "days are " + result + " " + "Euro.");
+    console.log("");
+    console.log("The average expenditures of the last " + days + " " + "days are " + result + " " + "Euro.");
     console.log("");
     console.log("----------------------------------------------------------------------"); // 70.
 }

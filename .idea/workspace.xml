@@ -28,10 +28,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="x">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/structures.js" beforeDir="false" afterPath="$PROJECT_DIR$/structures.js" afterDir="false" />
-    </list>
+    <list default="true" id="22f1ad52-0aa9-44b2-8fba-b3aea67bd067" name="Default Changelist" comment="x" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,7 +99,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ee" />
     <MESSAGE value="test 2" />
     <MESSAGE value="GeneralInfo FINISHED&#10;Layout FINISHED&#10;&#10;readCLA FINISHED&#10;testMode INITIALIZED&#10;&#10;Commented: CHECK&#10;GeneralTested: CHECK" />
     <MESSAGE value="versioned all" />
@@ -127,7 +123,8 @@
     <MESSAGE value="Search und Delete funktionieren nun, nur das Datum macht ein paar Probleme, wegen dem Vergleich (Minuten werden mitverglichen). Das muss noch gelöst werden.&#10;Delete hat das Selbe Problem.&#10;Delete schien mit if else bei dem Objektabgleich besser zu passen als if, da bei einem if einzelne Übereinstimmungen dazu führen können dass ein Objekt doch noch &quot;gerettet&quot; wird. Mit if else wird das Umgangen.&#10;Test Funktion muss noch korrigiert werden." />
     <MESSAGE value="r" />
     <MESSAGE value="g" />
-    <option name="LAST_COMMIT_MESSAGE" value="g" />
+    <MESSAGE value="outcome management: lastdays und average funktionieren.&#10;Average muss noch modifiziert werden." />
+    <option name="LAST_COMMIT_MESSAGE" value="outcome management: lastdays und average funktionieren.&#10;Average muss noch modifiziert werden." />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
