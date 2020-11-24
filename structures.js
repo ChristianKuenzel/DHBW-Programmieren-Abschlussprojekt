@@ -962,23 +962,26 @@ function outcomeManagement() {
 function expenditureLastDays(days) {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Show all entries.");
+    console.log("Task: Your expenditures of the last " + days + " " + "days.");
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
 
-    // Calculate date.
+    // Calculate date you are looking for.
     let deadline = new Date();
     deadline.setDate(deadline.getDate() - days);
 
     // Sum up all entries within the date.
     let sum = 0;
 
+    // Range over allEntries from storage.
     for (let i = 0; i < allEntries.length; i++) {
-        if (allEntries[i].date.toString() >= deadline.toString()) { // !!! conversion needed: string -> date !!!
-            console.log(allEntries[i]); // Testing
-            sum += allEntries[i].amount;
+        // Convert date of entry to date format.
+        let temp = new Date(allEntries[i].date);
+        // Compare milliseconds. If higher, than it is within range of x days.
+        if (temp.getTime() >= deadline.getTime()) {
+            sum += parseInt(allEntries[i].amount);
         }
     }
 
@@ -994,36 +997,38 @@ function expenditureLastDays(days) {
 function expenditureAverage(days) {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Show all entries.");
+    console.log("Task: Your average expenditures of the last " + days + " " + "days.");
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
     let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
 
-    // Calculate date.
+    // Calculate date you are looking for.
     let deadline = new Date();
-    deadline.setTime(deadline.getDate() - days);
+    deadline.setDate(deadline.getDate() - days);
 
     // Sum up all entries within the date.
     let sum = 0;
 
-    // Count the amount of entries
+    // Counting the amount of
     let counter = 0;
 
+    // Range over allEntries from storage.
     for (let i = 0; i < allEntries.length; i++) {
-        if (allEntries[i].date >= deadline.getDate()) { // Average need to be calculated different.
-            sum += allEntries[i].amount;
+        // Convert date of entry to date format.
+        let temp = new Date(allEntries[i].date);
+        // Compare milliseconds. If higher, than it is within range of x days.
+        if (temp.getTime() >= deadline.getTime()) {
+            sum += parseInt(allEntries[i].amount);
             counter += 1;
         }
     }
 
-    // Calculate average.
+    // Calculating average value.
     let result = sum / counter;
 
-    // Print result.
-    console.log("The average expenditures of the last " + days + "days are " + result + " Euro.");
-
-    // Layout.
+    // Layout + Print result.
+    console.log("The expenditures of the last " + days + " " + "days are " + result + " " + "Euro.");
     console.log("");
     console.log("----------------------------------------------------------------------"); // 70.
 }
