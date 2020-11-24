@@ -742,8 +742,7 @@ function searchEntry() {
 // Delete an entry.
 function deleteEntry() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Delete a specific entry.");
 
     // Repeat till "OK" / "DONE"
@@ -765,9 +764,9 @@ function deleteEntry() {
 
         // If input is empty, dont search for date.
         if (date.length === 0) {
-            newDate = NaN
+            newDate = NaN;
 
-            // If input got the correct amount of characters, start converting.
+        // If input got the correct amount of characters, start converting.
         } else if (date.length === 10) {
             // Convert string into date object.
             date = Date.parse(date);
@@ -786,35 +785,35 @@ function deleteEntry() {
 
 
         // GET CATEGORY:
-        let category = readlineSync.question("Category: ");
+        var category = readlineSync.question("Category: ");
 
         // Back.
         if (category === "!") {
             break
 
-            // Check if category is correct and not larger than 15 letters.
+        // Check if category is correct and not larger than 15 letters.
         } else if (isNaN(parseInt(category)) === false || category.length > 15) {
             console.log("Your category is not valid: Letter's only; max. 15;");
             break
 
-            // If input is empty, dont search for category.
+        // If input is empty, dont search for category.
         } else if (category.length === 0) {
             category = NaN;
         }
 
 
         // GET PRICE:
-        let money = readlineSync.question("Money: ");
+        var money = readlineSync.question("Money: ");
 
         // Back.
         if (money === "!") {
             break
 
-            // If input is empty, dont search for money.
+        // If input is empty, dont search for money.
         } else if (money.length === 0) {
             money = NaN;
 
-            // Check if money is correct.
+        // Check if money is correct.
         } else if (isNaN(parseInt(money)) === true) { // money -> float ???
             console.log("");
             console.log("Your value is not valid: Numbers only;");
@@ -824,8 +823,15 @@ function deleteEntry() {
 
         // After input validation:
         // Create entry object containing info.
-        let insertEntry = entry;
+        var insertEntry = entry;
         insertEntry = {date: newDate, category: category, amount: money};
+
+        console.log(newDate);
+        console.log(typeof newDate);
+        console.log(category);
+        console.log(typeof category);
+        console.log(money);
+        console.log(typeof money);
 
         // Comparing searched entry to stored entries.
         // Temporary list, containing all entries from entryStorage.
@@ -841,43 +847,54 @@ function deleteEntry() {
             // Search through every element from entryStorage.
             for (let i = 0; i < temp.length; i++) {
                 // Check if we use date as a Comparison factor.
+
+                console.log(category)
+
                 if (isNaN(newDate) === false) {
-                    if (temp[i].date !== insertEntry.date) {
+                    let tmp = new Date(temp[i].date);
+                    if (tmp.getTime() !== newDate.getTime()) {
                         newEntries.push(temp[i]);
                     } else {
                         deletedEntries.push(temp[i]);
                     }
-                }
 
                 // Check if we use category as a Comparison factor.
-                 else if (isNaN(category) === false) {
+                } else if (isNaN(category) === false) {
                     if (temp[i].category !== insertEntry.category) {
                         newEntries.push(temp[i]);
                     } else {
                         deletedEntries.push(temp[i]);
                     }
-                }
 
                 // Check if we use amount as a Comparison factor.
-                else if (isNaN(money) === false) {
+                } else if (isNaN(money) === false) {
                     if (temp[i].amount !== insertEntry.amount) {
                         newEntries.push(temp[i]);
                     } else {
                         deletedEntries.push(temp[i]);
                     }
                 }
-
+                // else mit "No filter selected!" ?
             }
 
-            // Print all the deleted entries.
-            console.log(deletedEntries.length + " entry/entries have been deleted!")
-            console.table(deletedEntries);
+            console.log(category)
 
-            // Set allEntries to newEntries.
-            setValue(entryStorage, activeProfile, JSON.stringify(newEntries));
+            // Check if filters are not used. Else reSet storage.
+            if (isNaN(newDate) && isNaN(category) && isNaN(money)) {
+                console.log("");
+                console.log("No filter selected!");
+            } else {
+                // Print all the deleted entries.
+                console.log("");
+                console.log(deletedEntries.length + " entry/entries have been deleted!");
+                console.table(deletedEntries);
+
+                // Set new storage: allEntries = newEntries.
+                setValue(entryStorage, activeProfile, JSON.stringify(newEntries));
+            }
 
         } else {
-            console.log("No entries available!")
+            console.log("No entries available!");
         }
     }
 }
