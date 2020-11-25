@@ -1007,57 +1007,67 @@ function expenditureLastDays(days) {
     console.log("The expenditures of the last " + days + "days are " + sum + "Euro.");
     console.log("");
     console.log("----------------------------------------------------------------------"); // 70.
+
+    return sum
 }
 
 // Calculate the average expenditure.
 function expenditureAverage(days) {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Your average expenditures of the last " + days + " " + "days.");
-    console.log("----------------------------------------------------------------------"); // 70.
+    // Calculate sum of expenditures in the last x days.
+    let sum = expenditureLastDays(days);
 
-    // Get all entries from storage.
-    let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
+    // Calculating average expenditure.
+    let result = sum / days;
 
-    // Calculate date you are looking for.
-    let deadline = new Date();
-    deadline.setDate(deadline.getDate() - days);
+    // User info: Week
+    if (days === 7) {
+        // Layout + Print result.
+        console.log("");
+        console.log("The average expenditures per day of the last week is about " + result + " " + "Euro.");
+        console.log("");
+        console.log("----------------------------------------------------------------------"); // 70.
 
-    // Sum up all entries within the date.
-    let sum = 0;
+    // User info: Month
+    } else if (days === 31) {
+        // Layout + Print result.
+        console.log("");
+        console.log("The average expenditures per day of the last month is about " + result + " " + "Euro.");
+        console.log("");
+        console.log("----------------------------------------------------------------------"); // 70.
 
-    // Counting the amount of
-    let counter = 0;
+    // User info: Year
+    } else if (days === 365) {
+        // Layout + Print result.
+        console.log("");
+        console.log("The average expenditures per day of the last year is about " + result + " " + "Euro.");
+        console.log("");
+        console.log("----------------------------------------------------------------------"); // 70.
 
-    // Range over allEntries from storage.
-    for (let i = 0; i < allEntries.length; i++) {
-        // Convert date of entry to date format.
-        let temp = new Date(allEntries[i].date);
-        // Compare milliseconds. If higher, than it is within range of x days.
-        if (temp.getTime() >= deadline.getTime()) {
-            sum += parseInt(allEntries[i].amount);
-            counter += 1;
-        }
+    } else {
+        console.log("Error! No fitting user info found.");
+        console.log("Result: " + result);
+        console.log("");
+        console.log("----------------------------------------------------------------------"); // 70.
     }
-
-    // Calculating average value.
-    let result = sum / counter;
-
-    // Layout + Print result.
-    console.log("");
-    console.log("The average expenditures of the last " + days + " " + "days are " + result + " " + "Euro.");
-    console.log("");
-    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // ...
 function expenditureForecast() {
+    // ASk for monthly income
     let income = readlineSync.question("Monthly income: ");
-    let average = expenditureAverage(365);
 
-    let yearDifference = 12 * income - 12 * average;
+    // Calculate average expenditure per month by evaluating expenditures per year
+    let averageMonthByYear = expenditureLastDays(365) / 12;
+    let averageMonthByMonth = expenditureLastDays(31);
 
-    console.log(yearDifference);
+    // Calculate difference over a year.
+    let resultMonthByYear = 12 * income - 12 * averageMonthByYear;
+    let resultMonthByMonth = 12 * income - 12 * averageMonthByMonth;
+
+    console.log("Considering your average expenditures over the last year, we predict a change of capital by "
+    + resultMonthByYear + " " + "over the next year.");
+    console.log("Considering your expenditures last month, we predict a change of capital by "
+    + resultMonthByMonth + " " + "over the next year.");
 }
 
 // ________________________________________________________________________________
