@@ -35,6 +35,12 @@ var entry = {
     amount: NaN
 }
 
+var user = {
+    name: NaN,
+    password: NaN,
+    capital: NaN,
+} // Expansion.
+
 // ________________________________________________________________________________
 // Listing of all functions.
 // Reading command line arguments to secure program execution and check for -test mode.
@@ -753,6 +759,9 @@ function deleteEntry() {
         console.log("DONE / BACK: Enter '!'.");
         console.log("");
 
+        // Filter sign.
+        let filterOffline = "$"
+
         // GET DATE:
         let date = readlineSync.question("Date: ");
         var newDate;
@@ -764,7 +773,7 @@ function deleteEntry() {
 
         // If input is empty, dont search for date.
         if (date.length === 0) {
-            newDate = NaN;
+            newDate = filterOffline;
 
         // If input got the correct amount of characters, start converting.
         } else if (date.length === 10) {
@@ -785,7 +794,7 @@ function deleteEntry() {
 
 
         // GET CATEGORY:
-        var category = readlineSync.question("Category: ");
+        let category = readlineSync.question("Category: ");
 
         // Back.
         if (category === "!") {
@@ -798,12 +807,12 @@ function deleteEntry() {
 
         // If input is empty, dont search for category.
         } else if (category.length === 0) {
-            category = NaN;
+            category = filterOffline;
         }
 
 
         // GET PRICE:
-        var money = readlineSync.question("Money: ");
+        let money = readlineSync.question("Money: ");
 
         // Back.
         if (money === "!") {
@@ -811,7 +820,7 @@ function deleteEntry() {
 
         // If input is empty, dont search for money.
         } else if (money.length === 0) {
-            money = NaN;
+            money = filterOffline;
 
         // Check if money is correct.
         } else if (isNaN(parseInt(money)) === true) { // money -> float ???
@@ -823,15 +832,8 @@ function deleteEntry() {
 
         // After input validation:
         // Create entry object containing info.
-        var insertEntry = entry;
+        let insertEntry = entry;
         insertEntry = {date: newDate, category: category, amount: money};
-
-        console.log(newDate);
-        console.log(typeof newDate);
-        console.log(category);
-        console.log(typeof category);
-        console.log(money);
-        console.log(typeof money);
 
         // Comparing searched entry to stored entries.
         // Temporary list, containing all entries from entryStorage.
@@ -847,10 +849,7 @@ function deleteEntry() {
             // Search through every element from entryStorage.
             for (let i = 0; i < temp.length; i++) {
                 // Check if we use date as a Comparison factor.
-
-                console.log(category)
-
-                if (isNaN(newDate) === false) {
+                if (newDate !== filterOffline) {
                     let tmp = new Date(temp[i].date);
                     if (tmp.getTime() !== newDate.getTime()) {
                         newEntries.push(temp[i]);
@@ -859,7 +858,7 @@ function deleteEntry() {
                     }
 
                 // Check if we use category as a Comparison factor.
-                } else if (isNaN(category) === false) {
+                } else if (category !== filterOffline) {
                     if (temp[i].category !== insertEntry.category) {
                         newEntries.push(temp[i]);
                     } else {
@@ -867,7 +866,7 @@ function deleteEntry() {
                     }
 
                 // Check if we use amount as a Comparison factor.
-                } else if (isNaN(money) === false) {
+                } else if (money !== filterOffline) {
                     if (temp[i].amount !== insertEntry.amount) {
                         newEntries.push(temp[i]);
                     } else {
@@ -879,10 +878,12 @@ function deleteEntry() {
 
             console.log(category)
 
-            // Check if filters are not used. Else reSet storage.
-            if (isNaN(newDate) && isNaN(category) && isNaN(money)) {
+            // Check if filters are all offline.
+            if (newDate === filterOffline && category === filterOffline && money === filterOffline) {
                 console.log("");
                 console.log("No filter selected!");
+
+            // Else reSet storage.
             } else {
                 // Print all the deleted entries.
                 console.log("");
