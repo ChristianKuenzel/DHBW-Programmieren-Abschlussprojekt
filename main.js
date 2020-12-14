@@ -1,11 +1,17 @@
 /*
-
 Copyright 2020
 DHBW Lörrach, Programmieren Abschlussprojekt: Hauswirtschaftsprogramm
-David Schüler <david.schueler97@gmail.com> & Christian Künzel <kunibertgames@web.de>
-Matr.Nr.: & Matr.Nr.: 3889521
+David Schüler, Matr.Nr.: ?, <david.schueler97@gmail.com>, https://github.com/AranguZ
+Christian Künzel, Matr.Nr.: 3889521, <kunibertgames@web.de>, https://github.com/ChristianKuenzel
 
-Main Datei
+Content undergoes the terms of chosen licenses. See GitHub for more:
+https://github.com/ChristianKuenzel/DHBW-WebEngineering-Abschlussprojekt
+
+Main File
+
+1) Const variables
+2) Functions
+3) End of Program
 
 */
 // ________________________________________________________________________________
@@ -16,17 +22,17 @@ const struct = require('./structures');
 struct.userStorage = struct.initStorage()[0];
 struct.entryStorage = struct.initStorage()[1];
 
-// Reading command line arguments; Initialize test mode for examination.
+// Reading command line arguments. Initialize test mode for examination.
 if (struct.readCLA() === true) {
-    struct.testMode(1000);
+    // Run test function. Initialize values / user / entries.
+    struct.testMode(100);
     struct.mainMenuOptions();
-    process.exit();
+} else {
+    struct.profileMenuOptions();
+    struct.mainMenuOptions();
 }
 
-// Check and validate profile menu option. Return given input.
-struct.profileMenuOptions();
-
-// Menu main functions.
-struct.mainMenuOptions();
+// Close application.
+process.exit();
 
 // ### End of program. ###
