@@ -1,17 +1,19 @@
 /*
-
 Copyright 2020
 DHBW Lörrach, Programmieren Abschlussprojekt: Hauswirtschaftsprogramm
-David Schüler <david.schueler97@gmail.com> & Christian Künzel <kunibertgames@web.de>
-Matr.Nr.: & Matr.Nr.: 3889521
+David Schüler, Matr.Nr.: ?, <david.schueler97@gmail.com>, https://github.com/AranguZ
+Christian Künzel, Matr.Nr.: 3889521, <kunibertgames@web.de>, https://github.com/ChristianKuenzel
 
-Struktur Datei
+Content undergoes the terms of chosen licenses. See GitHub for more:
+https://github.com/ChristianKuenzel/DHBW-WebEngineering-Abschlussprojekt
 
-1) const variables
-2) variables
-3) objects
-4) functions
-5) exports
+Structure file
+
+1) Const variables
+2) Variables
+3) Objects
+4) Functions
+5) Exports
 
 */
 // ________________________________________________________________________________
@@ -19,6 +21,7 @@ Struktur Datei
 const process = require("process");
 const LocalStorage = require('node-localstorage').LocalStorage;
 const readlineSync = require('readline-sync');
+const fs = require('fs');
 
 // ________________________________________________________________________________
 // Listing of all variables.
@@ -65,31 +68,82 @@ function readCLA () {
     }
 
     if (cmdLineArgument[2] === '-test') {
-        console.log("readCLA: FINISHED")
+        console.log("readCLA: FINISHED");
     }
 }
 
 // Test function. Inserting given values for examination.
 function testMode (value) {
+    // Begin of test function.
+    console.log("testMode: STARTED");
+
+    // Test: initStorage().
+    // Check if folder exists.
+    try {
+        fs.statSync('./userStorage');
+        console.log("initStorage check uStorage: OK");
+    } catch (error) {
+        console.log("initStorage check uStorage: FAILED");
+        console.log("File doesnt exist! -> initStorage()");
+    }
+
+    // Check if folder exists.
+    try {
+        fs.statSync('./userStorage');
+        console.log("initStorage check eStorage: OK");
+    } catch (error) {
+        console.log("initStorage check eStorage: FAILED");
+        console.log("File doesnt exist! -> initStorage()");
+    }
+
+    // Check is finished.
+    console.log("initStorage: FINISH");
+
+
+    // Test: Profile settings.
     // Insert profile and chose profile.
     setValue(userStorage, "test", "test");
     activeProfile = "test";
 
-    // Create list of entries. -> value.
+    // Check if user exists.
+    try {
+        let testVar = getValue(userStorage, activeProfile);
+        if (testVar !== "test") {
+            throw false
+        }
+    } catch (error) {
+        console.log("Check user: FAILED")
+        console.log("User doesnt exist! -> activeProfile / userStorage / setValue()")
+    }
+
+    // ...
+
+    // Test: ...
+
+    // ...
+
+    // Test: Preparation for functionality.
+    // Fill list with entries.
     let testList = [];
     let testObj = entry;
+    let date = new Date();
     let char = "x";
+
     for (let i = 0; i < value; i++) {
-        testObj.date = "2001-11-10T23:00:00.000Z";
-        for (let j = 0; j < i || j < 20; j++) {
-            testObj.category += char;
-        }
+        testObj.date = date;
+        testObj.category = char; // Change more values ?
         testObj.amount = i;
         testList.push(testObj);
     }
 
-    // Insert list of entries.
-    setValue(entryStorage, activeProfile, testList); // JSON.stringify
+    setValue(entryStorage, activeProfile, JSON.stringify(testList));
+
+
+    // ...
+
+
+    // End of test function.
+    console.log("testMode: FINISH")
 }
 
 // Initialize storage containing user and entries.
@@ -100,14 +154,11 @@ function initStorage () {
         userStorage = new LocalStorage('./userStorage');
     }
 
-    console.log("initStorage check uStorage: OK");
-
     // Check if file already exists, otherwise create one.
     if (typeof entryStorage === "undefined" || entryStorage === null) {
         entryStorage = new LocalStorage('./entryStorage');
     }
-    console.log("initStorage check eStorage: OK");
-    console.log("initStorage: FINISH");
+
     return [userStorage, entryStorage];
 }
 
@@ -115,15 +166,12 @@ function initStorage () {
 // Check and validate profile menu option.
 function profileMenuOptions () {
     // Layout + Introduction
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70 "-"
     console.log("Welcome to your budget software to manage your households finances!");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70 "-"
 
     // User information
-    console.log("Please enter one of the following tasks by " +
-        "entering its number.");
+    console.log("Please enter one of the following tasks by entering its number.");
 
     // Check until input is correct!
     while (true) {
@@ -137,8 +185,7 @@ function profileMenuOptions () {
         var input = readlineSync.prompt();
 
         // Layout
-        console.log("------------------------------------------------------------" +
-            "----------"); // 60 + 10 "-"
+        console.log("----------------------------------------------------------------------"); // 70 "-"
 
         // Evaluate user input.
         switch (input) {
@@ -171,8 +218,7 @@ function profileMenuOptions () {
 // Choose an already existing profile.
 function chooseProfile() {
     console.log("Choose one of the following profiles:");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70 "-"
 
     // Check if at least one profile exists.
     if (userStorage.length === 0) {
