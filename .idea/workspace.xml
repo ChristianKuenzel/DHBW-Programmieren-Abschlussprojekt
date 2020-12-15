@@ -102,7 +102,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="prompt deleted" />
     <MESSAGE value="profile function&#10;export korrigiert&#10;readline implementiert&#10;getestet&#10;&#10;local.Storage verwendung prüfen!" />
     <MESSAGE value="save slot, wanna rework profile menu workflow." />
     <MESSAGE value="function reduction complete &amp; profile menu &quot;rework&quot;.&#10;mainMenuOptions menu implemented. Sub functions still empty." />
@@ -127,7 +126,8 @@
     <MESSAGE value=".gitignore update" />
     <MESSAGE value="Expansion: Beginning with incomeManagement &amp; accounting.&#10;Expansion: Adding update function to update entries by monthly contributions.&#10;Expansion: added user object properties lastOnline, list monthlyIn and list monthlyOut.&#10;Expansion: Adding structures for incomeManagement &amp; accounting." />
     <MESSAGE value="Update .gitignore.&#10;Added incomeStorage -&gt; category = name.&#10;Started incomeFunctions.&#10;Started changing functions: excluding readlinesync to generalize functions for more reusability." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update .gitignore.&#10;Added incomeStorage -&gt; category = name.&#10;Started incomeFunctions.&#10;Started changing functions: excluding readlinesync to generalize functions for more reusability." />
+    <MESSAGE value="Started changes: Komprimierung der Funktion durch calcLastPeriod() und printLastPeriod!&#10;Veränderung in expenditureManagement.&#10;Achtung: Ungetestet.&#10;Noch unverändert: expenditureAverage().&#10;Zu showEntriesMoney summe hinzufügen?&#10;Weitere Änderungen folgen." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started changes: Komprimierung der Funktion durch calcLastPeriod() und printLastPeriod!&#10;Veränderung in expenditureManagement.&#10;Achtung: Ungetestet.&#10;Noch unverändert: expenditureAverage().&#10;Zu showEntriesMoney summe hinzufügen?&#10;Weitere Änderungen folgen." />
   </component>
   <component name="WindowStateProjectService">
     <state x="463" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604423598248">
@@ -145,7 +145,7 @@
     <state x="505" y="190" key="SettingsEditor/72.23.1848.1057@72.23.1848.1057" timestamp="1604511881929" />
     <state x="508" y="190" key="SettingsEditor/76.23.1844.1057@76.23.1844.1057" timestamp="1604424857843" />
     <state x="514" y="192" key="SettingsEditor/83.25.1837.1055@83.25.1837.1055" timestamp="1605722648617" />
-    <state x="606" y="292" key="Vcs.Push.Dialog.v2" timestamp="1608039789717">
+    <state x="606" y="292" key="Vcs.Push.Dialog.v2" timestamp="1608046608757">
       <screen x="86" y="25" width="1834" height="1055" />
     </state>
     <state x="594" y="291" key="Vcs.Push.Dialog.v2/69.23.1851.1057@69.23.1851.1057" timestamp="1605287179562" />
@@ -153,7 +153,7 @@
     <state x="598" y="292" key="Vcs.Push.Dialog.v2/74.25.1846.1055@74.25.1846.1055" timestamp="1605559685122" />
     <state x="599" y="291" key="Vcs.Push.Dialog.v2/76.23.1844.1057@76.23.1844.1057" timestamp="1604435693931" />
     <state x="604" y="292" key="Vcs.Push.Dialog.v2/83.25.1837.1055@83.25.1837.1055" timestamp="1606314635522" />
-    <state x="606" y="292" key="Vcs.Push.Dialog.v2/86.25.1834.1055@86.25.1834.1055" timestamp="1608039789717" />
+    <state x="606" y="292" key="Vcs.Push.Dialog.v2/86.25.1834.1055@86.25.1834.1055" timestamp="1608046608757" />
     <state x="816" y="473" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606133312090">
       <screen x="83" y="25" width="1837" height="1055" />
     </state>
