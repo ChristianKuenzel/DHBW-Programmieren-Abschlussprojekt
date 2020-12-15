@@ -41,8 +41,11 @@ var entry = {
 var user = {
     name: NaN,
     password: NaN,
-    capital: NaN,
-} // Expansion.
+    balance: NaN,
+    lastOnline: NaN,
+    monthlyIn: NaN,
+    monthlyOut: NaN
+}
 
 // ________________________________________________________________________________
 // Listing of all functions.
@@ -265,8 +268,7 @@ function chooseProfile() {
 function createNewProfile () {
     // Layout.
     console.log("Creating a new profile:");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70 "-"
     console.log("DONE / BACK: Enter '!'.");
     console.log("");
 
@@ -314,11 +316,9 @@ function setValue (storage, key, value) {
 // Start menu functions and entry based functions.
 function mainMenuOptions() {
     // Layout
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70 "-"
     console.log("Main menu: What is you next task ?");
-    console.log("------------------------------------------------------------" +
-        "----------"); // 60 + 10 "-"
+    console.log("----------------------------------------------------------------------"); // 70 "-"
 
     // Repeat main menu until user leaves the program.
     while (true) {
@@ -806,7 +806,7 @@ function deleteEntry() {
         console.log("");
 
         // Filter sign.
-        let filterOffline = "$"
+        let filterOffline = "$";
 
         // GET DATE:
         let date = readlineSync.question("Date: ");
@@ -922,7 +922,7 @@ function deleteEntry() {
                 // else mit "No filter selected!" ?
             }
 
-            console.log(category)
+            console.log(category);
 
             // Check if filters are all offline.
             if (newDate === filterOffline && category === filterOffline && money === filterOffline) {
@@ -1022,6 +1022,11 @@ function outcomeManagement() {
     }
 }
 
+// Add monthly expenditures.
+function addMonthlyExpenditure() {
+
+}
+
 // Calculate the expenditure of the last days n.
 function expenditureLastDays(days) {
     // Layout
@@ -1111,15 +1116,100 @@ function expenditureForecast() {
     let resultMonthByYear = 12 * income - 12 * averageMonthByYear;
     let resultMonthByMonth = 12 * income - 12 * averageMonthByMonth;
 
-    console.log("Considering your average expenditures over the last year, we predict a change of capital by "
+    console.log("Considering your average expenditures over the last year, we predict a change in balance by "
     + resultMonthByYear + " " + "over the next year.");
-    console.log("Considering your expenditures last month, we predict a change of capital by "
+    console.log("Considering your expenditures last month, we predict a change in balance by "
     + resultMonthByMonth + " " + "over the next year.");
+}
+
+// Update list of monthly expenditure and add entry to entry storage per month for then (lastOnline) to today (new Date())
+function updateExpenditure(lastOnline, monthlyIn) {
+
 }
 
 // ________________________________________________________________________________
 // Income management:
 function incomeManagement() {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Income Management: Choose your task!");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    // Run until user wants back or leave.
+    while(true) {
+        // Print user Interface.
+        console.log("[1] - Add income.");
+        console.log("[2] - Add monthly income.");
+        console.log("[3] - Income last months.");
+        console.log("[4] - Forecast income next months.");
+        console.log("[5] - Back.");
+        console.log("[6] - Leave.");
+        console.log("");
+
+        // Read user input.
+        let input = readlineSync.prompt();
+
+        // Evaluate user input.
+        switch (input) {
+            // Add income.
+            case "1":
+                addIncome();
+                break
+            // Add monthly income to list.
+            case "2":
+                addMonthlyIncome();
+                break
+            // Search an entry.
+            case "3":
+                incomeLastMonths();
+                break
+            // Delete an entry.
+            case "4":
+                incomeForecast();
+                break
+            // Back to main menu.
+            case "5":
+                break
+            // Leave.
+            case "6":
+                process.exit();
+                break // -> Ignore IDEA warning
+            // User input is not valid.
+            default:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+        }
+
+        // Go back to main menu.
+        if (input === "5") {
+            break
+        }
+    }
+}
+
+// Add single incomes to income Storage.
+function addIncome() {
+
+}
+
+// Add Monthly incomes to list user.monthlyIn.
+function addMonthlyIncome() {
+
+}
+
+// Calculate the income of the last x months.
+function incomeLastMonths(months) {
+
+}
+
+// Forecast expected income based on monthly income (additional average income of each month last year?).
+function incomeForecast(months) {
+
+}
+
+// Update list of monthly income and add income to income storage per month for then (lastOnline) to today (new Date()).
+function updateIncome(lastOnline, monthlyIn) {
 
 }
 
@@ -1127,6 +1217,21 @@ function incomeManagement() {
 // Accounting:
 function accounting() {
 
+}
+
+//
+function balanceLastMonths(months) {
+    
+}
+
+// Calculate monthly income - monthly expenditures and return difference.
+function balanceOfMonthlyContributions(months) { // months?
+    
+}
+
+//
+function balanceForecast() {
+    
 }
 
 // ________________________________________________________________________________
