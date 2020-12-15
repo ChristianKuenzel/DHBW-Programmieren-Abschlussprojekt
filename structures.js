@@ -27,6 +27,7 @@ const fs = require('fs');
 // Listing of all variables.
 let userStorage;
 let entryStorage;
+let incomeStorage;
 
 let activeProfile;
 
@@ -99,6 +100,15 @@ function testMode (value) {
         console.log("File doesnt exist! -> initStorage()");
     }
 
+    // Check if folder exists.
+    try {
+        fs.statSync('./incomeStorage');
+        console.log("initStorage check iStorage: OK");
+    } catch (error) {
+        console.log("initStorage check iStorage: FAILED");
+        console.log("File doesnt exist! -> initStorage()");
+    }
+
     // Check is finished.
     console.log("initStorage: FINISH");
 
@@ -157,12 +167,17 @@ function initStorage () {
         userStorage = new LocalStorage('./userStorage');
     }
 
-    // Check if file already exists, otherwise create one.
+    // Check if storage file already exists, otherwise create one.
     if (typeof entryStorage === "undefined" || entryStorage === null) {
         entryStorage = new LocalStorage('./entryStorage');
     }
 
-    return [userStorage, entryStorage];
+    // Check if storage file already exists, otherwise create one.
+    if (typeof incomeStorage === "undefined" || incomeStorage === null) {
+        incomeStorage = new LocalStorage('./incomeStorage');
+    }
+
+    return [userStorage, entryStorage, incomeStorage];
 }
 
 // ________________________________________________________________________________
@@ -1159,11 +1174,19 @@ function incomeManagement() {
             case "2":
                 addMonthlyIncome();
                 break
-            // Search an entry.
+            // Calculate income of the last months.
             case "3":
-                incomeLastMonths();
+                let months = readlineSync.question("Months: ");
+                if (months === "!") {
+                    break
+                } else if (isNaN(parseInt(months)) === true || months === undefined) {
+                    console.log("Input not valid! Only numbers allowed!");
+                    console.log("Your Input: " + months);
+                    break
+                }
+                incomeLastMonths(months);
                 break
-            // Delete an entry.
+            // Prognosticate income.
             case "4":
                 incomeForecast();
                 break
@@ -1190,17 +1213,190 @@ function incomeManagement() {
 
 // Add single incomes to income Storage.
 function addIncome() {
+    // Layout.
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Adding income");
+
+    // Repeat till "OK" / "DONE".
+    while (true) {
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("Please consider the following scheme: ");
+        console.log("Date: 'day month year' or 'day-month-year'; Category: category; Money: '123,45€'");
+        console.log("DONE / BACK: Enter '!'.");
+        console.log("");
+
+        // GET DATE:
+        let date = readlineSync.question("Date: ");
+
+        // Back.
+        if (date === "!") {
+            break
+        }
+
+        // Check length before converting.
+        if (date.length !== 10) {
+            console.log("The number of characters needs to be exactly 10: 'xx-xx-xxxx' or 'xx xx xxxx'");
+            break
+        }
+
+        // Convert string into date object.
+        date = Date.parse(date);
+        let newDate = new Date(date);
+
+        // Check if date is correct.
+        if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
+            console.log("Your date is not valid: day month year; numbers only;");
+            break
+        }
+
+
+        // GET CATEGORY:
+        let category = readlineSync.question("Category: ");
+
+        // Back.
+        if (category === "!") {
+            break
+
+            // Check if category is correct and not larger than 15 letters.
+        } else if (isNaN(parseInt(category)) === false || category.length > 15) {
+            console.log("Your category is not valid: Letter's only; max. 15;");
+            break
+        }
+
+
+        // GET PRICE:
+        let money = readlineSync.question("Money: ");
+
+        // Back.
+        if (money === "!") {
+            break
+
+            // Check if money is correct.
+        } else if (isNaN(parseInt(money)) === true || money === undefined) { // money -> float ???
+            console.log("");
+            console.log("Your value is not valid: Numbers only;");
+            console.log("");
+            break
+        }
+
+        // After input validation:
+        // Create entry object containing info.
+        let insertEntry = entry;
+        insertEntry = {date: newDate, category: category, amount: money};
+
+        // Layout + user info.
+        let insertEntryPrintFormat = entry;
+        insertEntryPrintFormat = {date: newDate.toLocaleString(), category: category, amount: money};
+        console.log("");
+        console.log("Your entry", insertEntryPrintFormat, "got integrated!");
+        console.log("");
+
+        // Adding by rewriting list of objects.
+        let temp = [];
+        if (activeProfile.length > 0) {
+            temp = JSON.parse(getValue(incomeStorage, activeProfile));
+        }
+        temp.push(insertEntry);
+        setValue(incomeStorage, activeProfile, JSON.stringify(temp));
+    }
 
 }
 
 // Add Monthly incomes to list user.monthlyIn.
 function addMonthlyIncome() {
+    // Layout.
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Adding monthly income.");
 
+    // Repeat till "OK" / "DONE".
+    while (true) {
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("DONE / BACK: Enter '!'.");
+        console.log("");
+
+        // GET NAME:
+        let name = readlineSync.question("Name: ");
+
+        // Back.
+        // Back.
+        if (name === "!") {
+            break
+        } else if (isNaN(parseInt(name)) === false || name === undefined) {
+            console.log("");
+            console.log("Your name is not valid: characters only;");
+            console.log("");
+            break
+        }
+
+        // GET PRICE:
+        let money = readlineSync.question("Money: ");
+
+        // Back.
+        if (money === "!") {
+            break
+
+        // Check if money is correct.
+        } else if (isNaN(parseInt(money)) === true || money === undefined) { // money -> float ???
+            console.log("");
+            console.log("Your value is not valid: Numbers only;");
+            console.log("");
+            break
+        }
+
+        // After input validation:
+        // Create income object containing info.
+        let income = income;
+        income = {name: name, amount: money};
+
+        // Layout + user info.
+        console.log("");
+        console.log("Your entry", income, "got integrated!");
+        console.log("");
+
+        // Adding by rewriting list of objects.
+        let temp = [];
+        if (activeProfile.length > 0) {
+            temp = JSON.parse(getValue(incomeStorage, activeProfile));
+        }
+        temp.push(income);
+        setValue(incomeStorage, activeProfile, JSON.stringify(temp));
+    }
 }
 
 // Calculate the income of the last x months.
 function incomeLastMonths(months) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Your expenditures of the last " + months + " " + "days.");
+    console.log("----------------------------------------------------------------------"); // 70.
 
+    // Get all entries from incomeStorage.
+    let allEntries = JSON.parse(getValue(incomeStorage, activeProfile));
+
+    // Calculate date you are looking for.
+    let deadline = new Date();
+    deadline.setDate(deadline.getDate() - months);
+
+    // Sum up all entries within the date.
+    let sum = 0;
+
+    // Range over allEntries from incomeStorage.
+    for (let i = 0; i < allEntries.length; i++) {
+        // Convert date of entry to date format.
+        let temp = new Date(allEntries[i].date);
+        // Compare milliseconds. If higher, than it is within range of x days.
+        if (temp.getTime() >= deadline.getTime()) {
+            sum += parseInt(allEntries[i].amount);
+        }
+    }
+
+    // Layout + Print result.
+    console.log("");
+    console.log("The expenditures of the last " + months + "days are " + sum + "Euro.");
+    console.log("");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    return sum
 }
 
 // Forecast expected income based on monthly income (additional average income of each month last year?).
@@ -1256,4 +1452,5 @@ module.exports = {
     testMode: testMode,
     userStorage: userStorage,
     entryStorage: entryStorage,
+    incomeStorage: incomeStorage
 }
