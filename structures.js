@@ -347,11 +347,11 @@ function calculateLastPeriod(time, period, storage) {
             break
         case "month":
             deadline = new Date();
-            deadline.setDate(deadline.getMonth() - time);
+            deadline.setMonth(deadline.getMonth() - time);
             break
         case "year":
             deadline = new Date();
-            deadline.setDate(deadline.getFullYear() - time);
+            deadline.setFullYear(deadline.getFullYear() - time);
             break
     }
 
@@ -378,7 +378,7 @@ function printLastPeriod(period, contributionType, storage) {
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Read & check user input.
-    let time = readlineSync.question("Months: ");
+    let time = readlineSync.question("" + period + ": ");
     if (time === "!") {
         return
     } else if (isNaN(parseInt(time)) === true || time === undefined) {
@@ -411,14 +411,14 @@ function updateContributionList(monthlyContributionList, storage) {
 function mainMenuOptions() {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70 "-"
-    console.log("Main menu: What is you next task ?");
+    console.log("Main menu: What is your next task ?");
     console.log("----------------------------------------------------------------------"); // 70 "-"
 
     // Repeat main menu until user leaves the program.
     while (true) {
         console.log("[1] - Entry management");
-        console.log("[2] - Income management");
-        console.log("[3] - Outcome management");
+        console.log("[2] - Expenditure management");
+        console.log("[3] - Income management");
         console.log("[4] - Accounting");
         console.log("[5] - Creditability");
         console.log("[6] - Solvency");
@@ -436,11 +436,11 @@ function mainMenuOptions() {
                 break
             // Manage the users income.
             case "2":
-                incomeManagement();
+                expenditureManagement();
                 break
             // Manage the expenditures of the user.
             case "3":
-                expenditureManagement();
+                incomeManagement();
                 break
             // Calculate income and expenditures,
             case "4":
@@ -1045,15 +1045,16 @@ function deleteEntry() {
 function expenditureManagement() {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Entry Management: Choose your task!");
+    console.log("Expenditure Management: Choose your task!");
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Run until user wants back or leave.
     while(true) {
         // Print user Interface.
-        console.log("[1] - Expenditure last week.");
-        console.log("[2] - Expenditure last month.");
-        console.log("[3] - Expenditure last year.");
+        console.log("[1] - Expenditure last days.");
+        console.log("[2] - Expenditure last months.");
+        console.log("[3] - Expenditure last years.");
+
         console.log("[4] - Average expenditure last week.");
         console.log("[5] - Average expenditure last month.");
         console.log("[6] - Average expenditure last year.");
@@ -1071,19 +1072,16 @@ function expenditureManagement() {
             case "1":
                 // Calculate expenditure of the last days.
                 printLastPeriod("day", "expenditure", entryStorage);
-                // expenditureLastDays(7);
                 break
             // Last month.
             case "2":
                 // Calculate expenditure of the last months.
                 printLastPeriod("month", "expenditure", entryStorage);
-                // expenditureLastDays(31);
                 break
             // Last year.
             case "3":
                 // Calculate expenditure of the last years.
                 printLastPeriod("year", "expenditure", entryStorage);
-                // expenditureLastDays(365);
                 break
             // Delete an entry.
             case "4":
