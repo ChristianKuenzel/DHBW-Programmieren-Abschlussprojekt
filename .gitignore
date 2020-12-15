@@ -1,4 +1,7 @@
 node_modules
 entryStorage
 userStorage
+incomeStorage
+package.json
+package-lock.json
 .idea

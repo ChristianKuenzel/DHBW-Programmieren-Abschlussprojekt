@@ -21,6 +21,7 @@ const struct = require('./structures');
 // Initialize storage files containing user and entries.
 struct.userStorage = struct.initStorage()[0];
 struct.entryStorage = struct.initStorage()[1];
+struct.incomeStorage = struct.initStorage()[2];
 
 // Reading command line arguments. Initialize test mode for examination.
 if (struct.readCLA() === true) {
