@@ -29,6 +29,11 @@ if (struct.readCLA() === true) {
     struct.mainMenuOptions();
 } else {
     struct.profileMenuOptions();
+
+    // updateIncome();
+    // updateExpenditure();
+    // (setLastOnline()); user.lastOnline = x <- new Date(), getDate();
+
     struct.mainMenuOptions();
 }
 
