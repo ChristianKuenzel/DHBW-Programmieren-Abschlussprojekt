@@ -181,6 +181,18 @@ function initStorage () {
 }
 
 // ________________________________________________________________________________
+// Generalized functions:
+// Get the chosen profile/entry to work with.
+function getValue (storage, key) {
+    return storage.getItem(key)
+}
+
+// Create a new profile/entry to work with.
+function setValue (storage, key, value) {
+    storage.setItem(key, value);
+}
+
+// ________________________________________________________________________________
 // Check and validate profile menu option:
 function profileMenuOptions () {
     // Layout + Introduction
@@ -317,93 +329,6 @@ function createNewProfile () {
             break
         }
     }
-}
-
-// ________________________________________________________________________________
-// Generalized functions:
-// Get the chosen profile/entry to work with.
-function getValue (storage, key) {
-    return storage.getItem(key)
-}
-
-// Create a new profile/entry to work with.
-function setValue (storage, key, value) {
-    storage.setItem(key, value);
-}
-
-// Calculate the income of the last x months.
-function calculateLastPeriod(time, period, storage) {
-    // Get all entries from storage.
-    let allElements = JSON.parse(getValue(storage, activeProfile));
-
-    // Pre-Definition due to only single definitions in switch-case.
-    let deadline;
-
-    // Calculate date you are looking for.
-    switch (period) {
-        case "day":
-            deadline = new Date();
-            deadline.setDate(deadline.getDate() - time);
-            break
-        case "month":
-            deadline = new Date();
-            deadline.setMonth(deadline.getMonth() - time);
-            break
-        case "year":
-            deadline = new Date();
-            deadline.setFullYear(deadline.getFullYear() - time);
-            break
-    }
-
-    // Sum up all entries within the date.
-    let sum = 0;
-
-    // Range over allElements from storage.
-    for (let i = 0; i < allElements.length; i++) {
-        // Convert date of element to date format.
-        let temp = new Date(allElements[i].date);
-        // Compare milliseconds. If higher, than it is within range of time.
-        if (temp.getTime() >= deadline.getTime()) {
-            sum += parseInt(allElements[i].amount);
-        }
-    }
-    return sum
-}
-
-// Format for executing and calculating sum of elements in %contributionType% %storage% of the last %period%.
-function printLastPeriod(period, contributionType, storage) {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Calculating your " + contributionType + " of the last " + period + "s.");
-    console.log("----------------------------------------------------------------------"); // 70.
-
-    // Read & check user input.
-    let time = readlineSync.question("" + period + ": ");
-    if (time === "!") {
-        return
-    } else if (isNaN(parseInt(time)) === true || time === undefined) {
-        console.log("Input not valid! Only numbers allowed!");
-        console.log("Your Input: " + time);
-        return
-    }
-
-    // Calculate income of the last months.
-    let sum = calculateLastPeriod(time, period, storage);
-
-    // Layout + Print result.
-    console.log("");
-    console.log("The " + contributionType + " of the last " + time + " " + period + " are " + sum + " Euro.");
-    console.log("");
-    console.log("----------------------------------------------------------------------"); // 70.
-}
-
-// Update %monthlyContributionList% and add elements to contribution storage per month from lastOnline until now.
-function updateContributionList(monthlyContributionList, storage) {
-    // activeProfile
-    // monthlyIn monthlyOut
-    // storage
-    // calculateLastPeriod
-
 }
 
 // ________________________________________________________________________________
@@ -1055,10 +980,12 @@ function expenditureManagement() {
         console.log("[2] - Expenditure last months.");
         console.log("[3] - Expenditure last years.");
 
-        console.log("[4] - Average expenditure last week.");
-        console.log("[5] - Average expenditure last month.");
-        console.log("[6] - Average expenditure last year.");
-        console.log("[7] - Expenditure ?forecast?.");
+        console.log("[4] - Average expenditure per day.");
+        console.log("[5] - Average expenditure per month.");
+        console.log("[6] - Average expenditure per year.");
+
+        console.log("[7] - Forecast future expenditures.");
+
         console.log("[8] - Back.");
         console.log("[9] - Leave.");
         console.log("");
@@ -1068,36 +995,33 @@ function expenditureManagement() {
 
         // Evaluate user input.
         switch (input) {
-            // Last week.
+            // Calculate expenditure of the last days.
             case "1":
-                // Calculate expenditure of the last days.
                 printLastPeriod("day", "expenditure", entryStorage);
                 break
-            // Last month.
+            // Calculate expenditure of the last months.
             case "2":
-                // Calculate expenditure of the last months.
                 printLastPeriod("month", "expenditure", entryStorage);
                 break
-            // Last year.
+            // Calculate expenditure of the last years.
             case "3":
-                // Calculate expenditure of the last years.
                 printLastPeriod("year", "expenditure", entryStorage);
                 break
-            // Delete an entry.
+            // Calculate average expenditure of the last days.
             case "4":
-                expenditureAverage(7);
+                printAverageLastPeriod("day", "expenditure", entryStorage);
                 break
-            // Delete an entry.
+            // Calculate average expenditure of the last months.
             case "5":
-                expenditureAverage(31);
+                printAverageLastPeriod("month", "expenditure", entryStorage);
                 break
-            // Delete an entry.
+            // Calculate average expenditure of the last years.
             case "6":
-                expenditureAverage(365);
+                printAverageLastPeriod("year", "expenditure", entryStorage);
                 break
-            // Back to main menu.
+            // Forecast expenditure of the following months.
             case "7":
-                expenditureForecast();
+                printForecast("expenditure", entryStorage);
                 break
             // Back to main menu.
             case "8":
@@ -1120,104 +1044,151 @@ function expenditureManagement() {
     }
 }
 
-// Add monthly expenditures.
-function addMonthlyExpenditure() {
+// Add monthly contributions.
+function addMonthlyContribution() {
 
 }
 
-// Calculate the expenditure of the last days n.
-/*function expenditureLastDays(days) {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Your expenditures of the last " + days + " " + "days.");
-    console.log("----------------------------------------------------------------------"); // 70.
+// Update %monthlyContributionList% and add elements to contribution storage per month from lastOnline until now.
+function updateContributionList(monthlyContributionList, storage) {
+    // activeProfile
+    // monthlyIn monthlyOut
+    // storage
+    // calculateLastPeriod
 
+} // Para ?
+
+// Calculate the income of the last x months.
+function calculateLastPeriod(time, period, storage) {
     // Get all entries from storage.
-    let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
+    let allElements = JSON.parse(getValue(storage, activeProfile));
+
+    // Pre-Definition due to only single definitions in switch-case.
+    let deadline;
 
     // Calculate date you are looking for.
-    let deadline = new Date();
-    deadline.setDate(deadline.getDate() - days);
+    switch (period) {
+        case "day":
+            deadline = new Date();
+            deadline.setDate(deadline.getDate() - time);
+            break
+        case "month":
+            deadline = new Date();
+            deadline.setMonth(deadline.getMonth() - time);
+            break
+        case "year":
+            deadline = new Date();
+            deadline.setFullYear(deadline.getFullYear() - time);
+            break
+    }
 
-    // Sum up all entries within the date.
+    // Sum up all contributions within the date.
     let sum = 0;
 
-    // Range over allEntries from storage.
-    for (let i = 0; i < allEntries.length; i++) {
-        // Convert date of entry to date format.
-        let temp = new Date(allEntries[i].date);
-        // Compare milliseconds. If higher, than it is within range of x days.
+    // Range over allElements from storage.
+    for (let i = 0; i < allElements.length; i++) {
+        // Convert date of element to date format.
+        let temp = new Date(allElements[i].date);
+        // Compare milliseconds. If higher, than it is within range of time.
         if (temp.getTime() >= deadline.getTime()) {
-            sum += parseInt(allEntries[i].amount);
+            sum += parseInt(allElements[i].amount);
         }
     }
+    return sum
+}
+
+// Format for executing and calculating sum of elements in %contributionType% %storage% of the last %period%.
+function printLastPeriod(period, contributionType, storage) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Calculating your " + contributionType + " of the last " + period + "s.");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    // Read & check user input.
+    let time = readlineSync.question("" + period + ": ");
+    if (time === "!") {
+        return
+    } else if (isNaN(parseInt(time)) === true || time === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + time);
+        return
+    }
+
+    // Calculate sum of contributions in the last x days.
+    let sum = calculateLastPeriod(time, period, storage);
 
     // Layout + Print result.
     console.log("");
-    console.log("The expenditures of the last " + days + "days are " + sum + "Euro.");
+    console.log("The " + contributionType + " of the last " + time + " " + period + "'s are " + sum + " Euro.");
     console.log("");
     console.log("----------------------------------------------------------------------"); // 70.
-
-    return sum
-}*/
+}
 
 // Calculate the average expenditure.
-function expenditureAverage(days) {
-    // Calculate sum of expenditures in the last x days.
-    let sum = expenditureLastDays(days);
+function printAverageLastPeriod(period, contributionType, storage) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Calculating your " + contributionType + " of the last " + period + "s.");
+    console.log("----------------------------------------------------------------------"); // 70.
 
-    // Calculating average expenditure.
-    let result = sum / days;
-
-    // User info: Week
-    if (days === 7) {
-        // Layout + Print result.
-        console.log("");
-        console.log("The average expenditures per day of the last week is about " + result + " " + "Euro.");
-        console.log("");
-        console.log("----------------------------------------------------------------------"); // 70.
-
-    // User info: Month
-    } else if (days === 31) {
-        // Layout + Print result.
-        console.log("");
-        console.log("The average expenditures per day of the last month is about " + result + " " + "Euro.");
-        console.log("");
-        console.log("----------------------------------------------------------------------"); // 70.
-
-    // User info: Year
-    } else if (days === 365) {
-        // Layout + Print result.
-        console.log("");
-        console.log("The average expenditures per day of the last year is about " + result + " " + "Euro.");
-        console.log("");
-        console.log("----------------------------------------------------------------------"); // 70.
-
-    } else {
-        console.log("Error! No fitting user info found.");
-        console.log("Result: " + result);
-        console.log("");
-        console.log("----------------------------------------------------------------------"); // 70.
+    // Read & check user input.
+    let time = readlineSync.question("" + period + ": ");
+    if (time === "!") {
+        return
+    } else if (isNaN(parseInt(time)) === true || time === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + time);
+        return
     }
+
+    // Calculate sum of contributions in the last x days.
+    let sum = calculateLastPeriod(time, period, storage);
+
+    // Calculating average contribution per period.
+    let averagePerPeriod = sum / time;
+
+    // Layout + Print result.
+    console.log("");
+    console.log("The average " + contributionType + " of the last " + time + " " + period + "'s are " + averagePerPeriod + " Euro.");
+    console.log("");
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // ...
-function expenditureForecast() {
-    // ASk for monthly income
-    let income = readlineSync.question("Monthly income: ");
+function printForecast(contributionType, storage) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Calculating your " + contributionType + " for the following months.");
+    console.log("----------------------------------------------------------------------"); // 70.
 
-    // Calculate average expenditure per month by evaluating expenditures per year
-    let averageMonthByYear = expenditureLastDays(365) / 12;
-    let averageMonthByMonth = expenditureLastDays(31);
+    // Read & check user input.
+    let time = readlineSync.question("Months: ");
+    if (time === "!") {
+        return
+    } else if (isNaN(parseInt(time)) === true || time === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + time);
+        return
+    }
+    // Ask for monthly contribution.
+    let sum = calculateLastPeriod(time, "month", storage);
+
+    // Calculating average contribution per period.
+    let averagePerPeriod = sum / time;
 
     // Calculate difference over a year.
-    let resultMonthByYear = 12 * income - 12 * averageMonthByYear;
-    let resultMonthByMonth = 12 * income - 12 * averageMonthByMonth;
+    let forecastPerPeriod = averagePerPeriod * time;
 
-    console.log("Considering your average expenditures over the last year, we predict a change in balance by "
-    + resultMonthByYear + " " + "over the next year.");
-    console.log("Considering your expenditures last month, we predict a change in balance by "
-    + resultMonthByMonth + " " + "over the next year.");
+    // Layout + Print result.
+    console.log("");
+    console.log("Considering your average " + contributionType +"'s over the last " + time +
+        " months, we predict an " + contributionType + " of " + forecastPerPeriod +
+        " within the next " + time + " months.");
+    console.log("Considering your average " + contributionType +"'s over the last " + time +
+        " months, we predict an average " + contributionType + " of " + averagePerPeriod +
+        " per month.");
+    console.log("");
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // ________________________________________________________________________________
@@ -1233,10 +1204,11 @@ function incomeManagement() {
         // Print user Interface.
         console.log("[1] - Add income.");
         console.log("[2] - Add monthly income.");
-        console.log("[3] - Income of the last months.");
-        console.log("[4] - Forecast income next months.");
-        console.log("[5] - Back.");
-        console.log("[6] - Leave.");
+        console.log("[3] - Income last months.");
+        console.log("[4] - Income last years.");
+        console.log("[5] - Forecast future incomes.");
+        console.log("[6] - Back.");
+        console.log("[7] - Leave.");
         console.log("");
 
         // Read user input.
@@ -1259,17 +1231,25 @@ function incomeManagement() {
                 printLastPeriod("month", "income", incomeStorage);
                 break
 
-            // Prognosticate income of the following months.
+            // Calculate income of the last years.
             case "4":
-                incomeForecast();
+                printLastPeriod("year", "income", incomeStorage);
                 break
-            // Back to main menu.
+
+            // Forecast expenditure of the following months.
             case "5":
+                printForecast("income", incomeStorage);
                 break
-            // Leave.
+
+            // Back to main menu.
             case "6":
+                break
+
+            // Leave.
+            case "7":
                 process.exit();
                 break // -> Ignore IDEA warning
+
             // User input is not valid.
             default:
                 console.log("Input not valid! Only numbers allowed!");
@@ -1278,7 +1258,7 @@ function incomeManagement() {
         }
 
         // Go back to main menu.
-        if (input === "5") {
+        if (input === "6") {
             break
         }
     }
@@ -1434,11 +1414,6 @@ function addMonthlyIncome() {
         temp.push(income);
         setValue(incomeStorage, activeProfile, JSON.stringify(temp));
     }
-}
-
-// Forecast expected income based on monthly income (additional average income of each month last year?).
-function incomeForecast(months) {
-
 }
 
 // ________________________________________________________________________________
