@@ -46,7 +46,7 @@ var user = {
     lastOnline: NaN,
     monthlyIn: NaN,
     monthlyOut: NaN
-}
+} // NEEDS TO BE IMPLEMENTED
 
 // ________________________________________________________________________________
 // Listing of all functions:
@@ -157,7 +157,7 @@ function testMode (value) {
 
     // End of test function.
     console.log("testMode: FINISH")
-}
+} // UNFINISHED
 
 // Initialize storage containing user and entries.
 // Check if storage files already exist, otherwise create them.
@@ -291,7 +291,7 @@ function chooseProfile() {
             console.log("");
         }
     }
-}
+} // ADAPT IF USER/PASSWORD INTEGRATION
 
 // Create a new user profile.
 function createNewProfile () {
@@ -318,10 +318,17 @@ function createNewProfile () {
             console.log("Userprofile already exists! Please try another one ...");
             console.log("");
 
-            // If userProfile doesnt exist. Create a new one.
+        // If userProfile doesnt exist. Create a new one.
         } else {
             // Profile:Key -> userName; Value -> userName;
             setValue(userStorage, userName, userName);
+
+            // Already initialize file with empty array to prevent array[] = null.
+            let emptyArray = [];
+            setValue(entryStorage, userName, JSON.stringify(emptyArray));
+            setValue(incomeStorage, userName, JSON.stringify(emptyArray));
+
+            // Layout + userInfo.
             console.log("Your username: " + userName);
             console.log("");
             console.log("Userprofile successfully created!");
@@ -329,7 +336,7 @@ function createNewProfile () {
             break
         }
     }
-}
+} // ADAPT IF USER/PASSWORD INTEGRATION
 
 // ________________________________________________________________________________
 // Start menu functions and entry based functions.
@@ -418,7 +425,7 @@ function entryManagement() {
         switch (input) {
             // Add entries.
             case "1":
-                addEntries();
+                addContribution(entryStorage);
                 break
             // Show all entries.
             case "2":
@@ -453,8 +460,8 @@ function entryManagement() {
     }
 }
 
-// Add entries.
-function addEntries() {
+// Add Contributions.
+function addContribution(storage) {
     // Layout.
     console.log("----------------------------------------------------------------------"); // 70.
     console.log("Task: Adding entry");
@@ -527,19 +534,18 @@ function addEntries() {
         insertEntry = {date: newDate, category: category, amount: money};
 
         // Layout + user info.
-        let insertEntryPrintFormat = entry;
-        insertEntryPrintFormat = {date: newDate.toLocaleString(), category: category, amount: money};
         console.log("");
-        console.log("Your entry", insertEntryPrintFormat, "got integrated!");
+        console.log("Your entry " + insertEntry.date.toLocaleString() + " " + insertEntry.category +
+            " " + insertEntry.amount + " got integrated!");
         console.log("");
 
         // Adding by rewriting list of objects.
         let temp = [];
         if (activeProfile.length > 0) {
-            temp = JSON.parse(getValue(entryStorage, activeProfile));
+            temp = JSON.parse(getValue(storage, activeProfile));
         }
         temp.push(insertEntry);
-        setValue(entryStorage, activeProfile, JSON.stringify(temp));
+        setValue(storage, activeProfile, JSON.stringify(temp));
     }
 }
 
@@ -1047,16 +1053,16 @@ function expenditureManagement() {
 // Add monthly contributions.
 function addMonthlyContribution() {
 
-}
+} // IMPLEMENTATION
 
-// Update %monthlyContributionList% and add elements to contribution storage per month from lastOnline until now.
+// Update %monthlyContributionList% and add elements to contribution %storage% per month from %lastOnline% until now.
 function updateContributionList(monthlyContributionList, storage) {
     // activeProfile
     // monthlyIn monthlyOut
     // storage
     // calculateLastPeriod
 
-} // Para ?
+} // Parameter ? // IMPLEMENTATION
 
 // Calculate the income of the last x months.
 function calculateLastPeriod(time, period, storage) {
@@ -1218,7 +1224,7 @@ function incomeManagement() {
         switch (input) {
             // Add income to incomeStorage
             case "1":
-                addIncome();
+                addContribution(incomeStorage);
                 break
 
             // Add monthly income to monthlyIn list.
@@ -1262,97 +1268,6 @@ function incomeManagement() {
             break
         }
     }
-}
-
-// Add single incomes to income Storage.
-function addIncome() {
-    // Layout.
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Adding income");
-
-    // Repeat till "OK" / "DONE".
-    while (true) {
-        console.log("----------------------------------------------------------------------"); // 70.
-        console.log("Please consider the following scheme: ");
-        console.log("Date: 'day month year' or 'day-month-year'; Category: category; Money: '123,45€'");
-        console.log("DONE / BACK: Enter '!'.");
-        console.log("");
-
-        // GET DATE:
-        let date = readlineSync.question("Date: ");
-
-        // Back.
-        if (date === "!") {
-            break
-        }
-
-        // Check length before converting.
-        if (date.length !== 10) {
-            console.log("The number of characters needs to be exactly 10: 'xx-xx-xxxx' or 'xx xx xxxx'");
-            break
-        }
-
-        // Convert string into date object.
-        date = Date.parse(date);
-        let newDate = new Date(date);
-
-        // Check if date is correct.
-        if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
-            console.log("Your date is not valid: day month year; numbers only;");
-            break
-        }
-
-
-        // GET CATEGORY:
-        let category = readlineSync.question("Category: ");
-
-        // Back.
-        if (category === "!") {
-            break
-
-            // Check if category is correct and not larger than 15 letters.
-        } else if (isNaN(parseInt(category)) === false || category.length > 15) {
-            console.log("Your category is not valid: Letter's only; max. 15;");
-            break
-        }
-
-
-        // GET PRICE:
-        let money = readlineSync.question("Money: ");
-
-        // Back.
-        if (money === "!") {
-            break
-
-            // Check if money is correct.
-        } else if (isNaN(parseInt(money)) === true || money === undefined) { // money -> float ???
-            console.log("");
-            console.log("Your value is not valid: Numbers only;");
-            console.log("");
-            break
-        }
-
-        // After input validation:
-        // Create entry object containing info.
-        let insertEntry = entry;
-        insertEntry = {date: newDate, category: category, amount: money};
-
-        // Layout + user info.
-        let insertEntryPrintFormat = entry;
-        insertEntryPrintFormat = {date: newDate.toLocaleString(), category: category, amount: money};
-        console.log("");
-        console.log("Your entry", insertEntryPrintFormat, "got integrated!");
-        console.log("");
-
-        // Adding by rewriting list of objects.
-        let temp = [];
-        if (activeProfile.length > 0) {
-            temp = JSON.parse(getValue(incomeStorage, activeProfile));
-        }
-        temp.push(insertEntry);
-        setValue(incomeStorage, activeProfile, JSON.stringify(temp));
-    }
-
 }
 
 // Add Monthly incomes to list user.monthlyIn.
@@ -1414,7 +1329,7 @@ function addMonthlyIncome() {
         temp.push(income);
         setValue(incomeStorage, activeProfile, JSON.stringify(temp));
     }
-}
+} // REWORK
 
 // ________________________________________________________________________________
 // Accounting:
@@ -1423,12 +1338,12 @@ function accounting() {
 }
 
 //
-function balanceLastMonths(months) {
+function balanceLastMonths() {
     
 }
 
 // Calculate monthly income - monthly expenditures and return difference.
-function balanceOfMonthlyContributions(months) { // months?
+function balanceMonthlyContributions() {
     
 }
 
