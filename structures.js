@@ -517,7 +517,7 @@ function incomeManagement() {
 
             // Add monthly income to monthlyIn list.
             case "2":
-                addMonthlyIncome();
+                addMonthlyContribution();
                 break
 
             // Calculate income of the last months.
@@ -1235,7 +1235,7 @@ function printAverageLastPeriod(period, contributionType, storage) {
     console.log("----------------------------------------------------------------------"); // 70.
 }
 
-// ...
+// Prognosticate average contributions over the next months based on your average spending.
 function printForecast(contributionType, storage) {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
