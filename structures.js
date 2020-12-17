@@ -29,7 +29,7 @@ let userStorage;
 let entryStorage;
 let incomeStorage;
 
-let activeProfile;
+let activeProfile; // -> user.name // INFO
 
 // ________________________________________________________________________________
 // Listing of all objects.
@@ -1243,29 +1243,40 @@ function printForecast(contributionType, storage) {
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Read & check user input.
-    let time = readlineSync.question("Months: ");
-    if (time === "!") {
+    let dataTime = readlineSync.question("Months: ");
+    if (dataTime === "!") {
         return
-    } else if (isNaN(parseInt(time)) === true || time === undefined) {
+    } else if (isNaN(parseInt(dataTime)) === true || dataTime === undefined) {
         console.log("Input not valid! Only numbers allowed!");
-        console.log("Your Input: " + time);
+        console.log("Your Input: " + dataTime);
         return
     }
-    // Ask for monthly contribution.
-    let sum = calculateLastPeriod(time, "month", storage);
+
+    // Read & check user input.
+    let forecastTime = readlineSync.question("Forecast months: ");
+    if (forecastTime === "!") {
+        return
+    } else if (isNaN(parseInt(forecastTime)) === true || forecastTime === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + forecastTime);
+        return
+    }
+
+    // Ask for contribution per month.
+    let sum = calculateLastPeriod(dataTime, "month", storage);
 
     // Calculating average contribution per period.
-    let averagePerPeriod = sum / time;
+    let averagePerPeriod = sum / dataTime;
 
     // Calculate difference over a year.
-    let forecastPerPeriod = averagePerPeriod * time;
+    let forecastPerPeriod = averagePerPeriod * forecastTime;
 
     // Layout + Print result.
     console.log("");
-    console.log("Considering your average " + contributionType +"'s over the last " + time +
-        " months, we predict an " + contributionType + " of " + forecastPerPeriod +
-        " within the next " + time + " months.");
-    console.log("Considering your average " + contributionType +"'s over the last " + time +
+    console.log("Considering your average " + contributionType +"'s over the last " + dataTime +
+        " months, we predict a change in " + contributionType + " of " + forecastPerPeriod +
+        " within the next " + forecastTime + " months.");
+    console.log("Considering your average " + contributionType +"'s over the last " + dataTime +
         " months, we predict an average " + contributionType + " of " + averagePerPeriod +
         " per month.");
     console.log("");
@@ -1275,12 +1286,98 @@ function printForecast(contributionType, storage) {
 // ________________________________________________________________________________
 // Accounting:
 function accounting() {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Accounting: Choose your task!");
+    console.log("----------------------------------------------------------------------"); // 70.
 
+    // Run until user wants back or leave.
+    while(true) {
+        // Print user Interface.
+        console.log("[1] - Balance last months.");
+        console.log("[2] - Balance of monthly contributions.");
+        console.log("[3] - Forecast balance of the following months.");
+        console.log("[4] - Procentual proportion of monthly contributions related to single contributions.")
+        console.log("[5] - Balances procentual in-/decrease in the last months.")
+        console.log("[6] - Back.");
+        console.log("[7] - Leave.");
+        console.log("");
+
+        // Read user input.
+        let input = readlineSync.prompt();
+
+        // Evaluate user input.
+        switch (input) {
+            //
+            case "1":
+                balanceLastMonths("month", "balance");
+                break
+            //
+            case "2":
+                balanceMonthlyContributions();
+                break
+            //
+            case "3":
+                balanceForecast("balance");
+                break
+            //
+            case "4":
+                balanceProcentualMonthlyToSingle();
+                break
+            //
+            case "5":
+                balanceProcentualChange("month", "balance");
+                break
+            // Back to main menu.
+            case "6":
+                break
+            // Leave.
+            case "7":
+                process.exit();
+                break // -> Ignore IDEA warning
+            // User input is not valid.
+            default:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+        }
+
+        // Go back to main menu.
+        if (input === "6") {
+            break
+        }
+    }
 }
 
 //
-function balanceLastMonths() {
-    
+function balanceLastMonths(period, contributionType) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Calculating your " + contributionType + " of the last " + period + "s.");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    // Read & check user input.
+    let time = readlineSync.question("" + period + ": ");
+    if (time === "!") {
+        return
+    } else if (isNaN(parseInt(time)) === true || time === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + time);
+        return
+    }
+
+    // Calculate sum of contributions in the last x months.
+    let sumExpenditure = calculateLastPeriod(time, period, entryStorage);
+    let sumIncome = calculateLastPeriod(time, period, incomeStorage);
+
+    // Calculate balance.
+    let balance = sumIncome - sumExpenditure;
+
+    // Layout + Print result.
+    console.log("");
+    console.log("The " + contributionType + " of the last " + time + " " + period + "'s are " + balance + " Euro.");
+    console.log("");
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // Calculate monthly income - monthly expenditures and return difference.
@@ -1289,8 +1386,110 @@ function balanceMonthlyContributions() {
 }
 
 //
-function balanceForecast() {
-    
+function balanceForecast(contributionType) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Calculating your " + contributionType + " for the following months.");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    // Read & check user input.
+    let dataTime = readlineSync.question("Collect months of Data: ");
+    if (dataTime === "!") {
+        return
+    } else if (isNaN(parseInt(dataTime)) === true || dataTime === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + dataTime);
+        return
+    }
+
+    // Read & check user input.
+    let forecastTime = readlineSync.question("Forecast months: ");
+    if (forecastTime === "!") {
+        return
+    } else if (isNaN(parseInt(forecastTime)) === true || forecastTime === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + forecastTime);
+        return
+    }
+
+    // Ask for contribution per month.
+    let sumExpenditure = calculateLastPeriod(dataTime, "month", entryStorage);
+    let sumIncome = calculateLastPeriod(dataTime, "month", incomeStorage);
+
+    let sumBalance = sumIncome - sumExpenditure;
+
+    // Calculating average contribution per period.
+    let averagePerPeriodBalance = sumBalance / dataTime;
+
+    // Calculate difference over a year.
+    let forecastPerPeriodBalance = averagePerPeriodBalance * forecastTime;
+
+    // Layout + Print result.
+    console.log("");
+    console.log("Considering your average " + contributionType +"'s over the last " + dataTime +
+        " months, we predict a change in " + contributionType + " of " + forecastPerPeriodBalance +
+        " within the next " + forecastTime + " months.");
+    console.log("Considering your average " + contributionType +"'s over the last " + dataTime +
+        " months, we predict an average " + contributionType + " of " + averagePerPeriodBalance +
+        " per month.");
+    console.log("");
+    console.log("----------------------------------------------------------------------"); // 70.
+}
+
+//
+function balanceProcentualMonthlyToSingle() {
+
+}
+
+//
+// Von -> Bis, Bis < Heute, input = "$" -> until = 0
+function balanceProcentualChange(period, contributionType) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Calculating your procentual change in " + contributionType + " of the last " + period + "s.");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    // Read & check user input.
+    let from = readlineSync.question("From: ");
+    if (from === "!") {
+        return
+    } else if (isNaN(parseInt(from)) === true || from === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + from);
+        return
+    }
+
+    // Read & check user input.
+    let until = readlineSync.question("Until: ");
+    if (until === "!") {
+        return
+    } else if (isNaN(parseInt(until)) === true || until === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + until);
+        return
+    }
+
+    // Calculate sum of contributions in the last x months.
+    let sumExpenditureFrom = calculateLastPeriod(from, period, entryStorage);
+    let sumExpenditureUntil = calculateLastPeriod(until, period, entryStorage);
+
+    let sumIncomeFrom = calculateLastPeriod(from, period, incomeStorage);
+    let sumIncomeUntil = calculateLastPeriod(until, period, incomeStorage);
+
+    // Calculate balance.
+    let balanceFrom = sumIncomeFrom - sumExpenditureFrom;
+    let balanceUntil = sumIncomeUntil - sumExpenditureUntil;
+
+    // Percentual difference.
+    let balanceFactor = balanceUntil / balanceFrom * 100;
+
+    // Layout + Print result.
+    console.log("");
+    console.log("The percentual change in " + contributionType + " between from the last " + from + " " + period +
+        " and until the last " + until + " " + period + " is about " + balanceFactor + " percent.");
+    console.log("");
+    console.log("----------------------------------------------------------------------"); // 70.
+
 }
 
 // ________________________________________________________________________________
