@@ -49,7 +49,7 @@ var user = {
 } // NEEDS TO BE IMPLEMENTED
 
 // ________________________________________________________________________________
-// Listing of all functions:
+// Listing of main functions:
 // Reading command line arguments to secure program execution and check for -test mode.
 function readCLA () {
     // Get commandLineArguments
@@ -180,8 +180,6 @@ function initStorage () {
     return [userStorage, entryStorage, incomeStorage];
 }
 
-// ________________________________________________________________________________
-// Generalized functions:
 // Get the chosen profile/entry to work with.
 function getValue (storage, key) {
     return storage.getItem(key)
@@ -191,6 +189,15 @@ function getValue (storage, key) {
 function setValue (storage, key, value) {
     storage.setItem(key, value);
 }
+
+// Update %monthlyContributionList% and add elements to contribution %storage% per month from %lastOnline% until now.
+function updateContributionList(monthlyContributionList, storage) {
+    // activeProfile
+    // monthlyIn monthlyOut
+    // storage
+    // calculateLastPeriod
+
+} // Parameter ? // IMPLEMENTATION
 
 // ________________________________________________________________________________
 // Check and validate profile menu option:
@@ -339,7 +346,7 @@ function createNewProfile () {
 } // ADAPT IF USER/PASSWORD INTEGRATION
 
 // ________________________________________________________________________________
-// Start menu functions and entry based functions.
+// Start menu functions and management functions.
 function mainMenuOptions() {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70 "-"
@@ -399,7 +406,159 @@ function mainMenuOptions() {
     }
 }
 
-// ________________________________________________________________________________
+// Management menu navigation and function calls.
+// Expenditure management:
+function expenditureManagement() {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Expenditure Management: Choose your task!");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    // Run until user wants back or leave.
+    while(true) {
+        // Print user Interface.
+        console.log("[1] - Expenditure last days.");
+        console.log("[2] - Expenditure last months.");
+        console.log("[3] - Expenditure last years.");
+
+        console.log("[4] - Average expenditure per day.");
+        console.log("[5] - Average expenditure per month.");
+        console.log("[6] - Average expenditure per year.");
+
+        console.log("[7] - Forecast future expenditures.");
+
+        console.log("[8] - Back.");
+        console.log("[9] - Leave.");
+        console.log("");
+
+        // Read user input.
+        let input = readlineSync.prompt();
+
+        // Evaluate user input.
+        switch (input) {
+            // Calculate expenditure of the last days.
+            case "1":
+                printLastPeriod("day", "expenditure", entryStorage);
+                break
+            // Calculate expenditure of the last months.
+            case "2":
+                printLastPeriod("month", "expenditure", entryStorage);
+                break
+            // Calculate expenditure of the last years.
+            case "3":
+                printLastPeriod("year", "expenditure", entryStorage);
+                break
+            // Calculate average expenditure of the last days.
+            case "4":
+                printAverageLastPeriod("day", "expenditure", entryStorage);
+                break
+            // Calculate average expenditure of the last months.
+            case "5":
+                printAverageLastPeriod("month", "expenditure", entryStorage);
+                break
+            // Calculate average expenditure of the last years.
+            case "6":
+                printAverageLastPeriod("year", "expenditure", entryStorage);
+                break
+            // Forecast expenditure of the following months.
+            case "7":
+                printForecast("expenditure", entryStorage);
+                break
+            // Back to main menu.
+            case "8":
+                break
+            // Leave.
+            case "9":
+                process.exit();
+                break // -> Ignore IDEA warning
+            // Wrong input.
+            default:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+        }
+
+        // Go back to main menu.
+        if (input === "8") {
+            break
+        }
+    }
+}
+
+// Management menu navigation and function calls.
+// Income management:
+function incomeManagement() {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Income Management: Choose your task!");
+    console.log("----------------------------------------------------------------------"); // 70.
+
+    // Run until user wants back or leave.
+    while(true) {
+        // Print user Interface.
+        console.log("[1] - Add income.");
+        console.log("[2] - Add monthly income.");
+        console.log("[3] - Income last months.");
+        console.log("[4] - Income last years.");
+        console.log("[5] - Forecast future incomes.");
+        console.log("[6] - Back.");
+        console.log("[7] - Leave.");
+        console.log("");
+
+        // Read user input.
+        let input = readlineSync.prompt();
+
+        // Evaluate user input.
+        switch (input) {
+            // Add income to incomeStorage
+            case "1":
+                addContribution(incomeStorage);
+                break
+
+            // Add monthly income to monthlyIn list.
+            case "2":
+                addMonthlyIncome();
+                break
+
+            // Calculate income of the last months.
+            case "3":
+                printLastPeriod("month", "income", incomeStorage);
+                break
+
+            // Calculate income of the last years.
+            case "4":
+                printLastPeriod("year", "income", incomeStorage);
+                break
+
+            // Forecast expenditure of the following months.
+            case "5":
+                printForecast("income", incomeStorage);
+                break
+
+            // Back to main menu.
+            case "6":
+                break
+
+            // Leave.
+            case "7":
+                process.exit();
+                break // -> Ignore IDEA warning
+
+            // User input is not valid.
+            default:
+                console.log("Input not valid! Only numbers allowed!");
+                console.log("Your Input: " + input);
+                break
+        }
+
+        // Go back to main menu.
+        if (input === "6") {
+            break
+        }
+    }
+}
+
+// Management menu navigation and function calls.
 // Entry management: Add, show, search, delete entry or leave.
 function entryManagement() {
     // Layout
@@ -460,95 +619,8 @@ function entryManagement() {
     }
 }
 
-// Add Contributions.
-function addContribution(storage) {
-    // Layout.
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Adding entry");
-
-    // Repeat till "OK" / "DONE".
-    while (true) {
-        console.log("----------------------------------------------------------------------"); // 70.
-        console.log("Please consider the following scheme: ");
-        console.log("Date: 'day month year' or 'day-month-year'; Category: category; Money: '123,45€'");
-        console.log("DONE / BACK: Enter '!'.");
-        console.log("");
-
-        // GET DATE:
-        let date = readlineSync.question("Date: ");
-
-        // Back.
-        if (date === "!") {
-            break
-        }
-
-        // Check length before converting.
-        if (date.length !== 10) {
-            console.log("The number of characters needs to be exactly 10: 'xx-xx-xxxx' or 'xx xx xxxx'");
-            break
-        }
-
-        // Convert string into date object.
-        date = Date.parse(date);
-        let newDate = new Date(date);
-
-        // Check if date is correct.
-        if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
-            console.log("Your date is not valid: day month year; numbers only;");
-            break
-        }
-
-
-        // GET CATEGORY:
-        let category = readlineSync.question("Category: ");
-
-        // Back.
-        if (category === "!") {
-            break
-
-        // Check if category is correct and not larger than 15 letters.
-        } else if (isNaN(parseInt(category)) === false || category.length > 15) {
-            console.log("Your category is not valid: Letter's only; max. 15;");
-            break
-        }
-
-
-        // GET PRICE:
-        let money = readlineSync.question("Money: ");
-
-        // Back.
-        if (money === "!") {
-            break
-
-        // Check if money is correct.
-        } else if (isNaN(parseInt(money)) === true || money === undefined) { // money -> float ???
-            console.log("");
-            console.log("Your value is not valid: Numbers only;");
-            console.log("");
-            break
-        }
-
-        // After input validation:
-        // Create entry object containing info.
-        let insertEntry = entry;
-        insertEntry = {date: newDate, category: category, amount: money};
-
-        // Layout + user info.
-        console.log("");
-        console.log("Your entry " + insertEntry.date.toLocaleString() + " " + insertEntry.category +
-            " " + insertEntry.amount + " got integrated!");
-        console.log("");
-
-        // Adding by rewriting list of objects.
-        let temp = [];
-        if (activeProfile.length > 0) {
-            temp = JSON.parse(getValue(storage, activeProfile));
-        }
-        temp.push(insertEntry);
-        setValue(storage, activeProfile, JSON.stringify(temp));
-    }
-}
-
+// ________________________________________________________________________________
+// Functions of entryManagement:
 // Show entries. Select a filter.
 function showEntries() {
     // Layout
@@ -972,81 +1044,93 @@ function deleteEntry() {
 }
 
 // ________________________________________________________________________________
-// Outcome management:
-function expenditureManagement() {
-    // Layout
+// Generalized management functions:
+// Add Contributions.
+function addContribution(storage) {
+    // Layout.
     console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Expenditure Management: Choose your task!");
-    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Adding contribution");
 
-    // Run until user wants back or leave.
-    while(true) {
-        // Print user Interface.
-        console.log("[1] - Expenditure last days.");
-        console.log("[2] - Expenditure last months.");
-        console.log("[3] - Expenditure last years.");
-
-        console.log("[4] - Average expenditure per day.");
-        console.log("[5] - Average expenditure per month.");
-        console.log("[6] - Average expenditure per year.");
-
-        console.log("[7] - Forecast future expenditures.");
-
-        console.log("[8] - Back.");
-        console.log("[9] - Leave.");
+    // Repeat till "OK" / "DONE".
+    while (true) {
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("Please consider the following scheme: ");
+        console.log("Date: 'day month year' or 'day-month-year'; Category: category; Money: '123,45€'");
+        console.log("DONE / BACK: Enter '!'.");
         console.log("");
 
-        // Read user input.
-        let input = readlineSync.prompt();
+        // GET DATE:
+        let date = readlineSync.question("Date: ");
 
-        // Evaluate user input.
-        switch (input) {
-            // Calculate expenditure of the last days.
-            case "1":
-                printLastPeriod("day", "expenditure", entryStorage);
-                break
-            // Calculate expenditure of the last months.
-            case "2":
-                printLastPeriod("month", "expenditure", entryStorage);
-                break
-            // Calculate expenditure of the last years.
-            case "3":
-                printLastPeriod("year", "expenditure", entryStorage);
-                break
-            // Calculate average expenditure of the last days.
-            case "4":
-                printAverageLastPeriod("day", "expenditure", entryStorage);
-                break
-            // Calculate average expenditure of the last months.
-            case "5":
-                printAverageLastPeriod("month", "expenditure", entryStorage);
-                break
-            // Calculate average expenditure of the last years.
-            case "6":
-                printAverageLastPeriod("year", "expenditure", entryStorage);
-                break
-            // Forecast expenditure of the following months.
-            case "7":
-                printForecast("expenditure", entryStorage);
-                break
-            // Back to main menu.
-            case "8":
-                break
-            // Leave.
-            case "9":
-                process.exit();
-                break // -> Ignore IDEA warning
-            // Wrong input.
-            default:
-                console.log("Input not valid! Only numbers allowed!");
-                console.log("Your Input: " + input);
-                break
-        }
-
-        // Go back to main menu.
-        if (input === "8") {
+        // Back.
+        if (date === "!") {
             break
         }
+
+        // Check length before converting.
+        if (date.length !== 10) {
+            console.log("The number of characters needs to be exactly 10: 'xx-xx-xxxx' or 'xx xx xxxx'");
+            break
+        }
+
+        // Convert string into date object.
+        date = Date.parse(date);
+        let newDate = new Date(date);
+
+        // Check if date is correct.
+        if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
+            console.log("Your date is not valid: day month year; numbers only;");
+            break
+        }
+
+
+        // GET CATEGORY:
+        let category = readlineSync.question("Category: ");
+
+        // Back.
+        if (category === "!") {
+            break
+
+            // Check if category is correct and not larger than 15 letters.
+        } else if (isNaN(parseInt(category)) === false || category.length > 15) {
+            console.log("Your category is not valid: Letter's only; max. 15;");
+            break
+        }
+
+
+        // GET PRICE:
+        let money = readlineSync.question("Money: ");
+
+        // Back.
+        if (money === "!") {
+            break
+
+            // Check if money is correct.
+        } else if (isNaN(parseInt(money)) === true || money === undefined) { // money -> float ???
+            console.log("");
+            console.log("Your value is not valid: Numbers only;");
+            console.log("");
+            break
+        }
+
+        // After input validation:
+        // Create entry object containing info.
+        let insertEntry = entry;
+        insertEntry = {date: newDate, category: category, amount: money};
+
+        // Layout + user info.
+        console.log("");
+        console.log("Your entry " + insertEntry.date.toLocaleString() + " " + insertEntry.category +
+            " " + insertEntry.amount + " got integrated!");
+        console.log("");
+
+        // Adding by rewriting list of objects.
+        let temp = [];
+        if (activeProfile.length > 0) {
+            temp = JSON.parse(getValue(storage, activeProfile));
+        }
+        temp.push(insertEntry);
+        setValue(storage, activeProfile, JSON.stringify(temp));
     }
 }
 
@@ -1054,15 +1138,6 @@ function expenditureManagement() {
 function addMonthlyContribution() {
 
 } // IMPLEMENTATION
-
-// Update %monthlyContributionList% and add elements to contribution %storage% per month from %lastOnline% until now.
-function updateContributionList(monthlyContributionList, storage) {
-    // activeProfile
-    // monthlyIn monthlyOut
-    // storage
-    // calculateLastPeriod
-
-} // Parameter ? // IMPLEMENTATION
 
 // Calculate the income of the last x months.
 function calculateLastPeriod(time, period, storage) {
@@ -1196,140 +1271,6 @@ function printForecast(contributionType, storage) {
     console.log("");
     console.log("----------------------------------------------------------------------"); // 70.
 }
-
-// ________________________________________________________________________________
-// Income management:
-function incomeManagement() {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Income Management: Choose your task!");
-    console.log("----------------------------------------------------------------------"); // 70.
-
-    // Run until user wants back or leave.
-    while(true) {
-        // Print user Interface.
-        console.log("[1] - Add income.");
-        console.log("[2] - Add monthly income.");
-        console.log("[3] - Income last months.");
-        console.log("[4] - Income last years.");
-        console.log("[5] - Forecast future incomes.");
-        console.log("[6] - Back.");
-        console.log("[7] - Leave.");
-        console.log("");
-
-        // Read user input.
-        let input = readlineSync.prompt();
-
-        // Evaluate user input.
-        switch (input) {
-            // Add income to incomeStorage
-            case "1":
-                addContribution(incomeStorage);
-                break
-
-            // Add monthly income to monthlyIn list.
-            case "2":
-                addMonthlyIncome();
-                break
-
-            // Calculate income of the last months.
-            case "3":
-                printLastPeriod("month", "income", incomeStorage);
-                break
-
-            // Calculate income of the last years.
-            case "4":
-                printLastPeriod("year", "income", incomeStorage);
-                break
-
-            // Forecast expenditure of the following months.
-            case "5":
-                printForecast("income", incomeStorage);
-                break
-
-            // Back to main menu.
-            case "6":
-                break
-
-            // Leave.
-            case "7":
-                process.exit();
-                break // -> Ignore IDEA warning
-
-            // User input is not valid.
-            default:
-                console.log("Input not valid! Only numbers allowed!");
-                console.log("Your Input: " + input);
-                break
-        }
-
-        // Go back to main menu.
-        if (input === "6") {
-            break
-        }
-    }
-}
-
-// Add Monthly incomes to list user.monthlyIn.
-function addMonthlyIncome() {
-    // Layout.
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Task: Adding monthly income.");
-
-    // Repeat till "OK" / "DONE".
-    while (true) {
-        console.log("----------------------------------------------------------------------"); // 70.
-        console.log("DONE / BACK: Enter '!'.");
-        console.log("");
-
-        // GET NAME:
-        let name = readlineSync.question("Name: ");
-
-        // Back.
-        // Back.
-        if (name === "!") {
-            break
-        } else if (isNaN(parseInt(name)) === false || name === undefined) {
-            console.log("");
-            console.log("Your name is not valid: characters only;");
-            console.log("");
-            break
-        }
-
-        // GET PRICE:
-        let money = readlineSync.question("Money: ");
-
-        // Back.
-        if (money === "!") {
-            break
-
-        // Check if money is correct.
-        } else if (isNaN(parseInt(money)) === true || money === undefined) { // money -> float ???
-            console.log("");
-            console.log("Your value is not valid: Numbers only;");
-            console.log("");
-            break
-        }
-
-        // After input validation:
-        // Create income object containing info.
-        let income = income;
-        income = {name: name, amount: money};
-
-        // Layout + user info.
-        console.log("");
-        console.log("Your entry", income, "got integrated!");
-        console.log("");
-
-        // Adding by rewriting list of objects.
-        let temp = [];
-        if (activeProfile.length > 0) {
-            temp = JSON.parse(getValue(incomeStorage, activeProfile));
-        }
-        temp.push(income);
-        setValue(incomeStorage, activeProfile, JSON.stringify(temp));
-    }
-} // REWORK
 
 // ________________________________________________________________________________
 // Accounting:
