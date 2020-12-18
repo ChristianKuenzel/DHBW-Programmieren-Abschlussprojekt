@@ -29,7 +29,7 @@ let userStorage;
 let entryStorage;
 let incomeStorage;
 
-let activeProfile; // -> user.name // INFO
+let activeProfile;
 
 // ________________________________________________________________________________
 // Listing of all objects.
@@ -40,13 +40,13 @@ var entry = {
 }
 
 var user = {
-    name: NaN,
-    password: NaN,
-    balance: NaN,
+    name: "Standard",
+    password: "Not set!",
+    balance: 0,
     lastOnline: NaN,
-    monthlyIn: NaN,
-    monthlyOut: NaN
-} // NEEDS TO BE IMPLEMENTED
+    monthlyIn: [],
+    monthlyOut: []
+}
 
 // ________________________________________________________________________________
 // Listing of main functions:
@@ -115,12 +115,14 @@ function testMode (value) {
 
     // Test: Profile settings.
     // Insert profile and chose profile.
-    setValue(userStorage, "test", "test");
-    activeProfile = "test";
+    let testObject = user;
+    testObject.name = "test"
+    setValue(userStorage, "test", JSON.stringify(testObject));
+    activeProfile = testObject;
 
     // Check if user exists.
     try {
-        let testVar = getValue(userStorage, activeProfile);
+        let testVar = getValue(userStorage, activeProfile.name);
         if (testVar !== "test") {
             throw false
         }
@@ -138,18 +140,18 @@ function testMode (value) {
     // Test: Preparation for functionality.
     // Fill list with entries.
     let testList = [];
-    let testObj = entry;
+    let testEntry = entry;
     let date = new Date();
     let char = "x";
 
     for (let i = 0; i < value; i++) {
-        testObj.date = date;
-        testObj.category = char; // Change more values ?
-        testObj.amount = i;
-        testList.push(testObj);
+        testEntry.date = date;
+        testEntry.category = char; // Change more values ?
+        testEntry.amount = i;
+        testList.push(testEntry);
     }
 
-    setValue(entryStorage, activeProfile, JSON.stringify(testList));
+    setValue(entryStorage, activeProfile.name, JSON.stringify(testList));
 
 
     // ...
@@ -271,34 +273,44 @@ function chooseProfile() {
 
     // Show all existing profiles
     for (let i = 0; i < userStorage.length; i++) {
-        console.log(getValue(userStorage, userStorage.key(i)));
+        console.log(JSON.parse(getValue(userStorage, userStorage.key(i))).name);
     }
     console.log("");
 
     // Chose an existing profile. Else try again.
     while (true) {
+        // User input.
         let userName = readlineSync.prompt();
+        console.log("");
 
-        // Back.
-        if (userName === "!") {
-            break
-        }
+        // Check if input is correct.
+        if (userName.length > 0) {
+            // Back.
+            if (userName === "!") {
+                break
+            }
 
-        // Validate input, check if user exists.
-        if (getValue(userStorage, userName) === userName) {
-            console.log("");
-            console.log("You have chosen " + userName + "'s profile!");
-            activeProfile = userName;
-            break
+            // Check if userProfile exists.
+            let userObject = JSON.parse(getValue(userStorage, userName));
 
+            if (userObject === null) {
+                console.log("Your input: " + userName);
+                console.log("This user doesnt exist!");
+                console.log("");
+            } else if (userObject.name === userName) {
+                console.log("You have chosen " + userName + "'s profile!");
+                activeProfile = userObject;
+                break
+            } else {
+                console.log("Error! -> chooseProfile");
+            }
+        // If input is empty.
         } else {
-            console.log("");
-            console.log("Your input: " + userName);
-            console.log("This user doesnt exist!");
+            console.log("Your field is empty. Please enter at least one character!");
             console.log("");
         }
     }
-} // ADAPT IF USER/PASSWORD INTEGRATION
+}
 
 // Create a new user profile.
 function createNewProfile () {
@@ -313,37 +325,56 @@ function createNewProfile () {
         let userName = readlineSync.question('New username: ');
         console.log("");
 
-        // Back.
-        if (userName === "!") {
-            break
-        }
+        // Check if input is correct.
+        if (userName.length > 0) {
+            // Back.
+            if (userName === "!") {
+                break
+            }
 
-        // Check if userProfile already exists.
-        if (getValue(userStorage, userName) == userName) {
-            console.log("Your Input: " + userName);
-            console.log("");
-            console.log("Userprofile already exists! Please try another one ...");
-            console.log("");
+            // Check if userProfile already exists.
+            let userTest = JSON.parse(getValue(userStorage, userName));
 
-        // If userProfile doesnt exist. Create a new one.
+            // If userProfile doesnt exist. Create a new one.
+            if (userTest === null || userTest.name !== userName) {
+                // Hint: Profile:Key -> userName; Value -> userName;
+                let userObject = user;
+                userObject.name = userName;
+
+                // Set lastOnline to date of creation.
+                let now = new Date();
+                userObject.lastOnline = now.getDate();
+
+                // Store profile.
+                setValue(userStorage, userObject.name, JSON.stringify(userObject));
+
+                // Already initialize storage files with empty array to prevent array[] = null.
+                let emptyArray = [];
+                setValue(entryStorage, userObject.name, JSON.stringify(emptyArray));
+                setValue(incomeStorage, userObject.name, JSON.stringify(emptyArray));
+
+                // Layout + userInfo.
+                console.log("Your username: " + userName);
+                console.log("");
+                console.log("Userprofile successfully created!");
+                console.log("");
+                break
+
+            } else {
+                console.log("Your Input: " + userName);
+                console.log("");
+                console.log("Userprofile already exists! Please try another one ...");
+                console.log("");
+            }
+
+
+        // If input is empty.
         } else {
-            // Profile:Key -> userName; Value -> userName;
-            setValue(userStorage, userName, userName);
-
-            // Already initialize file with empty array to prevent array[] = null.
-            let emptyArray = [];
-            setValue(entryStorage, userName, JSON.stringify(emptyArray));
-            setValue(incomeStorage, userName, JSON.stringify(emptyArray));
-
-            // Layout + userInfo.
-            console.log("Your username: " + userName);
+            console.log("Your field is empty. Please enter at least one character!");
             console.log("");
-            console.log("Userprofile successfully created!");
-            console.log("");
-            break
         }
     }
-} // ADAPT IF USER/PASSWORD INTEGRATION
+}
 
 // ________________________________________________________________________________
 // Start menu functions and management functions.
@@ -364,7 +395,7 @@ function mainMenuOptions() {
         console.log("[7] - Leave");
         console.log("");
 
-        // User input
+        // User input.
         let input = readlineSync.prompt();
 
         // Run function user chose.
@@ -682,7 +713,7 @@ function showEntriesAll() {
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
-    let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
+    let allEntries = JSON.parse(getValue(entryStorage, activeProfile.name));
 
     // Print allEntries as a table.
     console.table(allEntries);
@@ -700,7 +731,7 @@ function showEntriesDate() {
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
-    let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
+    let allEntries = JSON.parse(getValue(entryStorage, activeProfile.name));
     let showDate = [];
     for (let i = 0; i < allEntries.length; i++) {
         showDate.push(allEntries[i].date);
@@ -722,7 +753,7 @@ function showEntriesCategory() {
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
-    let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
+    let allEntries = JSON.parse(getValue(entryStorage, activeProfile.name));
     let showCategory = [];
     for (let i = 0; i < allEntries.length; i++) {
         showCategory.push(allEntries[i].category);
@@ -744,7 +775,7 @@ function showEntriesMoney() {
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Get all entries from storage.
-    let allEntries = JSON.parse(getValue(entryStorage, activeProfile));
+    let allEntries = JSON.parse(getValue(entryStorage, activeProfile.name));
     let showMoney = [];
     for (let i = 0; i < allEntries.length; i++) {
         showMoney.push(allEntries[i].amount);
@@ -851,20 +882,23 @@ function searchEntry() {
         // Output list, containing all found entries to print.
         let output = [];
         // Check if there is an existing key file with entries.
-        if (activeProfile.length > 0) {
-            temp = JSON.parse(getValue(entryStorage, activeProfile));
+        if (activeProfile.name.length > 0) {
+            temp = JSON.parse(getValue(entryStorage, activeProfile.name));
 
             // Search through every element from entryStorage.
             for (let i = 0; i < temp.length; i++) {
                 // Check if we use date as a Comparison factor.
                 if (isNaN(newDate) === false) {
-                    if (temp[i].date === insertEntry.date) {
+                    let dateObj = new Date(temp[i].date);
+                    let inputDateObj = new Date(insertEntry.date);
+                    if (dateObj.getDate() === inputDateObj.getDate() && dateObj.getMonth() === inputDateObj.getMonth() &&
+                        dateObj.getFullYear() === inputDateObj.getFullYear()) {
                         output.push(temp[i]);
                     }
                 }
 
                 // Check if we use category as a Comparison factor.
-                if (isNaN(category) === false) {
+                if (isNaN(category) === true) {
                     if (temp[i].category === insertEntry.category) {
                         output.push(temp[i]);
                     }
@@ -986,8 +1020,8 @@ function deleteEntry() {
         // Entry list, containing all deleted entries.
         let deletedEntries = [];
         // Check if there is an existing key file with entries.
-        if (activeProfile.length > 0) {
-            temp = JSON.parse(getValue(entryStorage, activeProfile));
+        if (activeProfile.name.length > 0) {
+            temp = JSON.parse(getValue(entryStorage, activeProfile.name));
 
             // Search through every element from entryStorage.
             for (let i = 0; i < temp.length; i++) {
@@ -1034,7 +1068,7 @@ function deleteEntry() {
                 console.table(deletedEntries);
 
                 // Set new storage: allEntries = newEntries.
-                setValue(entryStorage, activeProfile, JSON.stringify(newEntries));
+                setValue(entryStorage, activeProfile.name, JSON.stringify(newEntries));
             }
 
         } else {
@@ -1126,11 +1160,11 @@ function addContribution(storage) {
 
         // Adding by rewriting list of objects.
         let temp = [];
-        if (activeProfile.length > 0) {
-            temp = JSON.parse(getValue(storage, activeProfile));
+        if (activeProfile.name.length > 0) {
+            temp = JSON.parse(getValue(storage, activeProfile.name));
         }
         temp.push(insertEntry);
-        setValue(storage, activeProfile, JSON.stringify(temp));
+        setValue(storage, activeProfile.name, JSON.stringify(temp));
     }
 }
 
@@ -1142,7 +1176,7 @@ function addMonthlyContribution() {
 // Calculate the income of the last x months.
 function calculateLastPeriod(time, period, storage) {
     // Get all entries from storage.
-    let allElements = JSON.parse(getValue(storage, activeProfile));
+    let allElements = JSON.parse(getValue(storage, activeProfile.name));
 
     // Pre-Definition due to only single definitions in switch-case.
     let deadline;
@@ -1243,7 +1277,7 @@ function printForecast(contributionType, storage) {
     console.log("----------------------------------------------------------------------"); // 70.
 
     // Read & check user input.
-    let dataTime = readlineSync.question("Months: ");
+    let dataTime = readlineSync.question("Collect months of Data: ");
     if (dataTime === "!") {
         return
     } else if (isNaN(parseInt(dataTime)) === true || dataTime === undefined) {
