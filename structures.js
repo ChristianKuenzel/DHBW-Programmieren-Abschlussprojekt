@@ -1461,7 +1461,7 @@ function accounting() {
                 break
             //
             case "4":
-                balanceProcentualMonthlyToSingle();
+                balanceProcentualMonthlyToSingle("month", "balance");
                 break
             //
             case "5":
@@ -1600,8 +1600,58 @@ function balanceForecast(contributionType) {
 }
 
 //
-function balanceProcentualMonthlyToSingle() {
+function balanceProcentualMonthlyToSingle(period, contributionType) {
+    // Layout
+    console.log("----------------------------------------------------------------------"); // 70.
+    console.log("Task: Calculating your " + contributionType + " of the last " + period + "s.");
+    console.log("----------------------------------------------------------------------"); // 70.
 
+    // Read & check user input.
+    let time = readlineSync.question("" + period + ": ");
+    if (time === "!") {
+        return
+    } else if (isNaN(parseInt(time)) === true || time === undefined) {
+        console.log("Input not valid! Only numbers allowed!");
+        console.log("Your Input: " + time);
+        return
+    }
+
+    // Calculate sum of contributions in the last x months.
+    let sumAllExpenditure = calculateLastPeriod(time, period, entryStorage);
+    let sumAllIncome = calculateLastPeriod(time, period, incomeStorage);
+
+    // Calculate balance of all contributions.
+    let balanceAll = sumAllIncome - sumAllExpenditure;
+
+    // Initialize sum of monthlyIn/monthlyOut.
+    let sumMonthlyIncome = 0;
+    let sumMonthlyExpenditure = 0;
+
+    // Calculate sum of all monthly income contributions.
+    for (let i = 0; i < activeProfile.monthlyIn.length; i++) {
+        sumMonthlyIncome += parseInt(activeProfile.monthlyIn[i].amount);
+    }
+
+    // Calculate sum of all monthly expenditure contributions.
+    for (let i = 0; i < activeProfile.monthlyOut.length; i++) {
+        sumMonthlyExpenditure += parseInt(activeProfile.monthlyOut[i].amount);
+    }
+
+    // Calculate balance of all monthly contributions.
+    let balanceMonthly = (sumMonthlyIncome * time) - (sumMonthlyExpenditure * time);
+
+    // Calculate the percentage of monthly contributions to single contributions.
+    let factorMonthlyToSingle = (balanceAll - balanceMonthly) / balanceMonthly * 100;
+
+    // Calculate the percentage of monthly contributions to all contributions.
+    let factorMonthlyToAll = balanceAll / balanceMonthly * 100;
+
+    // Layout + Print result.
+    console.log("");
+    console.log("The percentage of monthly contributions related to single contributions is about " + factorMonthlyToSingle + " percent.");
+    console.log("The percentage of monthly contributions related to all contributions is about " + factorMonthlyToAll + " percent.");
+    console.log("");
+    console.log("----------------------------------------------------------------------"); // 70.
 }
 
 // Calculate procentual change in balance.
