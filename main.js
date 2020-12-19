@@ -25,16 +25,22 @@ struct.incomeStorage = struct.initStorage()[2];
 
 // Reading command line arguments. Initialize test mode for examination.
 if (struct.readCLA() === true) {
-    // Run test function. Initialize values / user / entries.
+    // Run test function. Test some basic functions. Initialize values / user / entries.
     struct.testMode(100);
+    // Update contribution storage by adding monthly contributions.
+    struct.updateContributionList();
+    // After update: Set profile login time to lastOnline.
+    struct.setLastOnline();
+    // Start main navigation menu.
     struct.mainMenuOptions();
 } else {
+    // Start main profile menu.
     struct.profileMenuOptions();
-
-    // updateIncome();
-    // updateExpenditure();
-    // (setLastOnline()); user.lastOnline = x <- new Date(), getDate();
-
+    // Update contribution storage by adding monthly contributions.
+    struct.updateContributionList();
+    // After update: Set profile login time to lastOnline.
+    struct.setLastOnline();
+    // Start main navigation menu.
     struct.mainMenuOptions();
 }
 
