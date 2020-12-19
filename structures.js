@@ -192,6 +192,13 @@ function setValue (storage, key, value) {
     storage.setItem(key, value);
 }
 
+// Set lastOnline to new Date today.
+function setLastOnline() {
+    let today = new Date();
+    today = today.getTime();
+    activeProfile.lastOnline = today;
+}
+
 // Update %monthlyContributionList% and add elements to contribution %storage% per month from %lastOnline% until now.
 function updateContributionList(monthlyContributionList, storage) {
     // activeProfile
@@ -343,7 +350,7 @@ function createNewProfile () {
 
                 // Set lastOnline to date of creation.
                 let now = new Date();
-                userObject.lastOnline = now.getDate();
+                userObject.lastOnline = now.getTime();
 
                 // Store profile.
                 setValue(userStorage, userObject.name, JSON.stringify(userObject));
@@ -1383,7 +1390,7 @@ function accounting() {
     }
 }
 
-//
+// Calculate the balance of the last x months.
 function balanceLastMonths(period, contributionType) {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
@@ -1419,7 +1426,7 @@ function balanceMonthlyContributions() {
     
 }
 
-//
+// Prognosticate average balance over the next months based on your average spending & earning.
 function balanceForecast(contributionType) {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
@@ -1475,6 +1482,7 @@ function balanceProcentualMonthlyToSingle() {
 
 }
 
+// Calculate procentual change in balance.
 //
 // Von -> Bis, Bis < Heute, input = "$" -> until = 0
 function balanceProcentualChange(period, contributionType) {
@@ -1546,6 +1554,8 @@ module.exports = {
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
     testMode: testMode,
+    setLastOnline: setLastOnline,
+    updateContributionList: updateContributionList,
     userStorage: userStorage,
     entryStorage: entryStorage,
     incomeStorage: incomeStorage
