@@ -3,6 +3,4 @@ entryStorage
 userStorage
 incomeStorage
 exclude.js
-package.json
-package-lock.json
 .idea
