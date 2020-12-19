@@ -206,8 +206,7 @@ function updateContributionList(monthlyContributionList, storage) {
     // monthlyIn monthlyOut
     // storage
     // calculateLastPeriod
-
-} // Parameter ? // IMPLEMENTATION
+}
 
 // ________________________________________________________________________________
 // Check and validate profile menu option:
@@ -434,16 +433,17 @@ function mainMenuOptions() {
                 break
             // Leave.
             case "7":
-                // Set profile object to save changes in monthlyIn/Out && balance.
-                setValue(userStorage, activeProfile.name, JSON.stringify(activeProfile));
-                // Quit application.
-                process.exit();
-                break // -> Ignore IDEA warning
+                break
             // User input is not valid.
             default:
                 console.log("Input not valid! Only numbers allowed!");
                 console.log("Your Input: " + input);
                 break
+        }
+
+        // Go back to main menu.
+        if (input === "7") {
+            break
         }
     }
 }
@@ -464,7 +464,6 @@ function entryManagement() {
         console.log("[3] - Search for a specific entry.");
         console.log("[4] - Delete a specific entry.");
         console.log("[5] - Back.");
-        console.log("[6] - Leave.");
         console.log("");
 
         // Read user input.
@@ -491,13 +490,6 @@ function entryManagement() {
             // Back to main menu.
             case "5":
                 break
-            // Leave.
-            case "6":
-                // Set profile object to save changes in monthlyIn/Out && balance.
-                setValue(userStorage, activeProfile.name, JSON.stringify(activeProfile));
-                // Quit application.
-                process.exit();
-                break // -> Ignore IDEA warning
             // User input is not valid.
             default:
                 console.log("Input not valid! Only numbers allowed!");
@@ -536,7 +528,6 @@ function expenditureManagement() {
         console.log("[8] - Forecast future expenditures.");
 
         console.log("[9] - Back.");
-        console.log("[0] - Leave.");
         console.log("");
 
         // Read user input.
@@ -579,13 +570,6 @@ function expenditureManagement() {
             // Back to main menu.
             case "9":
                 break
-            // Leave.
-            case "0":
-                // Set profile object to save changes in monthlyIn/Out && balance.
-                setValue(userStorage, activeProfile.name, JSON.stringify(activeProfile));
-                // Quit application.
-                process.exit();
-                break // -> Ignore IDEA warning
             // Wrong input.
             default:
                 console.log("Input not valid! Only numbers allowed!");
@@ -617,7 +601,6 @@ function incomeManagement() {
         console.log("[4] - Income last years.");
         console.log("[5] - Forecast future incomes.");
         console.log("[6] - Back.");
-        console.log("[7] - Leave.");
         console.log("");
 
         // Read user input.
@@ -653,14 +636,6 @@ function incomeManagement() {
             // Back to main menu.
             case "6":
                 break
-
-            // Leave.
-            case "7":
-                // Set profile object to save changes in monthlyIn/Out && balance.
-                setValue(userStorage, activeProfile.name, JSON.stringify(activeProfile));
-                // Quit application.
-                process.exit();
-                break // -> Ignore IDEA warning
 
             // User input is not valid.
             default:
@@ -1439,7 +1414,6 @@ function accounting() {
         console.log("[4] - Procentual proportion of monthly contributions related to single contributions.")
         console.log("[5] - Balances procentual in-/decrease in the last months.")
         console.log("[6] - Back.");
-        console.log("[7] - Leave.");
         console.log("");
 
         // Read user input.
@@ -1447,36 +1421,29 @@ function accounting() {
 
         // Evaluate user input.
         switch (input) {
-            //
+            // Calculate the balance of the last x months.
             case "1":
                 balanceLastMonths("month", "balance");
                 break
-            //
+            // Calculate monthly income - monthly expenditures and return difference.
             case "2":
                 balanceMonthlyContributions();
                 break
-            //
+            // Prognosticate average balance over the next months based on your average spending & earning.
             case "3":
                 balanceForecast("balance");
                 break
-            //
+            // Calculate percentage of monthly contributions to all/single contributions.
             case "4":
                 balanceProcentualMonthlyToSingle("month", "balance");
                 break
-            //
+            // Calculate procentual change in balance.
             case "5":
                 balanceProcentualChange("month", "balance");
                 break
             // Back to main menu.
             case "6":
                 break
-            // Leave.
-            case "7":
-                // Set profile object to save changes in monthlyIn/Out && balance.
-                setValue(userStorage, activeProfile.name, JSON.stringify(activeProfile));
-                // Quit application.
-                process.exit();
-                break // -> Ignore IDEA warning
             // User input is not valid.
             default:
                 console.log("Input not valid! Only numbers allowed!");
@@ -1599,7 +1566,7 @@ function balanceForecast(contributionType) {
     console.log("----------------------------------------------------------------------"); // 70.
 }
 
-//
+// Calculate percentage of monthly contributions to all/single contributions.
 function balanceProcentualMonthlyToSingle(period, contributionType) {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
@@ -1707,28 +1674,18 @@ function balanceProcentualChange(period, contributionType) {
 }
 
 // ________________________________________________________________________________
-// Creditability
-function creditability() {
-
-}
-
-// ________________________________________________________________________________
-// Solvency
-function solvency() {
-
-}
-
-// ________________________________________________________________________________
 // Exporting all functions as modules.
 module.exports = {
     readCLA: readCLA,
     initStorage: initStorage,
+    testMode: testMode,
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
-    testMode: testMode,
+    setValue: setValue,
     setLastOnline: setLastOnline,
     updateContributionList: updateContributionList,
     userStorage: userStorage,
     entryStorage: entryStorage,
     incomeStorage: incomeStorage,
+    activeProfile: activeProfile
 }
