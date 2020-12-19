@@ -27,22 +27,21 @@ struct.incomeStorage = struct.initStorage()[2];
 if (struct.readCLA() === true) {
     // Run test function. Test some basic functions. Initialize values / user / entries.
     struct.testMode(100);
-    // Update contribution storage by adding monthly contributions.
-    struct.updateContributionList();
-    // After update: Set profile login time to lastOnline.
-    struct.setLastOnline();
-    // Start main navigation menu.
-    struct.mainMenuOptions();
 } else {
     // Start main profile menu.
     struct.profileMenuOptions();
-    // Update contribution storage by adding monthly contributions.
-    struct.updateContributionList();
-    // After update: Set profile login time to lastOnline.
-    struct.setLastOnline();
-    // Start main navigation menu.
-    struct.mainMenuOptions();
 }
+
+// Update contribution storage by adding monthly contributions.
+// struct.updateContributionList(struct.activeProfile.monthlyIn, struct.incomeStorage);
+// Update contribution storage by adding monthly contributions.
+// struct.updateContributionList(struct.activeProfile.monthlyOut, struct.entryStorage);
+// After update: Set profile login time to lastOnline.
+struct.setLastOnline();
+// Start main navigation menu.
+struct.mainMenuOptions();
+// Set profile object to save changes in monthlyIn/Out && balance.
+struct.setValue(struct.userStorage, struct.activeProfile.name, JSON.stringify(struct.activeProfile));
 
 // Close application.
 process.exit();
