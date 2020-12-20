@@ -291,16 +291,16 @@ function updateContributionList() {
 // ________________________________________________________________________________
 // Check and validate profile menu option:
 function profileMenuOptions () {
-    // Layout + Introduction
-    console.log("----------------------------------------------------------------------"); // 70 "-"
-    console.log("Welcome to your budget software to manage your households finances!");
-    console.log("----------------------------------------------------------------------"); // 70 "-"
-
-    // User information
-    console.log("Please enter one of the following tasks by entering its number.");
-
     // Check until input is correct!
     while (true) {
+        // Layout + Introduction
+        console.log("----------------------------------------------------------------------"); // 70 "-"
+        console.log("Welcome to your budget software to manage your households finances!");
+        console.log("----------------------------------------------------------------------"); // 70 "-"
+
+        // User information
+        console.log("Please enter one of the following tasks by entering its number.");
+
         // Print menu options
         console.log("[1] - Choose an already existing profile.");
         console.log("[2] - Create a new profile.");
@@ -311,7 +311,7 @@ function profileMenuOptions () {
         var input = readlineSync.prompt();
 
         // Layout
-        console.log("----------------------------------------------------------------------"); // 70 "-"
+        console.log("");
 
         // Evaluate user input.
         switch (input) {
@@ -331,6 +331,7 @@ function profileMenuOptions () {
             default:
                 console.log("Input not valid! Only numbers allowed!");
                 console.log("Your Input: " + input);
+                console.log("");
                 break
         }
 
@@ -343,6 +344,7 @@ function profileMenuOptions () {
 
 // Choose an already existing profile.
 function chooseProfile() {
+    console.log("----------------------------------------------------------------------"); // 70 "-"
     console.log("Choose one of the following profiles:");
     console.log("----------------------------------------------------------------------"); // 70 "-"
 
@@ -386,6 +388,7 @@ function chooseProfile() {
                 console.log("");
             } else if (userObject.name === userName) {
                 console.log("You have chosen " + userName + "'s profile!");
+                console.log("");
                 activeProfile = userObject;
                 break
             } else {
@@ -402,6 +405,7 @@ function chooseProfile() {
 // Create a new user profile.
 function createNewProfile () {
     // Layout.
+    console.log("----------------------------------------------------------------------"); // 70 "-"
     console.log("Creating a new profile:");
     console.log("----------------------------------------------------------------------"); // 70 "-"
     console.log("DONE / BACK: Enter '!'.");
