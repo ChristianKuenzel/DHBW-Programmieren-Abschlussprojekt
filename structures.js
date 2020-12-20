@@ -5,7 +5,7 @@ David Schüler, Matr.Nr.: ?, <david.schueler97@gmail.com>, https://github.com/Ar
 Christian Künzel, Matr.Nr.: 3889521, <kunibertgames@web.de>, https://github.com/ChristianKuenzel
 
 Content undergoes the terms of chosen licenses. See GitHub for more:
-https://github.com/ChristianKuenzel/DHBW-WebEngineering-Abschlussprojekt
+https://github.com/ChristianKuenzel/DHBW-Programmieren-Abschlussprojekt
 
 Structure file
 
