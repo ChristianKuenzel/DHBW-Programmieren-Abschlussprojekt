@@ -470,13 +470,13 @@ function createNewProfile () {
 // ________________________________________________________________________________
 // Start menu functions and management functions.
 function mainMenuOptions() {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70 "-"
-    console.log("Main menu: What is your next task ?");
-    console.log("----------------------------------------------------------------------"); // 70 "-"
-
     // Repeat main menu until user leaves the program.
     while (true) {
+        // Layout
+        console.log("----------------------------------------------------------------------"); // 70 "-"
+        console.log("Main menu: What is your next task ?");
+        console.log("----------------------------------------------------------------------"); // 70 "-"
+
         console.log("[1] - Entry management");
         console.log("[2] - Expenditure management");
         console.log("[3] - Income management");
@@ -517,6 +517,7 @@ function mainMenuOptions() {
                 break
             // Leave.
             case "7":
+                console.log("");
                 break
             // User input is not valid.
             default:
@@ -535,13 +536,13 @@ function mainMenuOptions() {
 // Management menu navigation and function calls.
 // Entry management: Add, show, search, delete entry or leave.
 function entryManagement() {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Entry Management: Choose your task!");
-    console.log("----------------------------------------------------------------------"); // 70.
-
     // Run until user wants back or leave.
     while(true) {
+        // Layout
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("Entry Management: Choose your task!");
+        console.log("----------------------------------------------------------------------"); // 70.
+
         // Print user Interface.
         console.log("[1] - Add entries.");
         console.log("[2] - Show all entries.");
@@ -591,13 +592,13 @@ function entryManagement() {
 // Management menu navigation and function calls.
 // Expenditure management:
 function expenditureManagement() {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Expenditure Management: Choose your task!");
-    console.log("----------------------------------------------------------------------"); // 70.
-
     // Run until user wants back or leave.
     while(true) {
+        // Layout
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("Expenditure Management: Choose your task!");
+        console.log("----------------------------------------------------------------------"); // 70.
+
         // Print user Interface.
         console.log("[1] - Add monthly expenditure.");
 
@@ -671,13 +672,13 @@ function expenditureManagement() {
 // Management menu navigation and function calls.
 // Income management:
 function incomeManagement() {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Income Management: Choose your task!");
-    console.log("----------------------------------------------------------------------"); // 70.
-
     // Run until user wants back or leave.
     while(true) {
+        // Layout
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("Income Management: Choose your task!");
+        console.log("----------------------------------------------------------------------"); // 70.
+
         // Print user Interface.
         console.log("[1] - Add income.");
         console.log("[2] - Add monthly income.");
@@ -739,13 +740,13 @@ function incomeManagement() {
 // Functions of entryManagement:
 // Show entries. Select a filter.
 function showEntries() {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Entries: Choose one of the following specifier or all.");
-    console.log("----------------------------------------------------------------------"); // 70.
-
     // Run until user wants back or leave.
     while(true) {
+        // Layout
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("Entries: Choose one of the following specifier or all.");
+        console.log("----------------------------------------------------------------------"); // 70.
+
         // Print user Interface.
         console.log("[1] - Date.");
         console.log("[2] - Category.");
@@ -1484,13 +1485,13 @@ function printForecast(contributionType, storage) {
 // ________________________________________________________________________________
 // Accounting:
 function accounting() {
-    // Layout
-    console.log("----------------------------------------------------------------------"); // 70.
-    console.log("Accounting: Choose your task!");
-    console.log("----------------------------------------------------------------------"); // 70.
-
     // Run until user wants back or leave.
     while(true) {
+        // Layout
+        console.log("----------------------------------------------------------------------"); // 70.
+        console.log("Accounting: Choose your task!");
+        console.log("----------------------------------------------------------------------"); // 70.
+
         // Print user Interface.
         console.log("[1] - Balance last months.");
         console.log("[2] - Balance of monthly contributions.");
