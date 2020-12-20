@@ -200,12 +200,49 @@ function setLastOnline() {
     setValue(userStorage, activeProfile.name, JSON.stringify(activeProfile));
 }
 
+// Set profile to save changes.
+// Integrated in function due to undefined in main.js when called.
+function setProfile() {
+    // Set profile object to save changes in monthlyIn/Out && balance.
+    setValue(userStorage, activeProfile.name, JSON.stringify(activeProfile));
+}
+
 // Update %monthlyContributionList% and add elements to contribution %storage% per month from %lastOnline% until now.
-function updateContributionList(monthlyContributionList, storage) {
-    // activeProfile
-    // monthlyIn monthlyOut
-    // storage
-    // calculateLastPeriod
+// With parameter (monthlyContributionList, storage) function doesnt work due to undefined in main.js when called.
+function updateContributionList() {
+    // Check if there is any element to add.
+    if (activeProfile.monthlyIn.length > 0) {
+        // Adding by rewriting list of objects.
+        let tempIn = [];
+        if (activeProfile.name.length > 0) {
+            tempIn = JSON.parse(getValue(incomeStorage, activeProfile.name));
+        }
+
+
+        // Add every element to incomeStorage.
+        for (let i = 0; i < activeProfile.monthlyIn.length; i++) {
+            tempIn.push(activeProfile.monthlyIn[i]);
+        }
+        // Save added elements in storage.
+        setValue(incomeStorage, activeProfile.name, JSON.stringify(tempIn));
+    }
+
+    // Check if there is any element to add.
+    if (activeProfile.monthlyOut.length > 0) {
+        // Adding by rewriting list of objects.
+        let tempOut = [];
+        if (activeProfile.name.length > 0) {
+            tempOut = JSON.parse(getValue(entryStorage, activeProfile.name));
+        }
+
+        // Add every element to expenditureStorage.
+        for (let i = 0; i < activeProfile.monthlyOut.length; i++) {
+            // Add every element to storage.
+            tempOut.push(activeProfile.monthlyOut[i]);
+        }
+        // Save added elements in storage.
+        setValue(entryStorage, activeProfile.name, JSON.stringify(tempOut));
+    }
 }
 
 // ________________________________________________________________________________
@@ -1681,7 +1718,7 @@ module.exports = {
     testMode: testMode,
     profileMenuOptions: profileMenuOptions,
     mainMenuOptions: mainMenuOptions,
-    setValue: setValue,
+    setProfile: setProfile,
     setLastOnline: setLastOnline,
     updateContributionList: updateContributionList,
     userStorage: userStorage,
