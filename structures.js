@@ -1659,7 +1659,6 @@ function balanceProcentualMonthlyToSingle(period, contributionType) {
 }
 
 // Calculate procentual change in balance.
-//
 // Von -> Bis, Bis < Heute, input = "$" -> until = 0
 function balanceProcentualChange(period, contributionType) {
     // Layout
@@ -1709,6 +1708,7 @@ function balanceProcentualChange(period, contributionType) {
     console.log("----------------------------------------------------------------------"); // 70.
 
 }
+
 // parse date with format and set hours to 8 
 function parseDate(input, format) {
     format = format || 'yyyy-mm-dd'; // default format
