@@ -116,50 +116,73 @@ function testMode (value) {
     // Test: Profile settings.
     // Insert profile and chose profile.
     let testObject = user;
-    testObject.name = "test"
+    testObject.name = "test";
+    testObject.balance = 10000;
+    testObject.password = "donteventrybro";
+    let testTime = new Date();
+    testObject.lastOnline = new Date(testTime.getTime());
+    testObject.monthlyIn = [];
+    testObject.monthlyOut = [];
+
     setValue(userStorage, "test", JSON.stringify(testObject));
     activeProfile = testObject;
 
     // Check if user exists.
     try {
-        let testVar = getValue(userStorage, activeProfile.name);
-        if (testVar !== "test") {
+        let testVar = JSON.parse(getValue(userStorage, activeProfile.name));
+        if (testVar.name !== "test") {
             throw false
         }
     } catch (error) {
-        console.log("Check user: FAILED")
-        console.log("User doesnt exist! -> activeProfile / userStorage / setValue()")
+        console.log("Check user: FAILED");
+        console.log("User doesnt exist! -> activeProfile / userStorage / setValue()");
     }
 
-    // ...
-
-    // Test: ...
-
-    // ...
+    let testProfile = JSON.parse(getValue(userStorage, activeProfile.name));
+    if (testProfile.name === undefined || testProfile.name === null) {
+        console.log("Object variable didnt got initialized.");
+    }
+    if (testProfile.balance === undefined || testProfile.balance === null) {
+        console.log("Object variable didnt got initialized.");
+    }
+    if (testProfile.lastOnline === undefined || testProfile.lastOnline === null) {
+        console.log("Object variable didnt got initialized.");
+    }
+    if (testProfile.password === undefined || testProfile.password  === null) {
+        console.log("Object variable didnt got initialized.");
+    }
 
     // Test: Preparation for functionality.
     // Fill list with entries.
     let testList = [];
     let testEntry = entry;
-    let date = new Date();
+    let initDate = new Date();
+    let date;
     let char = "x";
 
+    // Fill entryStorage.
     for (let i = 0; i < value; i++) {
+        date = new Date(initDate.getTime());
         testEntry.date = date;
         testEntry.category = char; // Change more values ?
-        testEntry.amount = i;
+        testEntry.amount = Math.random() * 100;
         testList.push(testEntry);
     }
-
     setValue(entryStorage, activeProfile.name, JSON.stringify(testList));
 
-
-    // ...
-
+    // Fill incomeStorage.
+    for (let i = 0; i < value; i++) {
+        date = new Date(initDate.getTime());
+        testEntry.date = date;
+        testEntry.category = char; // Change more values ?
+        testEntry.amount = Math.random() * 100;
+        testList.push(testEntry);
+    }
+    setValue(incomeStorage, activeProfile.name, JSON.stringify(testList));
 
     // End of test function.
     console.log("testMode: FINISH")
-} // UNFINISHED
+}
 
 // Initialize storage containing user and entries.
 // Check if storage files already exist, otherwise create them.
