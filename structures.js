@@ -857,17 +857,17 @@ function searchEntry() {
         // If input got the correct amount of characters, start converting.
         } else if (date.length === 10) {
             // Convert string into date object.
-            date = Date.parse(date);
-            newDate = new Date(date);
+           // date = Date.parse(date);  
+            newDate = parseDate(date, 'dd-mm-yyyy');
 
             // Check if date is correct.
             if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
-                console.log("Your date is not valid: 'day month year' or 'day-month-year'; numbers only;");
+                console.log("2Your date is not valid: 'day month year' or 'day-month-year'; numbers only;");
                 break
             }
 
         } else {
-            console.log("Your date is not valid: NONE or 'day month year' or 'day-month-year'; numbers only;");
+            console.log("1Your date is not valid: NONE or 'day month year' or 'day-month-year'; numbers only;");
             break
         }
 
@@ -993,8 +993,8 @@ function deleteEntry() {
         // If input got the correct amount of characters, start converting.
         } else if (date.length === 10) {
             // Convert string into date object.
-            date = Date.parse(date);
-            newDate = new Date(date);
+           // date = Date.parse(date);
+           newDate = parseDate(date, 'dd-mm-yyyy');
 
             // Check if date is correct.
             if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
@@ -1146,8 +1146,8 @@ function addContribution(storage) {
         }
 
         // Convert string into date object.
-        date = Date.parse(date);
-        let newDate = new Date(date);
+        //date = Date.parse(date);
+        newDate = parseDate(date, 'dd-mm-yyyy');
 
         // Check if date is correct.
         if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
@@ -1235,8 +1235,8 @@ function addMonthlyContribution(monthlyContributionList) {
         }
 
         // Convert string into date object.
-        date = Date.parse(date);
-        let newDate = new Date(date);
+        //date = Date.parse(date);
+        newDate = parseDate(date, 'dd-mm-yyyy');
 
         // Check if date is correct.
         if (isNaN(newDate.getDate()) === true || isNaN(newDate.getMonth()) === true || isNaN(newDate.getFullYear()) === true) {
@@ -1709,6 +1709,18 @@ function balanceProcentualChange(period, contributionType) {
     console.log("----------------------------------------------------------------------"); // 70.
 
 }
+// parse date with format and set hours to 8 
+function parseDate(input, format) {
+    format = format || 'yyyy-mm-dd'; // default format
+    var parts = input.match(/(\d+)/g), 
+        i = 0, fmt = {};
+    // extract date-part indexes from the format
+    format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });
+    let returnDate = new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
+    returnDate.setHours(8);
+  
+    return returnDate; 
+  }
 
 // ________________________________________________________________________________
 // Exporting all functions as modules.
