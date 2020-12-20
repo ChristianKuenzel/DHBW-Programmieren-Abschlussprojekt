@@ -32,6 +32,17 @@ Das Programm kann vom Hauptmenü aus verlassen werden. Eine Navigation durch das
 Die meisten Funktionen sind selbsterklärend, dennoch finden sie im Abschnitt Funktionsumfang eine entsprechende
 Auflistung.
 
+Hinweis:
+
+Das Löschen von Einträgen mithilfe der Filter löscht alle Elemente des beschriebenen Eintrags.
+Bei leer lassen eines Filters werden die Elemente nur auf die verbliebenen Informationen geprüft.
+Dies kann zum Löschen mehrerer Elemente des beschriebenen Typs führen.
+
+Das Suchen von Einträgen mithilfe der Filter ist konjunktiv. Die Auswahl einzelner Filter gibt alle
+Elemente zurück, die auf alle gewählten Filter zutreffen.
+
+Das Anzeigen von Einträgen gibt entweder alle oder ausgewählte Informationen aller Elemente aus.
+
 #Struktur:
 
 Importieren der Funktionen in die Main file.
@@ -77,6 +88,7 @@ Navigationsmenü mit mehreren Ebenen und verschiedenen Verwaltungsbereichen.
 Managementfunktionen zur Ausführung einzelner Funktionen.
 
 Eintragverwaltung durch das Anzeigen mit verschiedenen Filtern.
+Eintragverwaltung durch das Löschen mehrerer Einträge mit verschiedenen Filtern.
 
 Hinzufügen von einzelnen Einnahmen, sowie Daueraufträgen in Form monatlicher Einnahmen und Ausgaben.
 
