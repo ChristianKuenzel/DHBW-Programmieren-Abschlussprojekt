@@ -33,15 +33,16 @@ if (struct.readCLA() === true) {
 }
 
 // Update contribution storage by adding monthly contributions.
-// struct.updateContributionList(struct.activeProfile.monthlyIn, struct.incomeStorage);
-// Update contribution storage by adding monthly contributions.
-// struct.updateContributionList(struct.activeProfile.monthlyOut, struct.entryStorage);
+struct.updateContributionList();
+
 // After update: Set profile login time to lastOnline.
 struct.setLastOnline();
+
 // Start main navigation menu.
 struct.mainMenuOptions();
-// Set profile object to save changes in monthlyIn/Out && balance.
-struct.setValue(struct.userStorage, struct.activeProfile.name, JSON.stringify(struct.activeProfile));
+
+// Save profile changes.
+struct.setProfile();
 
 // Close application.
 process.exit();
