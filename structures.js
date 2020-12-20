@@ -1290,7 +1290,7 @@ function addMonthlyContribution(monthlyContributionList) {
     }
 }
 
-// Calculate the income of the last x months.
+// Calculate the income of the last x days, months, years.
 function calculateLastPeriod(time, period, storage) {
     // Get all entries from storage.
     let allElements = JSON.parse(getValue(storage, activeProfile.name));
@@ -1356,7 +1356,7 @@ function printLastPeriod(period, contributionType, storage) {
     console.log("----------------------------------------------------------------------"); // 70.
 }
 
-// Calculate the average expenditure.
+// Calculate the average income/expenditure.
 function printAverageLastPeriod(period, contributionType, storage) {
     // Layout
     console.log("----------------------------------------------------------------------"); // 70.
