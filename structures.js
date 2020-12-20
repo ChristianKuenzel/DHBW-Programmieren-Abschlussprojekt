@@ -241,11 +241,21 @@ function updateContributionList() {
             tempIn = JSON.parse(getValue(incomeStorage, activeProfile.name));
         }
 
+        // Calculate how much time is gone.
+        let time = new Date();
+        let today = new Date(time.getTime());
+        time = new Date(today.getTime() - activeProfile.lastOnline.getTime());
+        let counter = time.getMonth();
+        counter += 1;
 
         // Add every element to incomeStorage.
         for (let i = 0; i < activeProfile.monthlyIn.length; i++) {
-            tempIn.push(activeProfile.monthlyIn[i]);
+            // Add element several times.
+            for (let j = 0; j < counter; j++) {
+                tempIn.push(activeProfile.monthlyIn[i]);
+            }
         }
+
         // Save added elements in storage.
         setValue(incomeStorage, activeProfile.name, JSON.stringify(tempIn));
     }
@@ -258,11 +268,21 @@ function updateContributionList() {
             tempOut = JSON.parse(getValue(entryStorage, activeProfile.name));
         }
 
+        // Calculate how much time is gone.
+        let time = new Date();
+        let today = new Date(time.getTime());
+        time = new Date(today.getTime() - activeProfile.lastOnline.getTime());
+        let counter = time.getMonth();
+        counter += 1;
+
         // Add every element to expenditureStorage.
         for (let i = 0; i < activeProfile.monthlyOut.length; i++) {
-            // Add every element to storage.
-            tempOut.push(activeProfile.monthlyOut[i]);
+            // Add element several times.
+            for (let j = 0; j < counter; j++) {
+                tempOut.push(activeProfile.monthlyOut[i]);
+            }
         }
+
         // Save added elements in storage.
         setValue(entryStorage, activeProfile.name, JSON.stringify(tempOut));
     }
